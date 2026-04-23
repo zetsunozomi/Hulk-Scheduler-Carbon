@@ -1,1 +1,1 @@
-adaptive: only consider the scale
+For SC26 AD/AE
