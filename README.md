@@ -1,0 +1,1 @@
+adaptive: only consider the scale
