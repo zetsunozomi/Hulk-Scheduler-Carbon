@@ -1,0 +1,1 @@
+python draw_wait_time.py --log_path /pscratch/sd/s/syfan/carbon/src/model/policy-gradient-moe/exp12/validation_gpt345M_0.99.txt

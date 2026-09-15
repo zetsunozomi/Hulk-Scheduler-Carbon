@@ -1,0 +1,3 @@
+Using Python from: /pscratch/sd/s/syfan/conda/envs/carbon/bin/python
+Logging to: log_gpt345M_0.99.txt
+slurmstepd: error: *** JOB 48055794 ON nid008640 CANCELLED AT 2026-01-24T13:36:42 DUE TO TIME LIMIT ***
