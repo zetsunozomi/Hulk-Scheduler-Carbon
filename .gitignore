@@ -8,8 +8,6 @@ __pycache__/
 /src/misc
 /legacy_scripts
 /src/queue_prediction/json_data
-/src/model/policy-gradient-moe/sim.json
-/src/model/policy-gradient-moe/sim_validation.json
 /src/model/policy-gradient-moe/gpt345M
 /src/model/policy-gradient-moe/exp*
 /src/model/policy-gradient-moe/train_gpt345M.sh

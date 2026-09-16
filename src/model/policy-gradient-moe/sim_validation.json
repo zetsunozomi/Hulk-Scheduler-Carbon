@@ -1,0 +1,12 @@
+{
+  "job_log": "/pscratch/sd/s/syfan/carbon/src/workload/filtered_iw_validate.log",
+  "slurm_config": "/pscratch/sd/s/syfan/carbon/src/slurm_config/slurm_config.json",
+  "backfill_config": "/pscratch/sd/s/syfan/carbon/src/slurm_config/backfill_config.json",
+  "sim_start_time": "2024-08-01T00:00:00", 
+  "log_start_time": "2024-08-01T00:00:00",
+  "log_end_time": "2025-01-03T00:00:00",
+  "warmup_len": 2,
+  "sim_len": 5,
+  "sim_window": 144,
+  "seed": 10
+}
