@@ -1,0 +1,4 @@
+episode_id,arrival_utc,split,budget_hours
+synthetic-train,2024-01-01T00:20:00Z,train,0.25
+synthetic-validation,2024-01-01T02:20:00Z,validation,0.25
+synthetic-test,2024-01-01T04:20:00Z,test,0.25

@@ -18,3 +18,12 @@ __pycache__/
 *.txt
 *.png
 ._dbindex_/
+
+# P0/P1 generated outputs and local environment
+/results/
+/build/
+/dist/
+*.egg-info/
+/.venv/
+/slurm-*.out
+/configs/*.local.json

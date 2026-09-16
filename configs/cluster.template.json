@@ -1,0 +1,144 @@
+{
+  "schema_version": 1,
+  "purpose": "development",
+  "panel": "FILL-machine-workload",
+  "root": "..",
+  "cluster": {
+    "name": null,
+    "partition": null,
+    "nodes": null,
+    "allowed_nodes": [
+      4,
+      8,
+      16,
+      32
+    ],
+    "max_request_seconds": 172800,
+    "walltime_resolution_seconds": 60,
+    "provenance": null,
+    "scheduler": {
+      "model": "conservative_backfill_v1",
+      "dispatch_interval_seconds": 60,
+      "max_job_test": 3000,
+      "age_weight": 7000,
+      "age_max_seconds": 604800,
+      "size_weight": 100
+    }
+  },
+  "trace": {
+    "path": null,
+    "sha256": null,
+    "timezone": null,
+    "dst_fold": null,
+    "coverage_start_utc": null,
+    "coverage_end_utc": null,
+    "coverage_attestation": null,
+    "provenance": null,
+    "zero_duration_policy": "drop",
+    "overrun_policy": "clip"
+  },
+  "workload": {
+    "name": null,
+    "optimizer_updates": null,
+    "global_batch": null,
+    "gpus_per_node": null,
+    "profile_status": "assumed",
+    "sequence_length": null,
+    "precision": null,
+    "software": null,
+    "correctness_artifact": null,
+    "provenance": null,
+    "profiles": {
+      "4": {
+        "updates_per_hour": null,
+        "initialization_seconds": null,
+        "restart_seconds": null,
+        "checkpoint_seconds": null,
+        "microbatch": null,
+        "accumulation": null
+      },
+      "8": {
+        "updates_per_hour": null,
+        "initialization_seconds": null,
+        "restart_seconds": null,
+        "checkpoint_seconds": null,
+        "microbatch": null,
+        "accumulation": null
+      },
+      "16": {
+        "updates_per_hour": null,
+        "initialization_seconds": null,
+        "restart_seconds": null,
+        "checkpoint_seconds": null,
+        "microbatch": null,
+        "accumulation": null
+      },
+      "32": {
+        "updates_per_hour": null,
+        "initialization_seconds": null,
+        "restart_seconds": null,
+        "checkpoint_seconds": null,
+        "microbatch": null,
+        "accumulation": null
+      }
+    }
+  },
+  "ci": {
+    "path": null,
+    "sha256": null,
+    "source": null,
+    "region": "Texas",
+    "unit": "gCO2e/kWh",
+    "type": "average_operational",
+    "availability_rule": null,
+    "queue_to_ci_offset_seconds": 0,
+    "alignment_description": null
+  },
+  "power": {
+    "reference_kw": null,
+    "workload_coefficient": null,
+    "rho_interval": [
+      0.25,
+      1.0
+    ],
+    "provenance": null,
+    "phase_assumption": "same_mean_power_at_given_scale"
+  },
+  "splits": {
+    "train": [
+      null,
+      null
+    ],
+    "validation": [
+      null,
+      null
+    ],
+    "test": [
+      null,
+      null
+    ]
+  },
+  "cohort": {
+    "path": null,
+    "sha256": null,
+    "provenance": null
+  },
+  "execution": {
+    "warmup_seconds": 172800,
+    "history_sample_seconds": 600,
+    "history_lags_seconds": [
+      0,
+      1800,
+      7200,
+      28800,
+      86400,
+      172800
+    ],
+    "max_episode_seconds": null,
+    "target_failure_model": "no_failures"
+  },
+  "holdout_audit": {
+    "test_is_untouched": false,
+    "notes": null
+  }
+}
