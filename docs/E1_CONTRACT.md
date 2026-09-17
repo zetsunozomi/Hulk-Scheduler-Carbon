@@ -1,5 +1,7 @@
 # E1 queue and input diagnostics
 
+**等待预测的角色（2026-09-17 更新）：** 当前 E1 照常运行，输入/探针/模型合同未变。主 ScaleDown 不使用显式等待预测；E1 模型仅供正式规划基线。E1 报告误差与尾部，不设置预测必须准确的门槛，也不把高 coverage 当作 deadline 保证。
+
 These are runnable diagnostics, not completed paper evidence. Published AMSP
 profiles are archived; actual elastic checkpoint execution is not claimed.
 

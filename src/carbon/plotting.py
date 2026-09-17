@@ -11,7 +11,7 @@ from .common import ContractError
 COLORS = {'Fixed-4':'#7F7F7F','Fixed-8':'#4A6B8A','Fixed-16':'#6B5B95','Fixed-32':'#B07C35',
           'Fixed-64':'#4A6B8A','Fixed-128':'#B07C35',
           'Fixed-Mix':'#009E73','Plan-once':'#56B4E9','Rollout-MPC':'#D55E00','ScaleDown':'#0072B2',
-          'Queue-blind-MPC':'#CC79A7','Current-CI':'#8C564B',
+          'Queue-blind-MPC':'#CC79A7','Current-CI':'#8C564B','Predictor-advised':'#8C564B','Precommitted-RL':'#8C564B',
           'ScaleDown-lower-endpoint':'#CC79A7','ScaleDown-upper-endpoint':'#009E73'}
 MAIN_METHODS = ('Fixed-4','Fixed-8','Fixed-16','Fixed-32','Fixed-64','Fixed-128','Fixed-Mix','Plan-once','Rollout-MPC','ScaleDown')
 

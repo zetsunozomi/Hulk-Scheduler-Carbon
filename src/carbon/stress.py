@@ -55,8 +55,8 @@ def run_stress(source, output, predictor_path, checkpoint_path, variant, budget_
     require(0 <= miss_tolerance <= 1, 'Invalid MPC risk threshold')
     metadata, state = read_checkpoint(checkpoint_path)
     settings = metadata['settings']
-    require(settings['objective'] == 'robust' and settings['forecast_mode'] == 'window',
-            'Environment sensitivity evaluates the full robust policy')
+    require(settings['objective'] == 'robust' and settings['forecast_mode'] == 'window' and settings.get('wait_features') == 'none' and settings.get('decision_mode','feedback') == 'feedback',
+            'Environment sensitivity evaluates the main robust policy without wait advice')
     require(beta in settings['budgets'], 'Stress budget must belong to the trained grid')
     references, predictor = shared_inputs(source, predictor_path, metadata['references'])
     encoder = PolicyInputs(source, predictor, references)
@@ -82,6 +82,7 @@ def run_stress(source, output, predictor_path, checkpoint_path, variant, budget_
     manifest = {**target.manifest, 'kind': 'frozen_environment_sensitivity_v1', 'status': 'running',
                 'source_config_sha256': source.manifest['config_sha256'], 'source_config': source.raw,
                 'checkpoint_sha256': checkpoint_hash, 'predictor_sha256': predictor.version,
+                'policy_predictor_sha256': None, 'wait_predictor_role': 'Rollout-MPC only',
                 'references': references, 'feature_schema': encoder.schema(), 'variant': variant,
                 'split': split, 'selected_episode_ids': [e.episode_id for e in episodes],
                 'methods': ['ScaleDown', 'Rollout-MPC'], 'training_seed': seed, 'budget_multiplier': beta,

@@ -2,7 +2,13 @@
 
 ## 当前执行进度
 
-作者已在 Sophia 跑完两份 preflight，各 64 条探针，无删失。Frontera 首两天没有后台提交，零等待不能代表完整区间；完整 E1 保留原时间划分与空闲日期。**下一步直接使用 [Sophia E1 命令](E1_RUN.md)**，同一来源只拟合一次等待模型。
+作者已在 Sophia 跑完两份 preflight，各 64 条探针，无删失。Frontera 首两天没有后台提交，零等待不能代表完整区间；完整 E1 保留原时间划分与空闲日期。作者的 Sophia allocation 已结束，最后回传 Frontera train 10,380 条探针。旧版逐行落盘但没有续跑入口；现已补充 [Sophia E1 的 `--resume`](E1_RUN.md#一小时作业中断后续跑)，保留已算标签，同一来源只拟合一次完整等待模型。不因下面的主策略改动重算探针。Sophia 实际使用 PBS/qsub；在 interactive 内用 bash，本站不要使用 sbatch。
+
+## 主策略不依赖等待预测
+
+主 actor/critic 不加载等待模型：直接读取可见队列历史、实际剩余工作/预算、节点数/速率/时长描述和未来 168h 的 28 个六小时 CI 均值。E1 的模型仅供正式规划基线 MPC、Plan-once 使用；误差再大也不构成主策略的准确率门槛。RL 仍可能学到只在训练环境成立的排队规律，已有 width/FCFS 冻结回放负责检查这个限制。不能保证 Slurm 持续不给资源时仍按期完成。
+
+slider 控制 D 小时的完成预算，左端更紧、右端允许更多时间降低碳成本。主策略只有一阶段端到端 PPO。E3 唯一新增训练组为 Precommitted-RL：在首次提交前就确定全部规模，不读后续反馈，与主策略匹配训练网格、到达采样、seeds 和总 episode 预算；机制评估限每 panel 一个预设预算。它替换旧的等待辅助/current-CI 消融。
 
 ## 论文现在讲什么
 
@@ -90,8 +96,12 @@ sbatch scripts/cluster_preflight.sh \
 |---|---|
 | 等待模型 + 预测诊断 | `cluster_e1.sh CONFIG OUTPUT [PROBE_INTERVAL_SECONDS]` |
 | train fixed + references | `cluster_run.sh CONFIG OUTPUT --split train`，随后 `carbon make-references` |
-| PPO | `cluster_ppo.sh CONFIG OUTPUT WAIT_MODEL REFERENCES ITERATIONS [options]` |
+| PPO | `cluster_ppo.sh CONFIG OUTPUT - REFERENCES ITERATIONS [options]` |
 | 冻结 test + 报告 | `cluster_test.sh CONFIG OUTPUT WAIT_MODEL SELECTION CHECKPOINT_DIR...`，详见脚本 usage |
 | 环境敏感性 | `cluster_stress.sh CONFIG OUTPUT WAIT_MODEL CHECKPOINT VARIANT BETA [--miss-tolerance ...]` |
 
 环境敏感性只用 7B、两来源、一个提前选定的预算和所有声明种子；变体为 `width2`、`fcfs`、`overhead60`、`overhead1800`。主场景的 checkpoint、预算、MPC 阈值先在 validation 冻结并归档，再运行变体。每次输出同时保留 full 与 MPC；不选最好变体，不重训或改小时预算。它单独输出 manifest/chunks/episodes，不冒充 E2 的普通 test 包。
+
+主 PPO 命令第三个参数 `-` 表示不需要等待模型；E3 对照同样用 `-`，仅加 `--decision-mode precommitted`。底层 `train-ppo`/`run-policy` 的 `--predictor` 可省略。旧命令若仍传入路径，默认 none 模式不会读取它。v2 checkpoint 不能与旧 v1 混用；完整 test/stress 仍需 E1 模型来运行规划基线。当前没有要求中断 E1 或开始正式 PPO，iterations 还要按开发阶段耗时固定。
+
+`run-policy --slider-position S` 选择 checkpoint 已支持档位；默认 beta=1/1.25/1.5/2 对应 S=0/.25/.5/1。不能与 --budgets 同时使用，未验证位置不插值。所有实际输出点照常报告。预先序列保存 plans.jsonl 并纳入 test 文件校验。正式 AMSP 规模仍是 4/16/64/128；4→8→4 是机制举例，不新增 8 节点曲线输入。

@@ -76,7 +76,7 @@ class ExportTests(unittest.TestCase):
         result=export_results(self.test,self.root/'report',self.root/'export',figures=False)
         data=load_json(self.root/'export/plot-data.json')
         self.assertEqual(result['status'],'complete');self.assertFalse(result['figures_exported'])
-        self.assertIn('Current-CI',data['missing_e3_methods']['1.0'])
+        self.assertIn('Precommitted-RL',data['missing_e3_methods']['1.0'])
         self.assertEqual(data['endpoint_ablation_budgets'],[])
         group=next(g for g in data['groups'] if g['method']=='ScaleDown')
         self.assertEqual(set(group['seed_labels']),{'11','23'})

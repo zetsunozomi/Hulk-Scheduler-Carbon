@@ -120,7 +120,10 @@ def run_test(bundle,selection_directory,output,predictor_path,checkpoint_paths):
                 manifest['runs'][identity] = {str(beta):name for beta in betas}
             write_manifest(output/'manifest.json',manifest)
         for name in {'fixed'}|{p for paths in manifest['runs'].values() for p in paths.values()}:
-            manifest['run_files_sha256'][name] = {f:digest(output/name/f) for f in ('manifest.json','episodes.jsonl','chunks.jsonl')}
+            files = ['manifest.json','episodes.jsonl','chunks.jsonl']
+            if (output/name/'plans.jsonl').exists():
+                files.append('plans.jsonl')
+            manifest['run_files_sha256'][name] = {f:digest(output/name/f) for f in files}
         manifest['status'] = 'complete'
     except Exception as exc:
         manifest.update(status='failed',failure={'candidate':current,'error_type':type(exc).__name__,'message':str(exc)})

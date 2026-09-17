@@ -18,8 +18,8 @@ set -euo pipefail
 # EDIT HERE: Python on the executing cluster; an existing export overrides this.
 export CARBON_PYTHON="${CARBON_PYTHON:-/pscratch/sd/s/syfan/conda/envs/carbon/bin/python}"
 # Add any required module load commands here, before running Python.
-if [[ $# -lt 2 || $# -gt 3 ]]; then
-  echo 'Usage: bash scripts/cluster_waits.sh CONFIG OUTPUT [PROBE_INTERVAL_SECONDS]' >&2
+if [[ $# -lt 2 || $# -gt 4 ]]; then
+  echo 'Usage: bash scripts/cluster_waits.sh CONFIG OUTPUT [PROBE_INTERVAL_SECONDS] [--resume]' >&2
   exit 2
 fi
 if [[ -n "${SLURM_ARRAY_TASK_ID:-}" ]]; then
@@ -32,6 +32,8 @@ if [[ -d "$PWD/src/carbon" ]]; then
   repo_root="$PWD"
 elif [[ -n "${SLURM_SUBMIT_DIR:-}" && -d "$SLURM_SUBMIT_DIR/src/carbon" ]]; then
   repo_root="$SLURM_SUBMIT_DIR"
+elif [[ -n "${PBS_O_WORKDIR:-}" && -d "$PBS_O_WORKDIR/src/carbon" ]]; then
+  repo_root="$PBS_O_WORKDIR"
 else
   repo_root="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
 fi
@@ -57,15 +59,16 @@ print("scikit-learn=" + sklearn.__version__ + ", scipy=" + scipy.__version__, fl
 PYTHON_CHECK
 config_path="$1"
 output_path="$2"
-interval_seconds="${3:-21600}"
-if [[ -e "$output_path" ]]; then
-  echo "Output already exists: $output_path; choose a new directory." >&2
-  exit 2
+shift 2
+interval_seconds=21600
+if [[ $# -gt 0 && "$1" != --resume ]]; then
+  interval_seconds="$1"
+  shift
 fi
-mkdir -p -- "$(dirname -- "$output_path")"
-mkdir -- "$output_path"
-"$python_bin" -B -m carbon probe-waits --config "$config_path" --output "$output_path/train-probes" --split train --interval-seconds "$interval_seconds"
-"$python_bin" -B -m carbon fit-waits --probes "$output_path/train-probes" --output "$output_path/model"
-"$python_bin" -B -m carbon probe-waits --config "$config_path" --output "$output_path/validation-probes" --split validation --interval-seconds "$interval_seconds"
-"$python_bin" -B -m carbon evaluate-waits --probes "$output_path/validation-probes" --predictor "$output_path/model/model.json" --output "$output_path/validation-diagnostics"
-echo "Wait pipeline complete: $output_path"
+pipeline_args=(--config "$config_path" --output "$output_path" --interval-seconds "$interval_seconds")
+if [[ $# -gt 0 && "$1" == --resume ]]; then
+  pipeline_args+=(--resume)
+  shift
+fi
+[[ $# -eq 0 ]] || { echo 'Unexpected arguments.' >&2; exit 2; }
+"$python_bin" -B -m carbon run-wait-pipeline "${pipeline_args[@]}"

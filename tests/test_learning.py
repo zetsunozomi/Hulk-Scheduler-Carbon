@@ -40,19 +40,42 @@ class PolicyInputTests(unittest.TestCase):
                     job['actual_duration']=999999;job['future_end']='2099-01-01'
         after=PolicyInputs(changed,predictor,refs).encode(altered)
         self.assertEqual(before,after)
+        self.assertEqual(PolicyInputs(bundle,predictor,refs,wait_features='advice').encode(observation),
+                         PolicyInputs(changed,predictor,refs,wait_features='advice').encode(altered))
 
-    def test_current_ci_changes_only_exposure_descriptor_and_keeps_masks(self):
+    def test_advice_adds_features_without_changing_core_inputs_or_physical_masks(self):
         bundle=Bundle(ROOT/'configs/synthetic-p2.json');episode=bundle.episodes[0]
         env=Environment(bundle,episode,initial_replay(bundle,episode),'test');obs=env.observe()
         obs['actions'][0]['feasible']=False
+        # A spent budget does not mask physically feasible requests.
+        obs['remaining_budget_hours']=-1000
         predictor=ConstantWaits(bundle.raw['execution']['history_lags_seconds'])
         refs={'time_reference_hours':1,'carbon_reference_g_per_kappa':{'0.25':100,'1.0':100}}
-        full,_=PolicyInputs(bundle,predictor,refs).encode(obs)
-        current,_=PolicyInputs(bundle,predictor,refs,'current').encode(obs)
-        self.assertEqual(full['global'],current['global']);self.assertEqual(full['mask'],[False,True,True,True])
-        self.assertEqual(full['actions'][0],[0.0]*7)
-        for a,b in zip(full['actions'][1:],current['actions'][1:]):
-            self.assertEqual(a[:-1],b[:-1]);self.assertNotEqual(a[-1],b[-1])
+        core,core_meta=PolicyInputs(bundle,None,refs).encode(obs)
+        advised,advice_meta=PolicyInputs(bundle,predictor,refs,wait_features='advice').encode(obs)
+        self.assertEqual(core['global'],advised['global'])
+        self.assertEqual(core['mask'],[False,True,True,True]);self.assertEqual(core['mask'],advised['mask'])
+        self.assertIsNone(core_meta['predictor_version'])
+        self.assertEqual(advice_meta['predictor_version'],predictor.version)
+        for x,y in zip(core['actions'],advised['actions']):
+            self.assertEqual(x,y[:6]);self.assertEqual(len(y),9)
+        self.assertNotIn('mean_wait_hours',core_meta['action_descriptors'][1])
+        self.assertIn('mean_wait_hours',advice_meta['action_descriptors'][1])
+
+    def test_main_never_accesses_predictor_and_current_ci_changes_only_forecast_sequence(self):
+        class ForbiddenPredictor:
+            def __getattribute__(self, name):
+                raise AssertionError('Main policy touched predictor: '+name)
+        bundle=Bundle(ROOT/'configs/synthetic-p2.json');episode=bundle.episodes[0]
+        env=Environment(bundle,episode,initial_replay(bundle,episode),'test');obs=env.observe()
+        refs={'time_reference_hours':1,'carbon_reference_g_per_kappa':{'0.25':100,'1.0':100}}
+        full,meta=PolicyInputs(bundle,ForbiddenPredictor(),refs).encode(obs)
+        self.assertEqual((full,meta),PolicyInputs(bundle,None,refs).encode(obs))
+        current,_=PolicyInputs(bundle,None,refs,'current').encode(obs)
+        self.assertEqual(full['actions'],current['actions']);self.assertEqual(full['mask'],current['mask'])
+        self.assertEqual(full['global'][:-28],current['global'][:-28])
+        self.assertEqual(len(set(current['global'][-28:])),1)
+        self.assertNotEqual(full['global'][-28:],current['global'][-28:])
 
 
 @unittest.skipUnless(HAS_TORCH,'requires P3 PyTorch dependency')

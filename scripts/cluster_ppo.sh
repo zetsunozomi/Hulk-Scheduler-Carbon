@@ -19,7 +19,7 @@ set -euo pipefail
 export CARBON_PYTHON="${CARBON_PYTHON:-/pscratch/sd/s/syfan/conda/envs/carbon/bin/python}"
 # Add any required module load commands here, before running Python.
 if [[ $# -lt 5 ]]; then
-  echo 'Usage: bash scripts/cluster_ppo.sh CONFIG OUTPUT WAIT_MODEL REFERENCES ITERATIONS [train-ppo options...]' >&2
+  echo 'Usage: bash scripts/cluster_ppo.sh CONFIG OUTPUT WAIT_MODEL_OR_DASH REFERENCES ITERATIONS [train-ppo options...]' >&2
   exit 2
 fi
 if [[ -n "${SLURM_ARRAY_TASK_ID:-}" ]]; then
@@ -57,9 +57,11 @@ print('PyTorch: '+str(torch.__version__)+'; policy device: cpu',flush=True)
 PYTHON_CHECK
 config_path="$1"
 output_path="$2"
-model_path="$3"
+model_path="$3" # Use - for the main policy; a model is needed only with --wait-features advice.
 references_path="$4"
 iterations="$5"
 shift 5
-exec "$python_bin" -B -m carbon train-ppo --config "$config_path" --output "$output_path" \
-  --predictor "$model_path" --references "$references_path" --iterations "$iterations" "$@"
+train_args=(train-ppo --config "$config_path" --output "$output_path"
+  --references "$references_path" --iterations "$iterations")
+if [[ "$model_path" != "-" ]]; then train_args+=(--predictor "$model_path"); fi
+exec "$python_bin" -B -m carbon "${train_args[@]}" "$@"

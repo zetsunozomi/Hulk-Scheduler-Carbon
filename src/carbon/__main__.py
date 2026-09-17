@@ -45,6 +45,13 @@ def main(argv=None):
     probe.add_argument("--request-seconds", type=int, nargs="+")
     probe.add_argument("--start")
     probe.add_argument("--stop")
+    probe.add_argument("--resume", action="store_true", help="Validate and append to an interrupted probe dataset")
+    pipeline = sub.add_parser("run-wait-pipeline", help="Run E1 queue stages with optional interrupted-run recovery")
+    pipeline.add_argument("--config", required=True)
+    pipeline.add_argument("--output", required=True)
+    pipeline.add_argument("--interval-seconds", type=int, default=21600)
+    pipeline.add_argument("--resume", action="store_true")
+    pipeline.add_argument("--e1", action="store_true", help="Include replay/dependence diagnostics")
     fit = sub.add_parser("fit-waits", help="Fit chronological GBT and out-of-fold residual atoms")
     fit.add_argument("--probes", required=True)
     fit.add_argument("--output", required=True)
@@ -81,7 +88,7 @@ def main(argv=None):
     training = sub.add_parser("train-ppo", help="Train complete-episode constrained PPO; checkpoints are not selected results")
     training.add_argument("--config", required=True)
     training.add_argument("--output", required=True)
-    training.add_argument("--predictor", required=True)
+    training.add_argument("--predictor", help="Required only with --wait-features advice; unused by the main policy")
     training.add_argument("--references", required=True)
     training.add_argument("--iterations", type=int, required=True, help="Predeclared total iterations, including completed iterations when resuming")
     training.add_argument("--resume", help="Checkpoint JSON from a previous run; writes a new output directory")
@@ -91,14 +98,17 @@ def main(argv=None):
     for option in ("learning-rate", "clip", "entropy", "gradient-norm", "value-coefficient", "epsilon", "dual-rate-p", "dual-rate-lambda"):
         training.add_argument("--"+option, type=float)
     training.add_argument("--forecast-mode", choices=["window", "current"])
+    training.add_argument("--decision-mode", choices=["feedback", "precommitted"], help="Default feedback; precommitted samples the whole scale sequence before submission")
+    training.add_argument("--wait-features", choices=["none", "advice"], help="Default none: main policy has no wait-predictor dependency")
     training.add_argument("--objective", choices=["robust", "lower", "upper"])
     policy = sub.add_parser("run-policy", help="Evaluate a checkpoint with its unchanged categorical sampling rule")
     policy.add_argument("--config", required=True)
     policy.add_argument("--output", required=True)
-    policy.add_argument("--predictor", required=True)
+    policy.add_argument("--predictor", help="Required only by predictor-advised checkpoints")
     policy.add_argument("--checkpoint", required=True)
     policy.add_argument("--split", choices=["train", "validation", "test"], default="validation")
     policy.add_argument("--budgets", type=float, nargs="+")
+    policy.add_argument("--slider-position", type=float, help="Select a supported completion-budget slider tick")
     policy.add_argument("--sampling-seed", type=int)
     stress = sub.add_parser("run-stress", help="Freeze full policy/MPC inputs and change one environment assumption")
     for option in ("config", "output", "predictor", "checkpoint"):
@@ -165,7 +175,11 @@ def main(argv=None):
         elif args.command == "probe-waits":
             from .probes import collect_probes
             collect_probes(Bundle(args.config, queue_only=True), args.output, args.split, args.interval_seconds,
-                           args.request_seconds, args.start, args.stop)
+                           args.request_seconds, args.start, args.stop, args.resume)
+        elif args.command == "run-wait-pipeline":
+            from .wait_pipeline import run_wait_pipeline
+            run_wait_pipeline(Bundle(args.config, queue_only=True), args.output,
+                              args.interval_seconds, args.resume, args.e1)
         elif args.command == "fit-waits":
             from .waits import fit_wait_model
             fit_wait_model(args.probes, args.output, args.trees, args.depth, args.learning_rate, args.folds, args.atoms, args.seed)
@@ -212,7 +226,7 @@ def main(argv=None):
                 train_policy(bundle,args.output,args.predictor,args.references,settings_for(args.iterations,**options),args.resume)
             elif args.command == "run-policy":
                 from .policy_runner import evaluate_policy
-                evaluate_policy(bundle,args.output,args.predictor,args.checkpoint,args.split,args.budgets,args.sampling_seed)
+                evaluate_policy(bundle,args.output,args.predictor,args.checkpoint,args.split,args.budgets,args.sampling_seed,args.slider_position)
     except (ContractError, KeyError, TypeError, OSError, json.JSONDecodeError) as exc:
         print(f"ERROR: {exc}", file=sys.stderr)
         return 2

@@ -105,6 +105,53 @@ class PolicyRunnerTests(unittest.TestCase):
         with self.assertRaisesRegex(ContractError,'trained grid'):
             evaluate_policy(self.bundle,self.root/'bad-budget',self.predictor,checkpoint,budgets=[10])
 
+    def test_main_cli_trains_and_evaluates_without_loading_any_wait_artifact(self):
+        self.predictor.unlink()
+        with patch('carbon.policy_inputs.WaitPredictor.load',side_effect=AssertionError('No wait model allowed')):
+            with redirect_stdout(io.StringIO()):
+                rc=main(['train-ppo','--config',str(ROOT/'configs/synthetic-p2.json'),
+                         '--references',str(self.references),'--output',str(self.root/'no-model'),
+                         '--iterations','1','--episodes-per-budget','1','--epochs','1','--budgets','1'])
+                self.assertEqual(rc,0)
+                checkpoint=self.root/'no-model/checkpoint-000001.json'
+                metadata,_=read_checkpoint(checkpoint)
+                self.assertIsNone(metadata['predictor_sha256'])
+                self.assertEqual(metadata['settings']['wait_features'],'none')
+                self.assertEqual(main(['run-policy','--config',str(ROOT/'configs/synthetic-p2.json'),
+                                      '--checkpoint',str(checkpoint),'--output',str(self.root/'no-model-eval')]),0)
+
+    def test_advice_requires_valid_model_and_binds_checkpoint_to_it(self):
+        settings=settings_for(1,budgets=[1],episodes_per_budget=1,epochs=1,wait_features='advice')
+        with self.assertRaisesRegex(ContractError,'requires --predictor'):
+            train_policy(self.bundle,self.root/'missing-advice',None,self.references,settings)
+        self.run_train('advice',settings)
+        checkpoint=self.root/'advice/checkpoint-000001.json'
+        metadata,_=read_checkpoint(checkpoint)
+        self.assertIsNotNone(metadata['predictor_sha256'])
+        with redirect_stdout(io.StringIO()):
+            result=evaluate_policy(self.bundle,self.root/'advice-eval',self.predictor,checkpoint)
+        self.assertEqual(result['method'],'Predictor-advised')
+        artifact=load_json(self.predictor);artifact['regressor']['initial']=1.
+        self.predictor.write_text(json_text(artifact))
+        with self.assertRaisesRegex(ContractError,'wait model differs'):
+            evaluate_policy(self.bundle,self.root/'changed-advice',self.predictor,checkpoint)
+
+    def test_precommitted_training_evaluation_and_slider_use_frozen_plan(self):
+        settings=settings_for(1,budgets=[1,2],episodes_per_budget=2,epochs=1,decision_mode='precommitted')
+        self.run_train('precommitted',settings)
+        checkpoint=self.root/'precommitted/checkpoint-000001.json'
+        with redirect_stdout(io.StringIO()):
+            result=evaluate_policy(self.bundle,self.root/'precommitted-eval',None,checkpoint,slider_position=1.)
+        self.assertEqual(result['method'],'Precommitted-RL');self.assertEqual(result['budget_multipliers'],[2.])
+        plans=[json.loads(x) for x in (self.root/'precommitted-eval/plans.jsonl').read_text().splitlines()]
+        rows=[json.loads(x) for x in (self.root/'precommitted-eval/episodes.jsonl').read_text().splitlines()]
+        for plan,row in zip(plans,rows):
+            self.assertEqual(plan['plan_sha256'],row['precommitted_plan_sha256'])
+            self.assertEqual([p['nodes'] for p in plan['steps']],row['precommitted_nodes'])
+            self.assertTrue(plan['created_before_first_target_submission'])
+        with self.assertRaisesRegex(ContractError,'Unsupported slider'):
+            evaluate_policy(self.bundle,self.root/'interpolated',None,checkpoint,slider_position=.5)
+
     def test_resume_matches_uninterrupted_optimizer_model_and_sampling(self):
         settings=settings_for(3,budgets=[1,2],episodes_per_budget=2,epochs=1,minibatch_episodes=2)
         self.run_train('full',settings)

@@ -1,5 +1,15 @@
 # Current status: 2026-09-17 AMSP scenario revision
 
+Wait-dependency update: the main policy now defaults to `--wait-features none`,
+with no predictor artifact required. The sole E3 learning comparison is now Precommitted-RL: the full sequence
+is archived before the first target submission, using initial public inputs
+and known planned work/allocation time. The earlier advice ablation is retired. The 28-bin CI
+sequence is relative to submission, not a predicted admission. E1 continues
+unchanged for planning-baseline inputs and descriptive errors. All 145 synthetic software
+tests passed, including predictor-free training/evaluation, precommit-before-
+execution and initial-only information checks, supported slider ticks, plan-file
+seal protection, and frozen-environment replay. These are not paper results.
+
 The earlier entries below are a historical implementation log, not current user
 prerequisites. Published AMSP 2024 profiles replace the Qwen/Vista plan. No GPU
 profiling, power measurement or new untouched log is required. Current launch

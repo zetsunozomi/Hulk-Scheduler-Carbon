@@ -65,8 +65,12 @@ Use `python -m carbon --help` for `make-references`, `run-planners`, and
 `fit-fixed-mix`. `configs/synthetic-p2.json` contains artificial CI warmup history
 for their software checks; it is not a research configuration.
 
-`scripts/cluster_ppo.sh CONFIG OUTPUT WAIT_MODEL REFERENCES ITERATIONS` runs one
-declared training seed; options include `--seed`, `--budgets` and `--resume`.
+`scripts/cluster_ppo.sh CONFIG OUTPUT - REFERENCES ITERATIONS` runs one
+declared main-policy training seed without a wait model. The main policy reads
+public queue history, actual remaining budget/work, physical action descriptors,
+and 28 six-hour causal CI forecast bins. For the E3 learned-sequence comparison, keep `-` and add
+`--decision-mode precommitted`; it is named Precommitted-RL and archives all
+actions before the first submission. Other options include `--seed`, `--budgets` and `--resume`.
 Iterations must be explicitly chosen before a run. Resume accepts checkpoint
 JSON, requires identical settings/input/code/runtime, and writes a new directory.
 `run-policy --checkpoint ...` evaluates the saved categorical policy on validation
@@ -81,8 +85,13 @@ The cluster wrapper combines these steps and a sealed table/data export; see
 `scripts/cluster_test.sh`. `render-results --export ... --output ...` renders that
 export without recomputing replay or statistics. Plotting optionally uses
 `requirements-plots.txt`; experiment execution and table export do not need it.
-Current-CI and single-endpoint training
-variants are explicit options, not additional default experiments.
+E3 uses Precommitted-RL as its single trained mechanism comparison. Match the
+main policy's complete budget grid, arrival sampling, seeds and interaction
+budget during training; evaluate the mechanism at one prespecified budget per panel. Current-CI and wait advice remain development options, outside the formal design.
+Single-endpoint training remains the bounded E4 comparison. The new v2 feature
+schema requires new training; v1 checkpoints cannot be relabeled or reused.
+E1 probe/model contracts are unchanged. No prediction accuracy target gates
+the main method; queue-shift sensitivity still requires the planned replay tests.
 
 ## Package layout
 
@@ -141,3 +150,9 @@ carbon-replay --help
 ```
 
 Only `carbon` is packaged; legacy model directories are excluded.
+
+The user slider selects physical completion budget, not an RL reward weight.
+`run-policy --slider-position S` selects a supported tick from the checkpoint
+(default grid positions 0, .25, .5, 1). Unsupported positions are rejected, not
+interpolated. Checkpoint/evaluation/export metadata preserve the tick mapping.
+This interface does not guarantee a deadline or monotone learned outcomes.

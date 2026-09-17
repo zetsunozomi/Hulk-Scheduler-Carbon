@@ -62,6 +62,17 @@ class ReportTests(unittest.TestCase):
                                       for name in {p for paths in manifest['runs'].values() for p in paths.values()}}
         (self.test/'manifest.json').write_text(json_text(manifest))
 
+    def test_frozen_precommitted_plan_file_cannot_be_modified_after_test(self):
+        manifest=load_json(self.test/'manifest.json')
+        relative=next(n for n in manifest['run_files_sha256'] if n!='fixed')
+        path=self.test/relative/'plans.jsonl';path.write_text('{}\n')
+        manifest['run_files_sha256'][relative]['plans.jsonl']=digest(path)
+        (self.test/'manifest.json').write_text(json_text(manifest))
+        report_test(self.test,self.root/'before-plan-tamper')
+        path.write_text('{"changed":true}\n')
+        with self.assertRaisesRegex(ContractError,'precommitted plan hash mismatch'):
+            report_test(self.test,self.root/'after-plan-tamper')
+
     def test_report_preserves_seed_points_and_comparator_and_phase_conservation(self):
         result=report_test(self.test,self.root/'report')
         policies=[r for r in result['records'] if r['method']=='ScaleDown']

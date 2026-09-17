@@ -1,33 +1,30 @@
 #!/usr/bin/env bash
-# EDIT HERE when moving clusters. bash ignores these directives; sbatch reads them.
-#SBATCH --job-name=carbon-e1
-#SBATCH --nodes=1
-#SBATCH --ntasks=1
-#SBATCH --cpus-per-task=1
-#SBATCH --mem=16G
-#SBATCH --time=02:00:00
-#SBATCH --output=slurm-%x-%j.out
-# Uncomment needed site options below (change ##SBATCH to #SBATCH).
-##SBATCH --account=YOUR_ACCOUNT
-##SBATCH --partition=YOUR_PARTITION
-##SBATCH --qos=YOUR_QOS
-##SBATCH --constraint=YOUR_CONSTRAINT
+# Sophia uses PBS/qsub. Run this script with bash inside your existing allocation.
+# For batch submission, put your site's confirmed #PBS resource/account/queue
+# directives here. Do not submit this file with sbatch on Sophia.
+# No allocation is requested by the script itself.
 
 set -euo pipefail
 
 # EDIT HERE: Python on the executing cluster; an existing export overrides this.
 export CARBON_PYTHON="${CARBON_PYTHON:-/lus/eagle/projects/Local-LLM/shuyuanfan/conda_env/carbon/bin/python}"
 # Add any required module load commands here, before running Python.
-if [[ $# -lt 2 || $# -gt 3 ]]; then
-  echo 'Usage: bash scripts/sophia_e1.sh CONFIG OUTPUT [PROBE_INTERVAL_SECONDS]' >&2
+if [[ $# -lt 2 || $# -gt 4 ]]; then
+  echo 'Usage: bash scripts/sophia_e1.sh CONFIG OUTPUT [PROBE_INTERVAL_SECONDS] [--resume]' >&2
   exit 2
 fi
-# sbatch executes a spool copy, so its script directory is not the repository.
-# Submit from the repository root; direct bash also works by absolute script path.
+if [[ -n "${SLURM_ARRAY_TASK_ID:-}" ]]; then
+  echo 'This pipeline is one job; Slurm arrays are not supported.' >&2
+  exit 2
+fi
+# PBS may execute a spool copy. Prefer the submission directory for batch jobs;
+# direct bash also works by absolute script path.
 if [[ -d "$PWD/src/carbon" ]]; then
   repo_root="$PWD"
 elif [[ -n "${SLURM_SUBMIT_DIR:-}" && -d "$SLURM_SUBMIT_DIR/src/carbon" ]]; then
   repo_root="$SLURM_SUBMIT_DIR"
+elif [[ -n "${PBS_O_WORKDIR:-}" && -d "$PBS_O_WORKDIR/src/carbon" ]]; then
+  repo_root="$PBS_O_WORKDIR"
 else
   repo_root="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
 fi
@@ -35,16 +32,34 @@ fi
 cd "$repo_root"
 export PYTHONPATH="$repo_root/src${PYTHONPATH:+:$PYTHONPATH}"
 export PYTHONDONTWRITEBYTECODE=1
+export OMP_NUM_THREADS="${OMP_NUM_THREADS:-1}"
+export OPENBLAS_NUM_THREADS="${OPENBLAS_NUM_THREADS:-1}"
 python_bin="$CARBON_PYTHON"
+"$python_bin" -B - <<'PYTHON_CHECK'
+import sys
+if sys.version_info < (3, 10):
+    raise SystemExit("Requires Python 3.10+; selected: " + sys.version)
+try:
+    import scipy, sklearn
+except ImportError:
+    raise SystemExit('Install fitting dependencies with "$CARBON_PYTHON" -m pip install -r requirements-p2.txt')
+if sklearn.__version__ != '1.6.1':
+    raise SystemExit('This pipeline pins scikit-learn 1.6.1; install requirements-p2.txt first')
+print("Using Python: " + sys.executable, flush=True)
+print("scikit-learn=" + sklearn.__version__ + ", scipy=" + scipy.__version__, flush=True)
+PYTHON_CHECK
 config_path="$1"
 output_path="$2"
-bash scripts/cluster_waits.sh "$config_path" "$output_path" "${3:-21600}"
-trace_role="$("$python_bin" -B -c 'import json,sys; print(json.load(open(sys.argv[1]))["trace"].get("role","historical"))' "$config_path")"
-if [[ "$trace_role" == historical ]]; then
-  "$python_bin" -B -m carbon evaluate-replay --config "$config_path" --output "$output_path/replay-validation" --split validation
-else
-  echo 'Constructed workload: historical admission fidelity is inapplicable; predictor diagnostics use simulator probes.'
+shift 2
+interval_seconds=21600
+if [[ $# -gt 0 && "$1" != --resume ]]; then
+  interval_seconds="$1"
+  shift
 fi
-"$python_bin" -B -m carbon audit-dependence --probes "$output_path/train-probes" "$output_path/validation-probes" \
-  --output "$output_path/dependence-queue"
-echo "E1 queue stage complete: $output_path. Scenario coverage, episode duration and full-policy results require review; no Qwen profiling is required."
+pipeline_args=(--config "$config_path" --output "$output_path" --interval-seconds "$interval_seconds")
+if [[ $# -gt 0 && "$1" == --resume ]]; then
+  pipeline_args+=(--resume)
+  shift
+fi
+[[ $# -eq 0 ]] || { echo 'Unexpected arguments.' >&2; exit 2; }
+"$python_bin" -B -m carbon run-wait-pipeline "${pipeline_args[@]}" --e1

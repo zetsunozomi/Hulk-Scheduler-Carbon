@@ -40,6 +40,9 @@ def load_test_inputs(directory):
             if relative not in loaded:
                 for name in ('manifest.json','episodes.jsonl','chunks.jsonl'):
                     require(digest(root/relative/name)==manifest['run_files_sha256'][relative][name],f'Held-out file hash mismatch: {relative}/{name}')
+                if 'plans.jsonl' in manifest['run_files_sha256'][relative]:
+                    require(digest(root/relative/'plans.jsonl')==manifest['run_files_sha256'][relative]['plans.jsonl'],
+                            'Held-out precommitted plan hash mismatch')
                 loaded[relative] = ResultRun(root/relative,selected['references'],allowed_splits={'test'})
             run = loaded[relative]
             require(all(run.manifest['software']['source_sha256'][n]==h for n,h in selected['replay_source_sha256'].items()),

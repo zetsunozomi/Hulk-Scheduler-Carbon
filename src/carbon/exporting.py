@@ -15,7 +15,7 @@ from .runner import provenance, write_manifest
 from .statistics import CalendarBlocks
 
 
-E3_METHODS = ('ScaleDown','Rollout-MPC','Queue-blind-MPC','Current-CI','Plan-once')
+E3_METHODS = ('ScaleDown','Precommitted-RL','Rollout-MPC','Plan-once')
 
 
 def carbon_at(a,b,rho,power):
@@ -166,9 +166,11 @@ def load_export_data(run_directory,report_directory):
                             group['power_curve'].append({'rho':rho,'ratio_of_means':carbon_at(alo,blo,rho,power)/bottom,
                                                          'scenario':'ideal-limit stress' if rho<lo else 'declared interval'})
             groups.append(group)
+    from .slider import slider_contract
     return {'kind':'paper_export_data_v1','panel':selected['panel'],'purpose':selected['purpose'],
             'selection_rule':selected.get('selection_rule','confidence_upper_miss'),
             'nominal_rho':nominal,'rho_interval':power['rho_interval'],'epsilon':selected['epsilon'],
+            'slider':slider_contract(references['time_reference_hours'],selected['budgets']),
             'budgets':selected['budgets'],'policy_seeds':selected['policy_seeds'],'groups':groups,
             'report_sha256':seal['report_sha256'],'test_manifest_sha256':report['input_manifest_sha256'],
             'statistics':blocks.metadata(),'ci_unit':references['resolved_config']['ci']['unit'],

@@ -7,11 +7,17 @@ import time
 from .common import digest, integer, iso, json_text, require, timestamp
 from .features import QueueFeatures
 from .replay import Replay, Request
+from .probe_resume import engine_contract, prepare_append, probe_lock, recover_prefix
 from .runner import provenance, write_manifest, write_record
 
 
 def collect_probes(bundle, output, split="train", interval_seconds=21600,
-                   request_seconds=None, start=None, stop=None):
+                   request_seconds=None, start=None, stop=None, resume=False):
+    with probe_lock(output, resume):
+        return _collect_probes(bundle, output, split, interval_seconds, request_seconds, start, stop, resume)
+
+
+def _collect_probes(bundle, output, split, interval_seconds, request_seconds, start, stop, resume):
     require(split in bundle.splits, "Unknown probe split")
     step = timedelta(seconds=integer(interval_seconds, "probe interval_seconds"))
     c, execution = bundle.raw["cluster"], bundle.raw["execution"]
@@ -28,8 +34,6 @@ def collect_probes(bundle, output, split="train", interval_seconds=21600,
     require(split_start <= start < stop <= split_end and start - warmup >= bundle.trace_start,
             "Probe arrival interval/warmup outside declared split/coverage")
     output = Path(output)
-    require(not output.exists(), f"Output already exists: {output}")
-    output.mkdir(parents=True)
     features = QueueFeatures(execution["history_lags_seconds"], bundle.raw["trace"]["timezone"])
     queue_summary = {
         "scope": "unweighted probe snapshots, not time-integrated utilization or policy performance",
@@ -51,14 +55,54 @@ def collect_probes(bundle, output, split="train", interval_seconds=21600,
                 "labeled_rows": 0, "censored_rows": 0,
                 "queue_summary": queue_summary, "wait_summary_by_request": waits_by_request,
                 "probe_semantics": "clone snapshot per request; stop at admission; no workload-speed input"}
-    write_manifest(output / "manifest.json", metadata)
+    metadata['probe_engine'] = engine_contract(metadata['software'])
+    saved_rows = []
+    previous_elapsed = 0.
+    if resume and (output / 'manifest.json').exists():
+        old, saved_rows, recovery = recover_prefix(output, metadata)
+        if old['status'] == 'complete':
+            print(f"Probe dataset already complete and verified: {output}; rows={old['rows']}", flush=True)
+            return old
+        backup = prepare_append(output, recovery)
+        previous_elapsed = old.get('elapsed_seconds', 0.)
+        metadata['software'] = old['software']
+        metadata['resume_sessions'] = old.get('resume_sessions', []) + [{
+            'retained_rows': len(saved_rows), 'backup': backup,
+            'software': provenance(bundle.root), 'prefix_sha256': digest(output / 'probes.jsonl') if (output / 'probes.jsonl').exists() else None,
+            'discarded_incomplete_tail_bytes': len(recovery['tail'])}]
+        metadata['status'] = 'recovering'
+        print(f"Resume: validated {len(saved_rows)} saved rows; rebuilding background replay without recomputing their probes.", flush=True)
+    elif resume:
+        require(not any(p.name != '.probe.lock' for p in output.iterdir()),
+                'Cannot resume: nonempty probe directory has no manifest')
+
+    def count_row(row):
+        known = not row['censored']
+        metadata['rows'] += 1
+        metadata['labeled_rows' if known else 'censored_rows'] += 1
+        key = f"{row['nodes']}:{row['requested_seconds']}"
+        summary = waits_by_request[key]
+        summary['rows'] += 1
+        summary['labeled_rows' if known else 'censored_rows'] += 1
+        if known:
+            wait = row['wait_hours']
+            summary['positive_wait_rows'] += int(wait > 0)
+            wait_sums[key] += wait
+            summary['mean_wait_hours'] = wait_sums[key] / summary['labeled_rows']
+            summary['max_wait_hours'] = max(summary['max_wait_hours'] or 0., wait)
+
+    for row in saved_rows:
+        count_row(row)
+    write_manifest(output / 'manifest.json', metadata)
     begun = time.monotonic()
+    last_recovery_update = begun
+    visited = 0
     try:
         origin = bundle.trace_start if execution.get("initial_state_mode", "observed") == "empty_warmup" else start - warmup
         base = Replay(bundle.jobs, origin, bundle.trace_end, c,
                       max(execution["history_lags_seconds"]), execution["history_sample_seconds"],
                       initialize_from_observed=execution.get("initial_state_mode", "observed") == "observed")
-        with (output / "probes.jsonl").open("x", encoding="utf-8") as stream:
+        with (output / "probes.jsonl").open("a" if resume else "x", encoding="utf-8") as stream:
             arrival = start
             while arrival < stop:
                 base.advance_to(arrival, before_dispatch=True)
@@ -72,6 +116,15 @@ def collect_probes(bundle, output, split="train", interval_seconds=21600,
                 snapshot_id = f"{split}:{iso(arrival)}"
                 for n in c["allowed_nodes"]:
                     for length in lengths:
+                        vector = features.request(history, arrival, n, length)
+                        if visited < len(saved_rows):
+                            require(saved_rows[visited]['features'] == vector,
+                                    f'Restored background features differ at saved row {visited + 1}')
+                            visited += 1
+                            continue
+                        if metadata['status'] == 'recovering':
+                            print(f"Resume ready: retained {len(saved_rows)} rows; next={snapshot_id}, nodes={n}, request={length}s", flush=True)
+                            metadata['status'] = 'running'
                         clone = base.clone()
                         identifier = f"probe:{snapshot_id}:{n}:{length}"
                         # The probe's future runtime cannot affect its own admission.
@@ -81,25 +134,22 @@ def collect_probes(bundle, output, split="train", interval_seconds=21600,
                         known = allocation is not None and allocation.start < split_end
                         row = {"snapshot_id": snapshot_id, "split": split, "arrival_utc": iso(arrival),
                                "nodes": n, "requested_seconds": length,
-                               "features": features.request(history, arrival, n, length),
+                               "features": vector,
                                "wait_hours": (allocation.start - arrival).total_seconds() / 3600 if known else None,
                                "label_observed_at_utc": iso(allocation.start) if known else None,
                                "label_boundary_utc": iso(split_end), "censored": not known}
                         write_record(stream, row)
-                        metadata["rows"] += 1
-                        metadata["labeled_rows" if known else "censored_rows"] += 1
-                        key = f"{n}:{length}"
-                        summary = waits_by_request[key]
-                        summary["rows"] += 1
-                        summary["labeled_rows" if known else "censored_rows"] += 1
-                        if known:
-                            wait = row["wait_hours"]
-                            summary["positive_wait_rows"] += int(wait > 0)
-                            wait_sums[key] += wait
-                            summary["mean_wait_hours"] = wait_sums[key] / summary["labeled_rows"]
-                            summary["max_wait_hours"] = max(summary["max_wait_hours"] or 0., wait)
+                        count_row(row)
+                        visited += 1
                 arrival += step
-                print(f"wait probes: {snapshot_id}; rows={metadata['rows']}, censored={metadata['censored_rows']}", flush=True)
+                metadata['elapsed_seconds'] = previous_elapsed + time.monotonic() - begun
+                metadata['elapsed_scope'] = 'recorded session seconds; a hard kill can lose time since the last snapshot manifest'
+                write_manifest(output / 'manifest.json', metadata)
+                if visited > len(saved_rows):
+                    print(f"wait probes: {snapshot_id}; rows={metadata['rows']}, censored={metadata['censored_rows']}", flush=True)
+                elif time.monotonic() - last_recovery_update >= 30:
+                    print(f"Restoring background: {snapshot_id}; checked {visited}/{len(saved_rows)} saved rows", flush=True)
+                    last_recovery_update = time.monotonic()
         metadata["probes_sha256"] = digest(output / "probes.jsonl")
         metadata["status"] = "complete"
         empty = queue_summary["empty_background_snapshots"]
@@ -112,12 +162,12 @@ def collect_probes(bundle, output, split="train", interval_seconds=21600,
                   "Keep the samples; do not infer full-trace performance from this window.", flush=True)
         for summary in waits_by_request.values():
             print("Probe wait summary: " + json_text(summary).strip().replace("\n", " "), flush=True)
-    except Exception as exc:
-        metadata["status"] = "failed"
+    except BaseException as exc:
+        metadata["status"] = "interrupted" if isinstance(exc, (KeyboardInterrupt, SystemExit)) else "failed"
         metadata["failure"] = dict(error_type=type(exc).__name__, message=str(exc))
         (output / "failure.json").write_text(json_text(metadata["failure"]), encoding="utf-8")
         raise
     finally:
-        metadata["elapsed_seconds"] = time.monotonic() - begun
+        metadata["elapsed_seconds"] = previous_elapsed + time.monotonic() - begun
         write_manifest(output / "manifest.json", metadata)
     return metadata
