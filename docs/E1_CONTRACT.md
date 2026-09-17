@@ -76,3 +76,15 @@ hash. The queue-only diagnostic must be supplemented with full target-episode sp
 
 Existing logs suffice for the dependence report and prediction tail/rank scores.
 They do not add new policy training, power measurements, or a new experiment grid.
+
+
+## Probe readiness summary
+
+Probe manifests retain `queue_summary` (window submission count, number of
+sampled empty states, unweighted sampled running fraction, maximum pending
+count) and `wait_summary_by_request` (complete/censored/positive-wait counts,
+mean and maximum known wait by nodes and requested duration). All-empty samples
+are explicitly noted without dropping them or changing the window. Zero new
+submissions alone do not imply an empty queue: carried-over jobs are counted
+in each snapshot. These descriptive checks are not time-integrated utilization,
+production validation, or a reason to select only busy periods.
