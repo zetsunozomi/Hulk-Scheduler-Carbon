@@ -2,7 +2,13 @@
 
 ## 当前执行进度
 
-作者已在 Sophia 跑完两份 preflight，各 64 条探针，无删失。Frontera 首两天没有后台提交，零等待不能代表完整区间；完整 E1 保留原时间划分与空闲日期。作者的 Sophia allocation 已结束，最后回传 Frontera train 10,380 条探针。旧版逐行落盘但没有续跑入口；现已补充 [Sophia E1 的 `--resume`](E1_RUN.md#一小时作业中断后续跑)，保留已算标签，同一来源只拟合一次完整等待模型。不因下面的主策略改动重算探针。Sophia 实际使用 PBS/qsub；在 interactive 内用 bash，本站不要使用 sbatch。
+作者已回传 Frontera 完整 E1 的成功结束日志：`results/amsp-e1-frontera`。validation 共 368 个快照、4,416 条探针，均无删失；快照平均运行节点比例 0.5307。4/16/64/128 节点平均等待约 0.69–0.71/1.31/6.64/38.25 小时；它们是模拟器探针结果，不是历史等待预测准确率，也不是动态策略收益。后续还要核对 manifest、模型误差与日历相关性文件。
+
+## 当前优先级：固定规模基准 → 训练参考量 → PPO
+
+按照 [下一步固定回放](NEXT_FIXED_RUN.md)，先运行 Frontera 7B 的 hash 分片 0/16：3 个预先确定的到达时间 × Fixed-4/16/64/128，共 12 次完整任务回放。它用于检查完成时间、工作守恒、chunk 数和程序耗时。完整 train cohort 是 73 个到达时间；小分片不能作为完整训练参考量或正式策略结论。
+
+IW 目前仅确认两天 preflight；它的完整 E1 后续单独处理，不阻塞 Frontera 固定基准和主 PPO。现有完整 test/stress 中的 MPC 使用已完成的 E1 模型；主 PPO 和 Precommitted-RL 不依赖它。Sophia 使用 PBS/qsub，在 interactive 内使用 bash，不使用 sbatch。
 
 ## 主策略不依赖等待预测
 
@@ -90,7 +96,7 @@ sbatch scripts/cluster_preflight.sh \
 
 ## 后续入口（第一次检查后再固定计算预算）
 
-所有阶段同样使用 `bash scripts/对应脚本.sh ...` 或 `sbatch scripts/对应脚本.sh ...`。
+Sophia 在现有 PBS interactive allocation 内使用 `bash scripts/对应脚本.sh ...`。`sbatch` 只适用于 Slurm 站点，不适用于这里的 Sophia。
 
 | 阶段 | 脚本与参数 |
 |---|---|
@@ -102,6 +108,6 @@ sbatch scripts/cluster_preflight.sh \
 
 环境敏感性只用 7B、两来源、一个提前选定的预算和所有声明种子；变体为 `width2`、`fcfs`、`overhead60`、`overhead1800`。主场景的 checkpoint、预算、MPC 阈值先在 validation 冻结并归档，再运行变体。每次输出同时保留 full 与 MPC；不选最好变体，不重训或改小时预算。它单独输出 manifest/chunks/episodes，不冒充 E2 的普通 test 包。
 
-主 PPO 命令第三个参数 `-` 表示不需要等待模型；E3 对照同样用 `-`，仅加 `--decision-mode precommitted`。底层 `train-ppo`/`run-policy` 的 `--predictor` 可省略。旧命令若仍传入路径，默认 none 模式不会读取它。v2 checkpoint 不能与旧 v1 混用；完整 test/stress 仍需 E1 模型来运行规划基线。当前没有要求中断 E1 或开始正式 PPO，iterations 还要按开发阶段耗时固定。
+主 PPO 命令第三个参数 `-` 表示不需要等待模型；E3 对照同样用 `-`，仅加 `--decision-mode precommitted`。底层 `train-ppo`/`run-policy` 的 `--predictor` 可省略。旧命令若仍传入路径，默认 none 模式不会读取它。v2 checkpoint 不能与旧 v1 混用；完整 test/stress 仍需 E1 模型来运行规划基线。Frontera E1 现已完成；正式 PPO 的 iterations 仍需按固定回放及短轮训练耗时确定。
 
 `run-policy --slider-position S` 选择 checkpoint 已支持档位；默认 beta=1/1.25/1.5/2 对应 S=0/.25/.5/1。不能与 --budgets 同时使用，未验证位置不插值。所有实际输出点照常报告。预先序列保存 plans.jsonl 并纳入 test 文件校验。正式 AMSP 规模仍是 4/16/64/128；4→8→4 是机制举例，不新增 8 节点曲线输入。

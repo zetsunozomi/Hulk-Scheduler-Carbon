@@ -1,4 +1,10 @@
-# 下一步：Sophia 完整 E1
+# Sophia E1：Frontera 已完成
+
+**最新进度（2026-09-17）：Frontera 完整 E1 已完成。** 作者回传 `E1 queue stage complete: results/amsp-e1-frontera`；末尾为 368 个 validation 快照、4,416 条探针，均无删失。之前的“允许部分数据参考”是中途恢复方案；该 Frontera 运行最终已完整结束，不需截取或重跑。
+
+下一步按 [固定规模回放说明](NEXT_FIXED_RUN.md)，先完成 Frontera 7B 的 3 个训练到达时间 × 4 种规模计时分片，再安排完整 train 参考量与主 PPO。IW 尚未回传完整 E1，不阻塞本轮 Frontera 任务。主策略不依赖等待模型。
+
+证据目前是作者粘贴的完成日志，尚未读取集群 artifact。下面保留 E1 配置与恢复说明；当前没有追加 Frontera E1 的要求。
 
 **等待预测的角色（2026-09-17 更新）：** E1 服务于规划基线与场景诊断，输入/探针/模型合同未变。主 ScaleDown 不使用显式等待预测；E1 模型仅供正式规划基线。E1 报告误差与尾部，不设置预测必须准确的门槛，也不把高 coverage 当作 deadline 保证。
 
