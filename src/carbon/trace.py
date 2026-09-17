@@ -63,6 +63,17 @@ def load_trace(path, config, capacity=None):
                 counts["duration_over_request_rows"] += 1
                 require(config["overrun_policy"] == "clip", "Duration exceeds requested walltime")
                 end = start + requested
+            original_nodes = nodes
+            multiplier = integer(config.get("node_multiplier", 1), "node_multiplier")
+            require(config.get("role", "historical") == "workload_template" or
+                    (multiplier == 1 and config.get("oversize_policy", "error") == "error"),
+                    "Resource transformation requires workload_template role")
+            nodes *= multiplier
+            if capacity is not None and nodes > capacity and config.get("oversize_policy", "error") == "cap":
+                counts["width_capped_rows"] += 1
+                nodes = capacity
+            counts["original_node_seconds"] += original_nodes * int((end-start).total_seconds())
+            counts["scenario_node_seconds"] += nodes * int((end-start).total_seconds())
             if capacity is not None:
                 require(nodes <= capacity, f"Job requests {nodes} nodes, capacity is {capacity}; audit partition membership")
             jobs.append(TraceJob("background:" + job_id, nodes, submit, start, end, requested))
@@ -75,5 +86,7 @@ def load_trace(path, config, capacity=None):
               "submit_start_utc": iso(jobs[0].submit), "submit_end_utc": iso(jobs[-1].submit),
               "observed_end_utc": iso(max(j.observed_end for j in jobs)),
               "max_requested_nodes": max(j.nodes for j in jobs),
-              "timezone": config["timezone"], "cleaning": {k: config[k] for k in ("zero_duration_policy", "overrun_policy")}}
+              "timezone": config["timezone"], "cleaning": {k: config[k] for k in ("zero_duration_policy", "overrun_policy")},
+              "role": config.get("role", "historical"), "node_multiplier": config.get("node_multiplier", 1),
+              "oversize_policy": config.get("oversize_policy", "error")}
     return tuple(jobs), report

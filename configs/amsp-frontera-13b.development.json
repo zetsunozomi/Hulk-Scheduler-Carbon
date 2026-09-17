@@ -1,0 +1,149 @@
+{
+  "schema_version": 1,
+  "purpose": "development",
+  "panel": "AMSP-13B-frontera-C128",
+  "root": "..",
+  "cluster": {
+    "name": "AMSP-shaped-128-node-scenario",
+    "partition": "constructed-homogeneous-nodes",
+    "nodes": 128,
+    "allowed_nodes": [
+      4,
+      16,
+      64,
+      128
+    ],
+    "max_request_seconds": 172800,
+    "walltime_resolution_seconds": 60,
+    "provenance": "Declared 128-node contention scenario; published target profile has 8 A800 per node. Not a reconstruction of the historical source cluster.",
+    "scheduler": {
+      "model": "conservative_backfill_v1",
+      "dispatch_interval_seconds": 60,
+      "max_job_test": 3000,
+      "age_weight": 7000,
+      "age_max_seconds": 604800,
+      "size_weight": 100
+    }
+  },
+  "trace": {
+    "path": "data/filtered/filtered-frontera-rtx.log",
+    "sha256": "ed555938a7532b05db3ec722fcaf7fa2cbe92ee254cea18c86cf66c0527bd67f",
+    "timezone": "UTC",
+    "dst_fold": null,
+    "coverage_start_utc": "2019-12-05T00:00:00Z",
+    "coverage_end_utc": "2021-08-19T00:00:00Z",
+    "coverage_attestation": "Constructed finite arrival stream from retained records in this interval; collection completeness of the original cluster is not asserted.",
+    "provenance": "Historical frontera resource-demand template. Naive timestamps assigned UTC scenario coordinates, paired with ERCOT UTC calendar. Original timezone and deployment association not asserted.",
+    "zero_duration_policy": "drop",
+    "overrun_policy": "clip",
+    "role": "workload_template",
+    "node_multiplier": 1,
+    "oversize_policy": "error"
+  },
+  "workload": {
+    "name": "AMSP-LLaMA-13B",
+    "optimizer_updates": 11602,
+    "global_batch": 1024,
+    "gpus_per_node": 8,
+    "profile_status": "published",
+    "sequence_length": 4096,
+    "precision": "BF16",
+    "software": "AMSP arXiv:2311.00257v2 Figure 12 Our Work; FlashAttention-v2; TP=PP=1",
+    "correctness_artifact": "Simulation work-accounting checks only. No AMSP checkpoint switching implementation or convergence measurement is claimed.",
+    "provenance": "Published steady-state TGS digitized from PDF vector bars; 1024 sequences per optimizer update inferred from 8 GPUs * 128 accumulation, length 4096. Initialization/restart/save values are declared scenarios, not reported measurements. Input record SHA256: 05fa5c0d7915e265376ec66cd74b1c86dadb4341ed67c53b1145e543af290fe2.",
+    "profiles": {
+      "4": {
+        "updates_per_hour": 60.424804688,
+        "initialization_seconds": 300,
+        "restart_seconds": 300,
+        "checkpoint_seconds": 300,
+        "microbatch": 1,
+        "accumulation": 32
+      },
+      "16": {
+        "updates_per_hour": 234.008789062,
+        "initialization_seconds": 300,
+        "restart_seconds": 300,
+        "checkpoint_seconds": 300,
+        "microbatch": 1,
+        "accumulation": 8
+      },
+      "64": {
+        "updates_per_hour": 852.5390625,
+        "initialization_seconds": 300,
+        "restart_seconds": 300,
+        "checkpoint_seconds": 300,
+        "microbatch": 1,
+        "accumulation": 2
+      },
+      "128": {
+        "updates_per_hour": 1661.1328125,
+        "initialization_seconds": 300,
+        "restart_seconds": 300,
+        "checkpoint_seconds": 300,
+        "microbatch": 1,
+        "accumulation": 1
+      }
+    }
+  },
+  "ci": {
+    "path": "data/texas_eia/ci.csv",
+    "sha256": "4c6030d3a1ab2920842bc8e8db8884e794523a1bbc7da52588b89347e4da84db",
+    "source": "EIA ERCOT Published Hourly Data; see data/texas_eia/source.json",
+    "region": "Texas ERCOT scenario",
+    "unit": "gCO2/kWh",
+    "type": "average_operational",
+    "availability_rule": "Revised archive made available 24h after interval end as a declared scenario; not vintage data.",
+    "queue_to_ci_offset_seconds": 0,
+    "alignment_description": "UTC scenario coordinates from naive source timestamps overlaid on ERCOT calendar; no claim of actual source timezone or A800 testbed location."
+  },
+  "power": {
+    "reference_kw": 1.0,
+    "workload_coefficient": null,
+    "rho_interval": [
+      0.25,
+      1.0
+    ],
+    "provenance": "1 kW is a normalization unit, not a server specification or measured power; unknown kappa absorbs absolute node power. Report ratios and node-hours.",
+    "phase_assumption": "same_mean_power_at_given_scale"
+  },
+  "splits": {
+    "train": [
+      "2020-01-05T00:00:00Z",
+      "2020-09-01T00:00:00Z"
+    ],
+    "validation": [
+      "2020-10-01T00:00:00Z",
+      "2021-01-01T00:00:00Z"
+    ],
+    "test": [
+      "2021-02-01T00:00:00Z",
+      "2021-08-01T00:00:00Z"
+    ]
+  },
+  "cohort": {
+    "path": "data/amsp/cohorts/frontera.csv",
+    "sha256": "d9e7b3729d76317536d292a5b56af8084b77892d6309a4f172e6cdd95647c5c9",
+    "provenance": "Predeclared every-third-day arrivals with seeded hour, seed 20260917; 21-day end guard. Same arrivals across profiles/methods; 192h field is replaced by trained budget grid during policy evaluation."
+  },
+  "execution": {
+    "warmup_seconds": 2419200,
+    "history_sample_seconds": 600,
+    "history_lags_seconds": [
+      0,
+      1800,
+      7200,
+      28800,
+      86400,
+      172800
+    ],
+    "max_episode_seconds": null,
+    "target_failure_model": "no_failures",
+    "initial_state_mode": "empty_warmup"
+  },
+  "holdout_audit": {
+    "test_is_untouched": false,
+    "notes": "Author reports prior train/validation use. New chronological splits fixed before this revision runs; old data are reused and no previously unseen test claim is made. Development until protocol/software are frozen.",
+    "evaluation_design": "retrospective_temporal"
+  }
+}

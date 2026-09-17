@@ -1,182 +1,93 @@
-# P0＋P1 集群交接
+# 当前方案与第一次集群运行
 
-这一阶段交付配置与数据校验、统一回放、固定工作量、分阶段成本日志，以及
-Fixed-4/8/16/32 的配对运行入口。真实 trace 回放与实验在集群进行。
-先保留 development 身份；完成来源和 untouched holdout 审核后再使用 research。
+## 论文现在讲什么
 
-## 1. 本地：你手动执行 Git 三件套
+用户在每个训练 chunk 结束后选择下次请求的节点数，在完成时间预算下减少**模型估算的相对碳排**。RL 与全部固定规模、固定混合、Plan-once、Rollout-MPC 比较。最重要的证据是它能否超过强规划基线；目前尚无正式结果。
 
-在新代码仓库中检查并提交本次改动：
+| 项目 | 本轮固定的输入或假设 |
+|---|---|
+| 训练速度 | AMSP 2024 修订版图 12，LLaMA 7B/13B/30B，Our Work 系列 |
+| 规模 | 4/16/64/128 节点，每节点 8 张 A800，即 32/128/512/1024 卡 |
+| 模拟集群 | 声明的 128 节点场景；与提交 CPU 作业的机器无关 |
+| 后台需求 | Frontera 与 iw 历史流分别使用，保留提交顺序、节点数、申请时长和占用时长；不混洗 |
+| 队列状态 | 从固定前缀起点空状态重新回放；至少 28 天后才计分，不使用旧开跑时间初始化 |
+| 碳强度 | 已整理的 Texas ERCOT EIA；外加地区情景，不声称 AMSP 平台位于 Texas |
+| 工作量/开销 | 每模型 U=ceil(192*q4) updates；每 chunk 开销 600 秒，均为预设情景 |
+| 功率 | 1 kW 只是归一化单位；绝对节点功率未知，报告相对碳排和 node-hours |
+| 数据划分 | 原数据曾做 train/validation；新三段划分是回顾性 benchmark，不宣称全新未看过的 test |
+
+**旧日志不能预测任意新机器的真实排队。** 它们在这里定义可复现的资源需求场景。等待标签由同一模拟器生成；原机器的等待时间不是真值。后台宽度、FCFS 和开销敏感性检查用来界定结论适用范围。
+
+无需再测 Qwen、节点功率或 checkpoint。实际跨规模恢复系统不在本轮实现范围。以前执行的 synthetic 检查只验证程序，不是论文实验。
+
+## 已准备好什么
+
+- 公开曲线数字化记录：`data/amsp/profiles.json`；源 PDF 校验脚本：`scripts/extract_amsp.py`。
+- 六个可读真实输入的配置：`configs/amsp-{frontera,iw}-{7b,13b,30b}.development.json`。输入哈希、时间解释、划分和配对 arrivals 已写入。
+- 等待预测、规划、PPO、validation 选择、冻结 test、功率后处理与图表导出均有程序检查。
+- `run-stress` 独立入口可固定 full/MPC 的模型和参考量，重新回放四个环境变体。一般 artifact 匹配检查仍严格保留。
+- 未完成：真实规模回放的耗时/占用率/等待尾部检查、正式训练和 E1–E4 结果。环境敏感性的跨来源汇总图尚待真实输出接入。
+
+当前配置保持 development，因为本次先检查场景和计算成本。协议冻结后才复制为正式 research 配置；`evaluation_design=retrospective_temporal` 和 `test_is_untouched=false` 仍保留。用 train 拟合、validation 选模；本轮 test 结果出来后不再据此调参。
+
+## 1. 手动同步仓库
+
+在本机代码仓库检查 `git status --short` 和 `git diff`，然后可以按你原来的方式手动三连：
 
 ```bash
-cd /Users/shuyuanfan/carbon-latest
-git diff --check
-git status --short
-git add .gitignore README.md pyproject.toml src/carbon tests configs examples scripts/cluster_run.sh docs
-git commit -m "Implement P0/P1 replay and exposure accounting"
+git add -A
+git commit -m "Use published AMSP profiles and portable scenario runners"
 git push
 ```
 
-本实现不会替你 commit、push 或向集群提交作业。旧 `src/sim`、`src/model` 和
-`src/queue_prediction` 保留；后续新方法统一使用 `src/carbon`。
+有其他未完成修改时，请改为逐文件 add。`results/` 与 `slurm-*.out` 已忽略；原 trace 文件需在目标集群可读，若没有随 Git 分发，请按配置中的相对路径复制，保留原文件 hash。draft 在独立的 `carbon-rewrite/newest_writing` 目录，不属于这个代码仓库。
 
-## 2. 集群：拉取并验证环境
+在目标集群代码仓库执行 `git pull --ff-only`。
 
-进入你已有的集群仓库目录，再执行：
+## 2. 移植时改任务脚本顶部
 
-```bash
-git pull --ff-only
-export CARBON_PYTHON=python3
-export PYTHONPATH="$PWD/src${PYTHONPATH:+:$PYTHONPATH}"
-export PYTHONDONTWRITEBYTECODE=1
-"$CARBON_PYTHON" --version
-"$CARBON_PYTHON" -B -m unittest discover -s tests -v
-"$CARBON_PYTHON" -m carbon validate --config configs/synthetic.json
-```
+直接编辑 `scripts/cluster_preflight.sh`，以后运行哪个阶段就编辑对应的 `cluster_*.sh`：
 
-需要 Python 3.10+；P0/P1 没有第三方运行依赖，无需安装旧 RL 代码的 PyTorch/Ray。
-若使用 named timezone，系统需提供对应 IANA timezone 数据。
+- **`#SBATCH` 块**：默认 1 个节点、1 个 task、1 CPU 核、16 GB、2 小时。按站点要求取消 account / partition / qos / constraint 示例前多余的 `#` 并填值。这是初始请求，尚非性能估计。
+- **`export CARBON_PYTHON=...`**：改成新集群的 Python 路径；保留原环境作为默认示例。已 export 的 CARBON_PYTHON 优先，可用于交互环境覆盖。
+- 如需 `module load`，放在紧接着的注释位置。
 
-可用合成数据检查完整启动脚本：
+每个脚本都包含资源设置和执行代码。`bash` 忽略 `#SBATCH` 注释并直接运行，`sbatch` 读取资源设置后在分配节点运行相同代码。脚本内部不提交作业，不再使用外层 submit_cluster.sh 或 cluster.local.env。
 
-```bash
-bash scripts/cluster_run.sh configs/synthetic.json results/synthetic-check --nodes 4 8 16 32
-```
+Python 需 3.10+。复用现有环境；有缺失依赖才安装到所选 Python：等待模型/LP 用 `requirements-p2.txt`，PPO 用 `requirements-p3.txt`（PyTorch 2.6+，CPU 即可）。例如先在 shell 设置同一 `CARBON_PYTHON` 路径，再执行 `"$CARBON_PYTHON" -m pip install -r requirements-p2.txt`。第一次 preflight 只需标准库。
 
-合成输出带 `purpose=synthetic`，只能用于功能验收。
+## 3. 第一次 CPU 检查：两种方式任选其一
 
-## 3. 准备真实输入
+需要计算节点是因为长历史回放和后续训练耗时。以下先运行 Frontera 的两天训练期 probes，检查输入、队列尾部、内存和耗时；不会训练 RL 或填写论文结果。**从代码仓库根目录启动。**
+
+已申请 interactive compute 节点时，直接运行：
 
 ```bash
-cp configs/cluster.template.json configs/development.json
+bash scripts/cluster_preflight.sh \
+  configs/amsp-frontera-7b.development.json results/amsp-preflight-frontera
 ```
 
-模板中的 null 表示必须补齐。以下三项允许保持 null：未知的
-`power.workload_coefficient`、未指定的 `trace.dst_fold`、不额外限制运行时长的
-`execution.max_episode_seconds`。其余未填项会由 validate 一次列出。
-
-### A. Cluster 与 trace
-
-- 填写真实 partition、节点容量、允许的 4/8/16/32 子集、最大 walltime 与粒度。
-  核对来源后填写 `provenance`。不能直接沿用旧代码的 88 节点常数。
-- 原 sacct 空格分隔 `.log` 可直接读取；标准化 CSV 需要字段
-  `JobID,NNodes,Submit,Start,End,TimelimitR`，其中 TimelimitR 单位为分钟。
-- 明确源时区。UTC offset 时间戳优先；本地时间在 DST 回拨处需要显式 fold。
-- 模板显式选择丢弃零时长行、把超出请求时长的背景作业裁到请求上限。
-  这是清洗假设，需要审核；可改为 `error` 逐项处理，所有计数写入 manifest。
-- `coverage_start/end` 声明背景到达完整覆盖的半开时间段。
-  `coverage_attestation` 说明覆盖依据。数据文件尾部没有到达不自动代表空队列。
-  同一文件需包含初始化边界前仍可能运行/排队的作业。
-- 审核旧训练/验证文件之间的缺口，不能把缺口自动当零到达。若当前文件无法提供
-  所需连续覆盖，需要从原数据源补齐或缩小预先定义的区间。
-
-确认源时区后进行只读审计，例如：
+在 login 节点提交 batch 作业时：
 
 ```bash
-# 将 TRACE_FILE、TRACE_TIMEZONE 设置为已经核实的路径和时区。
-"$CARBON_PYTHON" -m carbon audit-trace --trace "$TRACE_FILE" \
-  --timezone "$TRACE_TIMEZONE" --zero-duration drop --overrun clip
+sbatch scripts/cluster_preflight.sh \
+  configs/amsp-frontera-7b.development.json results/amsp-preflight-frontera
 ```
 
-### B. 工作负载 profile
+两条执行的是同一个任务，选择一种即可。输出目录不能重复；重试使用新后缀。batch 日志直接写在提交目录的 `slurm-carbon-preflight-<jobid>.out`，无需先创建日志目录；interactive 日志默认显示在终端。
 
-每个规模提供 updates/hour、initialization/restart/checkpoint 秒数、microbatch 和
-gradient accumulation。所有规模共享 global batch、总 optimizer updates、sequence
-length、精度和软件栈，并填写来源。优先找回已有 profile 与训练工程，只补缺项。
+带回整个 `results/amsp-preflight-frontera/` 和 batch 日志（interactive 则保存终端输出）。失败也保留已产生的文件。成功后根据 probe 完成/删失情况和实际耗时准备后续批量命令，不要求新增 GPU 实测。
 
-`profile_status` 可为 development 的 assumed，或 measured/published；research
-禁止 synthetic/assumed profile。`correctness_artifact` 指向短恢复/切规模检查的
-报告或注明 development 尚未执行。模拟器自身测试不能替代真实训练恢复检查。
+## 后续入口（第一次检查后再固定计算预算）
 
-### C. CI
+所有阶段同样使用 `bash scripts/对应脚本.sh ...` 或 `sbatch scripts/对应脚本.sh ...`。
 
-提供已确认来源的 Texas average operational CI；本地旧 CAISO 生命周期因子
-数据不能直接改名替代。文件格式：
+| 阶段 | 脚本与参数 |
+|---|---|
+| 等待模型 + 预测诊断 | `cluster_e1.sh CONFIG OUTPUT [PROBE_INTERVAL_SECONDS]` |
+| train fixed + references | `cluster_run.sh CONFIG OUTPUT --split train`，随后 `carbon make-references` |
+| PPO | `cluster_ppo.sh CONFIG OUTPUT WAIT_MODEL REFERENCES ITERATIONS [options]` |
+| 冻结 test + 报告 | `cluster_test.sh CONFIG OUTPUT WAIT_MODEL SELECTION CHECKPOINT_DIR...`，详见脚本 usage |
+| 环境敏感性 | `cluster_stress.sh CONFIG OUTPUT WAIT_MODEL CHECKPOINT VARIANT BETA [--miss-tolerance ...]` |
 
-```csv
-start_utc,end_utc,gco2e_per_kwh,available_at_utc
-2024-01-01T00:00:00Z,2024-01-01T01:00:00Z,400,2024-01-01T02:00:00Z
-```
-
-上面仅示范格式，不是实际观测。每行覆盖 `[start,end)`；可用时间来自真实
-发布记录或明确声明的固定延迟情景。未来真实值用于事后积分，P1 的公开历史接口
-只返回当时已发布且已结束的观测。缺失区间会阻止运行。
-
-queue/CI 年份不一致时，填写明确的 calendar alignment 和有符号秒偏移。
-默认偏移 0 不会自动匹配年份或季节。
-
-### D. Splits 与 cohort
-
-- train、validation、test 是按 UTC 定义的互不重叠半开区间。
-- 已看过的旧 test 属于 development；只有完成 access-history 审核的区间才能
-  声明 untouched。`research` 还要求 `holdout_audit.test_is_untouched=true`。
-- cohort CSV 固定所有方法共用的初始到达及预算：
-
-```csv
-episode_id,arrival_utc,split,budget_hours
-example-001,2024-01-03T00:00:00Z,train,24
-```
-
-- 为每个到达留足预热及完成所需背景覆盖。越过 split 边界会保留为 censored，
-  不能按哪个方法完成来筛样本。
-- 本阶段直接接受预算小时数。P2 才根据训练期 fixed 结果建立 T_ref 和预算网格。
-
-填写真实资产 hash：
-
-```bash
-"$CARBON_PYTHON" -m carbon hash "$TRACE_FILE" "$CI_FILE" "$COHORT_FILE"
-"$CARBON_PYTHON" -m carbon validate --config configs/development.json
-```
-
-配置路径相对 `root` 解析，`root` 相对配置文件目录解析；默认 `root=..` 对应
-仓库根目录。来源确认后再更新 hash，不能用更新 hash 掩盖输入变动。
-
-## 4. 提交首批集群运行
-
-先选一个 machine–workload panel，所有 fixed 共用同一 cohort。先在 development
-检查完成率、排队时间、最后一个 chunk 和成本守恒，再扩到正式实验。
-
-可在分配到的计算节点运行：
-
-```bash
-bash scripts/cluster_run.sh configs/development.json results/p0p1-dev-001 \
-  --nodes 4 8 16 32 --split train
-```
-
-或者通过 Slurm（先填写本集群允许的资源选项）：
-
-```bash
-sbatch --account="$ACCOUNT" --partition="$PARTITION" \
-  --time="$WALLTIME" --mem="$MEMORY" \
-  scripts/cluster_run.sh configs/development.json results/p0p1-dev-001 \
-  --nodes 4 8 16 32 --split train
-```
-
-该作业运行 CPU 模拟器，`--nodes 4 8 16 32` 是**模拟的训练规模**，不是向 Slurm
-申请 32 个真实节点。脚本默认单 CPU；资源额度由你按集群规则设置。
-
-需要分片时可选 job array。所有同 episode 的 fixed 方法留在一个 shard，hash
-分片不重叠；小 cohort 不宜设置过多 shard，空 shard 明确报错。
-
-```bash
-export CARBON_SHARDS=4
-sbatch --array=0-3 --account="$ACCOUNT" --partition="$PARTITION" \
-  --time="$WALLTIME" --mem="$MEMORY" \
-  scripts/cluster_run.sh configs/development.json results/p0p1-dev-array \
-  --nodes 4 8 16 32 --split train
-```
-
-不要重复使用已有输出目录。失败后保留原日志，修复后选新的 run ID。
-
-## 5. 运行结束后检查并带回
-
-每个 run/shard 目录带回这三个文件：
-
-1. `manifest.json`：status 必须为 complete，核对 cohort 数 × fixed 数等于
-   completed_episode_methods；保存 code/input hashes 和运行配置。
-2. `episodes.jsonl`：检查每条的 final_status、completed_updates、deadline_miss、
-   censor_flag；censored 的总成本是 null。
-3. `chunks.jsonl`：用于核对进度、运行阶段、排队反馈和不同功率假设下的重算。
-
-若存在 `failure.json`，同时带回它和 Slurm stdout。不要用部分日志生成“完整运行”
-的论文图表。下一阶段基于这批数据实现 P2 的输入模型与强基线，再接 P3 的 RL。
+环境敏感性只用 7B、两来源、一个提前选定的预算和所有声明种子；变体为 `width2`、`fcfs`、`overhead60`、`overhead1800`。主场景的 checkpoint、预算、MPC 阈值先在 validation 冻结并归档，再运行变体。每次输出同时保留 full 与 MPC；不选最好变体，不重训或改小时预算。它单独输出 manifest/chunks/episodes，不冒充 E2 的普通 test 包。

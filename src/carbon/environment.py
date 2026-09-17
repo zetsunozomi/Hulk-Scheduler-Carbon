@@ -10,9 +10,21 @@ from .replay import Replay, Request
 def initial_replay(bundle, episode):
     config = bundle.raw
     execution = config["execution"]
+    if execution.get("initial_state_mode", "observed") == "empty_warmup":
+        # All episodes in this scenario share one background origin. Reusing
+        # the unmodified background prefix is safe; target runs use clones.
+        replay = getattr(bundle, "_background_prefix", None)
+        if replay is None or replay.time > episode.arrival:
+            replay = Replay(bundle.jobs, bundle.trace_start, bundle.trace_end, config["cluster"],
+                            max(execution["history_lags_seconds"]), execution["history_sample_seconds"],
+                            initialize_from_observed=False)
+        replay.advance_to(episode.arrival, before_dispatch=True)
+        bundle._background_prefix = replay
+        return replay.clone()
     begin = episode.arrival - duration(execution["warmup_seconds"])
     replay = Replay(bundle.jobs, begin, bundle.trace_end, config["cluster"],
-                    max(execution["history_lags_seconds"]), execution["history_sample_seconds"])
+                    max(execution["history_lags_seconds"]), execution["history_sample_seconds"],
+                    initialize_from_observed=execution.get("initial_state_mode", "observed") == "observed")
     replay.advance_to(episode.arrival, before_dispatch=True)
     return replay
 
@@ -58,6 +70,8 @@ class Environment:
                 "purpose": self.bundle.raw["purpose"], "split": self.episode.split,
                 "initial_arrival_utc": iso(self.episode.arrival), "method": self.method,
                 "seed": self.seed, "budget_hours": self.episode.budget_hours,
+                "ci_unit": self.bundle.ci.unit,
+                "carbon_unit": "gCO2" if self.bundle.ci.unit == "gCO2/kWh" else "gCO2e",
                 "forecast_issue_utc": None, "forecast_input_id": None,
                 "predictor_version": None, "policy_checkpoint": None}
 

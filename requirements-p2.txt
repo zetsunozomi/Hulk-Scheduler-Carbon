@@ -1,0 +1,3 @@
+# Fitting the shared wait model and validation Fixed-Mix LP.
+# Replay, CI conversion/forecasting, exported GBT inference and MPC use stdlib only.
+scikit-learn==1.6.1

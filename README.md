@@ -1,8 +1,10 @@
 # Carbon-aware provisioning replay
 
-P0/P1 provides a reproducible, fixed-work simulation and accounting foundation.
-The canonical entry point is **`python -m carbon`**. It uses Python 3.10+ and the
-standard library; it needs no GPU, PyTorch, Ray, pandas or scikit-learn.
+The canonical entry point is **`python -m carbon`** on Python 3.10+.
+Replay, accounting, causal forecasts and planning use the standard library.
+Wait-model fitting and the Fixed-Mix LP need `requirements-p2.txt`; no GPU or
+PyTorch is needed for these components. Budget-conditioned PPO uses PyTorch 2.6+
+on CPU (`requirements-p3.txt`) and has synthetic functional coverage.
 
 ## Start here
 
@@ -25,12 +27,62 @@ with the same output path fails instead of overwriting results.
 
 ## Cluster handoff
 
-Read [the Chinese cluster runbook](docs/CLUSTER_RUNBOOK.md) for manual Git steps,
-required real inputs, validation, Slurm submission and expected outputs. Start
-real configuration from `configs/cluster.template.json`; unresolved fields fail
-validation. Cluster experiments must use confirmed profiles, partitions, CI and
-predeclared cohorts. The template intentionally does not infer these from old
-hardcoded constants.
+Read [the short Chinese runbook](docs/CLUSTER_RUNBOOK.md) for the current story,
+portable site settings and first CPU submission. Published AMSP March 2024
+Figure 12 supplies LLaMA 7B/13B/30B throughput at 4/16/64/128 eight-A800 nodes.
+Input extraction is archived in `data/amsp/profiles.json`; no new Qwen or power
+measurement is requested. The two historical streams separately define a
+128-node resource-demand scenario, with admissions rebuilt from the trace
+prefix. They do not predict arbitrary machines' production queues. Texas CI
+is an external regional scenario. Six `configs/amsp-*.development.json` files
+use disclosed retrospective chronological splits: old train/validation use
+precludes an untouched-test claim.
+
+The shared wait predictor, causal CI forecast, planners, and Fixed-Mix are
+implemented and verified on synthetic fixtures, alongside complete-episode PPO
+training, checkpoint resume and categorical evaluation. No paper experiment
+has run. `configs/synthetic.json` is a software test, and
+`configs/cluster.template.json` is an internal configuration reference.
+
+Each `scripts/cluster_*.sh` is both an interactive job script and an sbatch
+script. Edit its top `#SBATCH` resource/site settings and `CARBON_PYTHON` path.
+From the repository root, run `bash scripts/cluster_preflight.sh CONFIG OUTPUT`
+inside an interactive allocation, or `sbatch scripts/cluster_preflight.sh CONFIG
+OUTPUT` from the login node. The body executes the work directly; it never
+submits another job. Slurm output is `slurm-carbon-preflight-JOBID.out` in the
+submission directory. These CPU resources are independent of the simulated
+128-node cluster. The scripts locate the repository using the current directory
+or `SLURM_SUBMIT_DIR`, accommodating Slurm's copied script location.
+
+Install any missing dependencies into the selected `$CARBON_PYTHON`, reusing
+the existing environment. The first preflight needs only the standard library.
+
+`scripts/cluster_e1.sh CONFIG OUTPUT` runs training probes, GBT fitting,
+validation probes and wait/dependence diagnostics. Constructed scenarios skip
+recorded-admission fidelity: original starts are not ground truth after changing
+the scenario. See [E1 semantics](docs/E1_CONTRACT.md).
+Use `python -m carbon --help` for `make-references`, `run-planners`, and
+`fit-fixed-mix`. `configs/synthetic-p2.json` contains artificial CI warmup history
+for their software checks; it is not a research configuration.
+
+`scripts/cluster_ppo.sh CONFIG OUTPUT WAIT_MODEL REFERENCES ITERATIONS` runs one
+declared training seed; options include `--seed`, `--budgets` and `--resume`.
+Iterations must be explicitly chosen before a run. Resume accepts checkpoint
+JSON, requires identical settings/input/code/runtime, and writes a new directory.
+`run-policy --checkpoint ...` evaluates the saved categorical policy on validation
+by default. These raw checkpoint results still need validation selection and
+the final held-out report. `select-policies --spec ... --output ...` now freezes
+validation operating points and the non-RL comparator; missing seeds/baselines,
+unpaired cohorts and incomplete accounting cannot silently pass selection.
+`run-test` then executes every frozen point on the declared test cohort, matching
+checkpoint hashes from supplied training directories. `report-test` produces paired
+per-seed summaries, crossed seed/calendar variability, censoring and power analyses.
+The cluster wrapper combines these steps and a sealed table/data export; see
+`scripts/cluster_test.sh`. `render-results --export ... --output ...` renders that
+export without recomputing replay or statistics. Plotting optionally uses
+`requirements-plots.txt`; experiment execution and table export do not need it.
+Current-CI and single-endpoint training
+variants are explicit options, not additional default experiments.
 
 ## Package layout
 
@@ -41,7 +93,15 @@ hardcoded constants.
 | `workload.py` | Integer updates, fixed global batch, full/partial chunks, setup and checkpoint overhead |
 | `environment.py` | One environment for all policies; visible observations, phase logs, censoring |
 | `carbon.py` | Realized CI integration and reusable exposure/power endpoint accounting |
-| `runner.py`, `__main__.py` | Paired Fixed-4/8/16/32 execution, provenance, JSONL results and failure records |
+| `runner.py`, `__main__.py` | Paired configuration-selected fixed-scale execution, provenance, JSONL results and failure records |
+| `features.py`, `probes.py`, `waits.py`, `diagnostics.py` | Public request-conditioned features, chronological GBT/residual fitting, held-out probe errors and coverage |
+| `fidelity.py`, `dependence.py` | Continuous recorded-job admission discrepancy and development-only queue/outcome lag diagnostics |
+| `forecast.py`, `planning.py`, `baselines.py` | Causal CI forecasts, full-work MPC/Plan-once/queue-blind control, training references, validation-only Fixed-Mix LP |
+| `policy_inputs.py`, `learning.py`, `policy_runner.py` | Shared observable actor/critic inputs, complete-episode PPO, per-budget duals, resumable checkpoints, categorical evaluation |
+| `results.py`, `selection.py`, `statistics.py` | Validated paired outcomes, validation-only selection, explicitly scoped miss bounds and calendar-block ratio intervals |
+| `heldout.py`, `reporting.py` | Frozen test execution, sealed result inputs, per-seed and pooled summaries, paired cost/miss evidence |
+| `exporting.py`, `plotting.py` | Sealed figure data, E2/E4 PDF and PNG pages, E3 LaTeX/Markdown tables, visible missing results |
+| `power_analysis.py` | Same-log endpoint differences, break-even rho, scale-error radius, phase overhead and constant-CI rescore |
 
 See [the execution contract](docs/EXECUTION_CONTRACT.md),
 [the implementation checklist](docs/P0_P1_STATUS.md), and
@@ -56,10 +116,19 @@ node-level allocation, age/size priority and requested-walltime reservations,
 with an explicitly versioned conservative-backfill model. It is not a complete
 Slurm emulator and is not bit-for-bit equivalent to the old scheduler.
 
-P2's wait regressor, CI forecasting and planning baselines, and P3's constrained
-PPO are not part of P0/P1. P1 records the inputs and exposure they will share.
-Actual distributed training/checkpoint correctness remains a separate short
-cluster check; simulated update counters do not establish it.
+The planning baselines use the same execution/accounting as the fixed policies.
+Validation selection, frozen test execution, seed reporting and power
+postprocessing are implemented. E1 replay/predictor/dependence diagnostics are
+also available. Figure/table export is implemented and checked on synthetic
+inputs; formal inputs and statistical settings are not frozen. See the
+[statistical contract](docs/STATISTICS_CONTRACT.md) and
+[export semantics](docs/EXPORT_CONTRACT.md) for scope and assumptions.
+Actual distributed training/checkpoint correctness is outside this simulation
+study; simulated update counters do not establish it. Chunk overhead is an
+explicit assumption, with 60/600/1800-second scenarios. `run-stress` freezes
+source models and normalization while changing one environment assumption;
+see the runbook. Its outputs have a separate sensitivity manifest, preserving
+ordinary artifact-matching checks.
 
 ## Optional packaging
 

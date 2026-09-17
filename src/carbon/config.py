@@ -50,10 +50,11 @@ def asset(root, config, label):
 
 
 class Bundle:
-    def __init__(self, path):
+    def __init__(self, path, queue_only=False):
         self.path = Path(path).resolve()
         self.raw = c = load_json(self.path)
-        missing = unfilled(c)
+        missing = [field for field in unfilled(c) if not (queue_only and
+                   field.split(".")[0] in {"workload", "ci", "power", "cohort"})]
         require(not missing, "Unfilled config values: " + ", ".join(missing))
         keys(c, {"schema_version", "purpose", "panel", "root", "cluster", "trace", "workload", "ci", "power", "splits", "cohort", "execution", "holdout_audit"})
         require(c["schema_version"] == 1, "Unsupported config schema_version")
@@ -71,18 +72,24 @@ class Bundle:
         require(isinstance(cl["allowed_nodes"], list) and cl["allowed_nodes"], "allowed_nodes must be a nonempty list")
         require(all(isinstance(n, int) and not isinstance(n, bool) for n in cl["allowed_nodes"]), "allowed_nodes must contain integers")
         require(cl["allowed_nodes"] == sorted(set(cl["allowed_nodes"])), "allowed_nodes must be sorted and unique")
-        require(set(cl["allowed_nodes"]) <= {4, 8, 16, 32} and 4 in cl["allowed_nodes"], "Supported scales are subsets of 4/8/16/32 including 4")
+        require(set(cl["allowed_nodes"]) <= {4, 8, 16, 32, 64, 128} and 4 in cl["allowed_nodes"], "Supported scales are subsets of 4/8/16/32/64/128 including 4")
         require(max(cl["allowed_nodes"]) <= cl["nodes"], "Action exceeds partition capacity")
         sched = cl["scheduler"]
         keys(sched, {"model", "dispatch_interval_seconds", "max_job_test", "age_weight", "age_max_seconds", "size_weight"}, location="scheduler")
-        require(sched["model"] == "conservative_backfill_v1", "Unsupported scheduler model")
+        require(sched["model"] in {"conservative_backfill_v1", "fcfs_v1"}, "Unsupported scheduler model")
         for key in ("dispatch_interval_seconds", "max_job_test", "age_max_seconds"):
             sched[key] = integer(sched[key], f"scheduler.{key}")
         for key in ("age_weight", "size_weight"):
             sched[key] = float(number(sched[key], f"scheduler.{key}"))
 
         t = c["trace"]
-        keys(t, {"path", "sha256", "timezone", "dst_fold", "coverage_start_utc", "coverage_end_utc", "coverage_attestation", "provenance", "zero_duration_policy", "overrun_policy"}, location="trace")
+        keys(t, {"path", "sha256", "timezone", "dst_fold", "coverage_start_utc", "coverage_end_utc", "coverage_attestation", "provenance", "zero_duration_policy", "overrun_policy"}, optional={"role", "node_multiplier", "oversize_policy"}, location="trace")
+        require(t.get("role", "historical") in {"historical", "workload_template"}, "Unknown trace role")
+        integer(t.get("node_multiplier", 1), "trace.node_multiplier")
+        require(t.get("oversize_policy", "error") in {"error", "cap"}, "Unknown oversize policy")
+        require(t.get("role", "historical") == "workload_template" or
+                (t.get("node_multiplier", 1) == 1 and t.get("oversize_policy", "error") == "error"),
+                "Resource transformation is only allowed for declared workload templates")
         nonempty(t["timezone"], "trace.timezone")
         for key in ("coverage_attestation", "provenance"):
             nonempty(t[key], f"trace.{key}")
@@ -92,38 +99,43 @@ class Bundle:
         self.trace_start, self.trace_end = timestamp(t["coverage_start_utc"]), timestamp(t["coverage_end_utc"])
         require(self.trace_start < self.trace_end, "Empty trace coverage")
 
-        w = c["workload"]
-        keys(w, {"name", "optimizer_updates", "global_batch", "gpus_per_node", "profiles", "provenance", "profile_status", "sequence_length", "precision", "software", "correctness_artifact"}, location="workload")
-        for key in ("name", "provenance", "precision", "software", "correctness_artifact"):
-            nonempty(w[key], f"workload.{key}")
-        integer(w["sequence_length"], "sequence_length")
-        require(w["profile_status"] in {"synthetic", "measured", "published", "assumed"}, "Unknown profile_status")
-        for p in w["profiles"].values():
-            keys(p, {"updates_per_hour", "initialization_seconds", "restart_seconds", "checkpoint_seconds", "microbatch", "accumulation"}, location="workload profile")
-        self.workload = Workload(w, cl["allowed_nodes"], cl["max_request_seconds"], cl["walltime_resolution_seconds"])
-        require(not (c["purpose"] == "research" and w["profile_status"] not in {"measured", "published"}),
-                "Research runs require measured/published profiles with provenance")
+        if not queue_only:
+            w = c["workload"]
+            keys(w, {"name", "optimizer_updates", "global_batch", "gpus_per_node", "profiles", "provenance", "profile_status", "sequence_length", "precision", "software", "correctness_artifact"}, location="workload")
+            for key in ("name", "provenance", "precision", "software", "correctness_artifact"):
+                nonempty(w[key], f"workload.{key}")
+            integer(w["sequence_length"], "sequence_length")
+            require(w["profile_status"] in {"synthetic", "measured", "published", "assumed"}, "Unknown profile_status")
+            for p in w["profiles"].values():
+                keys(p, {"updates_per_hour", "initialization_seconds", "restart_seconds", "checkpoint_seconds", "microbatch", "accumulation"}, location="workload profile")
+            self.workload = Workload(w, cl["allowed_nodes"], cl["max_request_seconds"], cl["walltime_resolution_seconds"])
+            require(not (c["purpose"] == "research" and w["profile_status"] not in {"measured", "published"}),
+                    "Research runs require measured/published profiles with provenance")
 
-        ci = c["ci"]
-        keys(ci, {"path", "sha256", "source", "region", "unit", "type", "availability_rule", "queue_to_ci_offset_seconds", "alignment_description"}, location="ci")
-        for key in ("source", "region", "availability_rule", "alignment_description"):
-            nonempty(ci[key], f"ci.{key}")
-        require(ci["type"] == "average_operational", "CI type must be average_operational")
-        require(isinstance(ci["queue_to_ci_offset_seconds"], int), "CI calendar offset must be integer seconds")
+            ci = c["ci"]
+            keys(ci, {"path", "sha256", "source", "region", "unit", "type", "availability_rule", "queue_to_ci_offset_seconds", "alignment_description"}, location="ci")
+            for key in ("source", "region", "availability_rule", "alignment_description"):
+                nonempty(ci[key], f"ci.{key}")
+            require(ci["type"] == "average_operational", "CI type must be average_operational")
+            require(isinstance(ci["queue_to_ci_offset_seconds"], int), "CI calendar offset must be integer seconds")
 
-        p = c["power"]
-        keys(p, {"reference_kw", "workload_coefficient", "rho_interval", "provenance", "phase_assumption"}, location="power")
-        number(p["reference_kw"], "reference_kw", strict=True)
-        if p["workload_coefficient"] is not None:
-            number(p["workload_coefficient"], "workload_coefficient", strict=True)
-        require(isinstance(p["rho_interval"], list) and len(p["rho_interval"]) == 2, "rho_interval needs two endpoints")
-        low, high = [number(v, "rho") for v in p["rho_interval"]]
-        require(low < high <= 1, "Require 0 <= rho_low < rho_high <= 1")
-        nonempty(p["provenance"], "power.provenance")
-        require(p["phase_assumption"] == "same_mean_power_at_given_scale", "Unsupported phase-power assumption")
+            p = c["power"]
+            keys(p, {"reference_kw", "workload_coefficient", "rho_interval", "provenance", "phase_assumption"}, location="power")
+            number(p["reference_kw"], "reference_kw", strict=True)
+            if p["workload_coefficient"] is not None:
+                number(p["workload_coefficient"], "workload_coefficient", strict=True)
+            require(isinstance(p["rho_interval"], list) and len(p["rho_interval"]) == 2, "rho_interval needs two endpoints")
+            low, high = [number(v, "rho") for v in p["rho_interval"]]
+            require(low < high <= 1, "Require 0 <= rho_low < rho_high <= 1")
+            nonempty(p["provenance"], "power.provenance")
+            require(p["phase_assumption"] == "same_mean_power_at_given_scale", "Unsupported phase-power assumption")
 
         e = c["execution"]
-        keys(e, {"warmup_seconds", "history_sample_seconds", "history_lags_seconds", "max_episode_seconds", "target_failure_model"}, location="execution")
+        keys(e, {"warmup_seconds", "history_sample_seconds", "history_lags_seconds", "max_episode_seconds", "target_failure_model"}, optional={"initial_state_mode"}, location="execution")
+        mode = e.get("initial_state_mode", "observed")
+        require(mode in {"observed", "empty_warmup"}, "Unknown initial state mode")
+        require(t.get("role", "historical") != "workload_template" or mode == "empty_warmup",
+                "Workload templates must rebuild state; historical admissions cannot initialize a changed cluster")
         integer(e["warmup_seconds"], "warmup_seconds", 0)
         integer(e["history_sample_seconds"], "history_sample_seconds")
         require(e["target_failure_model"] == "no_failures", "P1 does not model target hardware failures or automatic retries")
@@ -144,25 +156,33 @@ class Bundle:
         require(self.splits["train"][1] <= self.splits["validation"][0] and
                 self.splits["validation"][1] <= self.splits["test"][0], "Splits must be chronological and disjoint")
         h = c["holdout_audit"]
-        keys(h, {"test_is_untouched", "notes"}, location="holdout_audit")
+        keys(h, {"test_is_untouched", "notes"}, optional={"evaluation_design"}, location="holdout_audit")
         require(isinstance(h["test_is_untouched"], bool), "test_is_untouched must be a boolean")
         nonempty(h["notes"], "holdout_audit.notes")
-        if c["purpose"] == "research":
-            require(h["test_is_untouched"], "Research configuration requires an audited untouched test interval")
+        design = h.get("evaluation_design", "prospective_temporal")
+        require(design in {"prospective_temporal", "retrospective_temporal"}, "Unknown evaluation design")
+        if c["purpose"] == "research" and design == "prospective_temporal":
+            require(h["test_is_untouched"], "Prospective research requires an audited untouched test interval")
 
-        keys(c["cohort"], {"path", "sha256", "provenance"}, location="cohort")
-        nonempty(c["cohort"]["provenance"], "cohort.provenance")
-        self.assets = {name: asset(root, c[name], name) for name in ("trace", "ci", "cohort")}
+        if not queue_only:
+            keys(c["cohort"], {"path", "sha256", "provenance"}, location="cohort")
+            nonempty(c["cohort"]["provenance"], "cohort.provenance")
+        asset_names = ("trace",) if queue_only else ("trace", "ci", "cohort")
+        self.assets = {name: asset(root, c[name], name) for name in asset_names}
         self.jobs, self.trace_report = load_trace(self.assets["trace"], t, cl["nodes"])
-        self.ci = CarbonSeries.load(self.assets["ci"], ci)
-        self.episodes = self._cohort()
-        self._check_initial_capacity()
+        self.episodes = ()
+        if not queue_only:
+            self.ci = CarbonSeries.load(self.assets["ci"], c["ci"])
+            self.episodes = self._cohort()
+            if mode == "observed":
+                self._check_initial_capacity()
         self.manifest = {"schema_version": 1, "purpose": c["purpose"], "panel": c["panel"],
+                         "validated_scope": "queue_only" if queue_only else "full_experiment",
                          "config_sha256": digest(self.path), "trace_audit": self.trace_report,
                          "asset_sha256": {k: digest(v) for k, v in self.assets.items()},
                          "resolved_config": c, "cohort_size": len(self.episodes),
                          "scheduler_model": sched["model"],
-                         "initial_state_rule": "observed_running_and_pending_at_replay_start_then_continuous_replay",
+                         "initial_state_rule": ("observed_running_and_pending_at_replay_start_then_continuous_replay" if mode == "observed" else "empty_at_trace_coverage_start_then_continuous_replay_no_historical_admissions"),
                          "target_failure_model": e["target_failure_model"]}
 
     def _check_initial_capacity(self):

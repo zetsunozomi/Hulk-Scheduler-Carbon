@@ -24,7 +24,7 @@ class CarbonSeries:
         self.source, self.region, self.unit = source, region, unit
         # Offset explicitly maps queue UTC -> CI UTC; never silently aligns calendar years.
         self.offset = duration(offset_seconds) if offset_seconds >= 0 else -duration(-offset_seconds)
-        require(unit == "gCO2e/kWh", "CI unit must be gCO2e/kWh; convert inputs explicitly")
+        require(unit in {"gCO2e/kWh", "gCO2/kWh"}, "CI unit must be gCO2/kWh or gCO2e/kWh; convert inputs explicitly")
         for i, r in enumerate(self.records):
             require(r.start < r.end, "CI interval must have positive duration")
             require(r.value.is_finite() and r.value >= 0, "CI value must be finite and nonnegative")
@@ -36,19 +36,21 @@ class CarbonSeries:
     def load(cls, path, config):
         with open(path, newline="", encoding="utf-8") as handle:
             reader = csv.DictReader(handle)
-            required = {"start_utc", "end_utc", "gco2e_per_kwh", "available_at_utc"}
+            value_column = {"gCO2/kWh": "gco2_per_kwh", "gCO2e/kWh": "gco2e_per_kwh"}.get(config["unit"])
+            require(value_column is not None, "Unsupported CI unit")
+            required = {"start_utc", "end_utc", value_column, "available_at_utc"}
             require(required <= set(reader.fieldnames or ()), f"CI CSV requires {sorted(required)}")
             records = []
             for line, row in enumerate(reader, 2):
                 try:
                     records.append(CIRecord(timestamp(row["start_utc"]), timestamp(row["end_utc"]),
-                                            number(row["gco2e_per_kwh"], "CI"), timestamp(row["available_at_utc"])))
+                                            number(row[value_column], "CI"), timestamp(row["available_at_utc"])))
                 except (ValueError, KeyError) as exc:
                     raise ContractError(f"CI {path}:{line}: {exc}") from exc
         return cls(records, config["source"], config["region"], config["unit"], config["queue_to_ci_offset_seconds"])
 
     def integral(self, start, end):
-        """gCO2e/kWh * hours. Fail on gaps, never extrapolate missing realized CI."""
+        """Declared CI unit times hours. Fail on gaps; never silently extrapolate."""
         require(start <= end, "Negative CI integration interval")
         if start == end:
             return Decimal(0)
@@ -80,8 +82,10 @@ class Exposure:
         for name, start, end in phases:
             exposure = nodes * ci.integral(start, end)
             self.L[nodes] += exposure
+            exposure_key = ("exposure_node_gco2_per_kwh_hours" if ci.unit == "gCO2/kWh"
+                            else "exposure_node_gco2e_per_kwh_hours")
             values.append({"phase": name, "start_utc": iso(start), "end_utc": iso(end),
-                           "exposure_node_gco2e_per_kwh_hours": float(exposure)})
+                           "ci_unit": ci.unit, exposure_key: float(exposure)})
         return values
 
     def summary(self, workload, power):

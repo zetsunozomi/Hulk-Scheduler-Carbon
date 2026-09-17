@@ -1,0 +1,3 @@
+# The CPU policy network is small; no GPU is required. A compatible existing
+# torch installation may be reused. Freeze its exact version before research runs.
+torch>=2.6,<3

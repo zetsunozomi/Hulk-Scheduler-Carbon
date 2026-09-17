@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # EDIT HERE when moving clusters. bash ignores these directives; sbatch reads them.
-#SBATCH --job-name=carbon-run
+#SBATCH --job-name=carbon-stress
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
@@ -18,10 +18,7 @@ set -euo pipefail
 # EDIT HERE: Python on the executing cluster; an existing export overrides this.
 export CARBON_PYTHON="${CARBON_PYTHON:-/pscratch/sd/s/syfan/conda/envs/carbon/bin/python}"
 # Add any required module load commands here, before running Python.
-if [[ $# -lt 2 ]]; then
-  echo 'Usage: bash scripts/cluster_run.sh CONFIG OUTPUT [run-fixed arguments...]' >&2
-  exit 2
-fi
+[[ $# -ge 6 ]] || { echo 'Usage: cluster_stress.sh CONFIG OUTPUT WAIT_MODEL CHECKPOINT VARIANT BETA [options]' >&2; exit 2; }
 # sbatch executes a spool copy, so its script directory is not the repository.
 # Submit from the repository root; direct bash also works by absolute script path.
 if [[ -d "$PWD/src/carbon" ]]; then
@@ -36,25 +33,5 @@ cd "$repo_root"
 export PYTHONPATH="$repo_root/src${PYTHONPATH:+:$PYTHONPATH}"
 export PYTHONDONTWRITEBYTECODE=1
 python_bin="$CARBON_PYTHON"
-if ! command -v "$python_bin" >/dev/null 2>&1; then
-  echo "Python is not executable or not found: $python_bin" >&2
-  echo 'Set CARBON_PYTHON to the interpreter you intend to use.' >&2
-  exit 2
-fi
-"$python_bin" -B - <<'PYTHON_CHECK'
-import sys
-if sys.version_info < (3, 10):
-    raise SystemExit("P0/P1 requires Python 3.10+; selected: " + sys.version)
-print("Using Python: " + sys.executable, flush=True)
-print("Python version: " + sys.version.split()[0], flush=True)
-PYTHON_CHECK
-config_path="$1"
-output_path="$2"
-shift 2
-if [[ -n "${SLURM_ARRAY_TASK_ID:-}" ]]; then
-  : "${CARBON_SHARDS:?Set CARBON_SHARDS to the count of zero-based array tasks}"
-  output_path="$output_path/shard-$SLURM_ARRAY_TASK_ID"
-  set -- "$@" --shard-index "$SLURM_ARRAY_TASK_ID" --shard-count "$CARBON_SHARDS"
-fi
-"$python_bin" -m carbon validate --config "$config_path"
-exec "$python_bin" -m carbon run-fixed --config "$config_path" --output "$output_path" "$@"
+config="$1"; output="$2"; predictor="$3"; checkpoint="$4"; variant="$5"; beta="$6"; shift 6
+exec "$python_bin" -B -m carbon run-stress --config "$config" --output "$output" --predictor "$predictor" --checkpoint "$checkpoint" --variant "$variant" --budget-multiplier "$beta" "$@"

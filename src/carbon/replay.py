@@ -39,7 +39,8 @@ class Allocation:
 
 
 class Replay:
-    def __init__(self, jobs, start, coverage_end, cluster, history_seconds=172800, sample_seconds=600):
+    def __init__(self, jobs, start, coverage_end, cluster, history_seconds=172800, sample_seconds=600,
+                 initialize_from_observed=True):
         require(start < coverage_end, "Replay start must precede coverage end")
         self.time, self.coverage_end, self.origin = start, coverage_end, start
         self.capacity = cluster["nodes"]
@@ -59,6 +60,8 @@ class Replay:
             if job.submit >= start:
                 if job.submit < coverage_end:
                     future.append(request)
+            elif not initialize_from_observed:
+                continue
             elif job.observed_start >= start:
                 self.pending[job.job_id] = request
                 self._submitted.add(job.job_id)
@@ -144,6 +147,16 @@ class Replay:
 
     def _dispatch(self):
         if not self.pending:
+            return
+        if self.config["model"] == "fcfs_v1":
+            free = self.capacity - sum(a.request.nodes for a in self.running.values())
+            for request in sorted(self.pending.values(), key=lambda r: (r.submit, r.job_id)):
+                if request.nodes > free:
+                    break
+                self.running[request.job_id] = Allocation(request, self.time)
+                del self.pending[request.job_id]
+                free -= request.nodes
+            self._check_capacity()
             return
         releases = {}
         for allocation in self.running.values():

@@ -25,3 +25,10 @@ __pycache__/
 /.venv/
 /slurm-*.out
 /configs/*.local.json
+
+/configs/*.local.env
+
+# Dependency manifests must travel with cluster handoffs despite the legacy *.txt rule.
+!/requirements-p2.txt
+!/requirements-p3.txt
+!/requirements-plots.txt

@@ -1,0 +1,64 @@
+{
+  "absent_hours": [],
+  "actual_publication_timestamps_known": false,
+  "availability_rule": "Scenario: released 24 hours after interval end; revised archive, not vintage forecasts",
+  "boundary": "consumption-based",
+  "ci_sha256": "4c6030d3a1ab2920842bc8e8db8884e794523a1bbc7da52588b89347e4da84db",
+  "continuous_segments": [
+    [
+      "2019-01-01T00:00:00Z",
+      "2025-01-04T00:00:00Z"
+    ]
+  ],
+  "conversion": "source_value * 453.59237",
+  "converted_at_utc": "2026-09-16T07:59:14.583607Z",
+  "coverage_complete": true,
+  "expected_hours": 52680,
+  "forward_filled_hours": [
+    "2019-04-03T04:00:00Z",
+    "2019-12-04T05:00:00Z",
+    "2021-07-28T15:00:00Z",
+    "2021-08-18T04:00:00Z",
+    "2023-04-13T20:00:00Z",
+    "2023-10-04T04:00:00Z",
+    "2023-10-12T15:00:00Z",
+    "2023-10-12T16:00:00Z",
+    "2023-11-07T06:00:00Z",
+    "2023-11-28T17:00:00Z",
+    "2024-03-28T20:00:00Z"
+  ],
+  "max_forward_fill_hours": 2,
+  "maximum_gco2_per_kwh": 542.5345742417112,
+  "minimum_gco2_per_kwh": 109.45273175711286,
+  "missing_value_hours": [
+    "2019-04-03T04:00:00Z",
+    "2019-12-04T05:00:00Z",
+    "2021-07-28T15:00:00Z",
+    "2021-08-18T04:00:00Z",
+    "2023-04-13T20:00:00Z",
+    "2023-10-04T04:00:00Z",
+    "2023-10-12T15:00:00Z",
+    "2023-10-12T16:00:00Z",
+    "2023-11-07T06:00:00Z",
+    "2023-11-28T17:00:00Z",
+    "2024-03-28T20:00:00Z"
+  ],
+  "missing_value_rule": "Forward-fill at most 2 consecutive hours from past published CI; retain longer gaps",
+  "not_included": "non-CO2 greenhouse gases, lifecycle emissions, node power measurements",
+  "pollutant": "CO2",
+  "region": "ERCOT (ERCO), Texas",
+  "release_lag_hours": 24.0,
+  "requested_interval": [
+    "2019-01-01T00:00:00Z",
+    "2025-01-04T00:00:00Z"
+  ],
+  "retained_hours": 52680,
+  "source_column": "CO2 Emissions Intensity for Consumed Electricity",
+  "source_sha256": "66b4f49a5fe652b2a16745d8a9d520c94290a909e60d07a88b2b218923a2ed8f",
+  "source_unit": "lbCO2/kWh",
+  "source_url": "https://www.eia.gov/electricity/gridmonitor/knownissues/xls/ERCO.xlsx",
+  "source_worksheet": "Published Hourly Data",
+  "time_rule": "UTC time is the hour ending; interval is [UTC time - 1h, UTC time)",
+  "type": "average_operational",
+  "unit": "gCO2/kWh"
+}

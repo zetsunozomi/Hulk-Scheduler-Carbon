@@ -1,0 +1,2 @@
+# Optional static figure export; replay and table export remain stdlib-only.
+matplotlib>=3.8,<4
