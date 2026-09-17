@@ -30,6 +30,10 @@ def main(argv=None):
     ci.add_argument("--max-forward-fill-hours", type=int, choices=[0, 1, 2], default=0)
     validate = sub.add_parser("validate", help="Check config, hashes, trace, CI coverage and cohort without replay")
     validate.add_argument("--config", required=True)
+    pilot = sub.add_parser("run-main-pilot", help="Full fixed references plus a bounded predictor-free PPO development pilot")
+    pilot.add_argument("--config", required=True)
+    pilot.add_argument("--output", required=True)
+    pilot.add_argument("--resume", action="store_true")
     run = sub.add_parser("run-fixed", help="Run the paired fixed policies on a declared cohort")
     run.add_argument("--config", required=True)
     run.add_argument("--output", required=True)
@@ -162,6 +166,9 @@ def main(argv=None):
             report = prepare_eia(args.workbook, args.output, args.start, args.end, args.release_lag_hours,
                                  args.max_forward_fill_hours)
             print(json_text(report), end="")
+        elif args.command == "run-main-pilot":
+            from .main_pilot import run_main_pilot
+            run_main_pilot(Bundle(args.config), args.output, args.resume)
         elif args.command == "run-stress":
             from .stress import run_stress
             run_stress(Bundle(args.config), args.output, args.predictor, args.checkpoint,

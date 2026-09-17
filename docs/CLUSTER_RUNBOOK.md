@@ -4,11 +4,15 @@
 
 作者已回传 Frontera 完整 E1 的成功结束日志：`results/amsp-e1-frontera`。validation 共 368 个快照、4,416 条探针，均无删失；快照平均运行节点比例 0.5307。4/16/64/128 节点平均等待约 0.69–0.71/1.31/6.64/38.25 小时；它们是模拟器探针结果，不是历史等待预测准确率，也不是动态策略收益。后续还要核对 manifest、模型误差与日历相关性文件。
 
-## 当前优先级：固定规模基准 → 训练参考量 → PPO
+## 当前优先级：完整固定基准与主 PPO pilot
 
-按照 [下一步固定回放](NEXT_FIXED_RUN.md)，先运行 Frontera 7B 的 hash 分片 0/16：3 个预先确定的到达时间 × Fixed-4/16/64/128，共 12 次完整任务回放。它用于检查完成时间、工作守恒、chunk 数和程序耗时。完整 train cohort 是 73 个到达时间；小分片不能作为完整训练参考量或正式策略结论。
+Frontera7B计时分片已完成：3个到达时间×4种规模，共12次完整结果、5.7s，chunk数5/2/1/1。此分片Fixed-64在时间和两功率端点成本上优于Fixed-128；Fixed-4成本最低。不能推广为完整日期结果。
 
-IW 目前仅确认两天 preflight；它的完整 E1 后续单独处理，不阻塞 Frontera 固定基准和主 PPO。现有完整 test/stress 中的 MPC 使用已完成的 E1 模型；主 PPO 和 Precommitted-RL 不依赖它。Sophia 使用 PBS/qsub，在 interactive 内使用 bash，不使用 sbatch。
+下一条 [sophia_main_pilot.sh](MAIN_PILOT_RUN.md) 自动运行完整train固定基准（292次）、train参考量/四档预算、完整validation固定基准（96次），再跑5轮80episode、seed11的主PPO。不是正式RL训练预算，不访问test。主策略不需要等待模型。
+
+预算范围改为从最快固定train平均TAT到Fixed-4 train第95百分位，四档s=[0,.25,.5,1]；原通用CLI的1–2倍T_ref在当前48h非终端chunk下可能过窄。来源仅train、右端不是可行性保证，各方法使用同一网格。输入/工作/开销/请求上限均不变，Frontera E1不重跑。
+
+IW完整E1尚未回传，后续单独处理。Sophia在PBS interactive内用bash；脚本不提交另一个作业。完整stage可跳过、PPO可按轮checkpoint恢复，细节见运行说明。
 
 ## 主策略不依赖等待预测
 
@@ -110,4 +114,4 @@ Sophia 在现有 PBS interactive allocation 内使用 `bash scripts/对应脚本
 
 主 PPO 命令第三个参数 `-` 表示不需要等待模型；E3 对照同样用 `-`，仅加 `--decision-mode precommitted`。底层 `train-ppo`/`run-policy` 的 `--predictor` 可省略。旧命令若仍传入路径，默认 none 模式不会读取它。v2 checkpoint 不能与旧 v1 混用；完整 test/stress 仍需 E1 模型来运行规划基线。Frontera E1 现已完成；正式 PPO 的 iterations 仍需按固定回放及短轮训练耗时确定。
 
-`run-policy --slider-position S` 选择 checkpoint 已支持档位；默认 beta=1/1.25/1.5/2 对应 S=0/.25/.5/1。不能与 --budgets 同时使用，未验证位置不插值。所有实际输出点照常报告。预先序列保存 plans.jsonl 并纳入 test 文件校验。正式 AMSP 规模仍是 4/16/64/128；4→8→4 是机制举例，不新增 8 节点曲线输入。
+`run-policy --slider-position S` 选择 checkpoint 已支持档位；通用CLI默认 beta=1/1.25/1.5/2；当前场景必须覆盖它，显式使用budget-grid.json里的train-derived beta，对应S=0/.25/.5/1。不能与 --budgets 同时使用，未验证位置不插值。所有实际输出点照常报告。预先序列保存 plans.jsonl 并纳入 test 文件校验。正式 AMSP 规模仍是 4/16/64/128；4→8→4 是机制举例，不新增 8 节点曲线输入。
