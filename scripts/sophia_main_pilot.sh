@@ -43,7 +43,7 @@ print("Python version: " + sys.version.split()[0], flush=True)
 PYTHON_CHECK
 # Reuse the existing environment. Install only if its torch is missing/incompatible.
 if ! "$python_bin" -B -c 'import torch; v=tuple(int(x) for x in torch.__version__.split(".")[:2]); assert (2,6)<=v<(3,0)' ; then
-  "$python_bin" -m pip install -r requirements-p3.txt
+  "$python_bin" -m pip install -r requirements-p3.txt --index-url https://download.pytorch.org/whl/cpu
 fi
 config_path="$1"
 output_path="$2"

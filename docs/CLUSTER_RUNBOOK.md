@@ -4,15 +4,13 @@
 
 作者已回传 Frontera 完整 E1 的成功结束日志：`results/amsp-e1-frontera`。validation 共 368 个快照、4,416 条探针，均无删失；快照平均运行节点比例 0.5307。4/16/64/128 节点平均等待约 0.69–0.71/1.31/6.64/38.25 小时；它们是模拟器探针结果，不是历史等待预测准确率，也不是动态策略收益。后续还要核对 manifest、模型误差与日历相关性文件。
 
-## 当前优先级：完整固定基准与主 PPO pilot
+## 当前优先级：主策略训练与 validation 曲线
 
-Frontera7B计时分片已完成：3个到达时间×4种规模，共12次完整结果、5.7s，chunk数5/2/1/1。此分片Fixed-64在时间和两功率端点成本上优于Fixed-128；Fixed-4成本最低。不能推广为完整日期结果。
+完整Frontera7B pilot已回传成功：train fixed 292次/114.5秒，validation fixed 96次/51.4秒；主PPO seed11完成5轮、80episode、125chunk。四档预算约15.11/59.79/104.48/193.84h，仅train确定。尚未回传RL validation效果，125chunk不等于发生动态换规模。
 
-下一条 [sophia_main_pilot.sh](MAIN_PILOT_RUN.md) 自动运行完整train固定基准（292次）、train参考量/四档预算、完整validation固定基准（96次），再跑5轮80episode、seed11的主PPO。不是正式RL训练预算，不访问test。主策略不需要等待模型。
+下一条 [sophia_main_train.sh](MAIN_TRAIN_RUN.md) 校验并复用已有fixed/reference/grid，主PPO从seed11初始化跑64轮、每轮4档×16episode，共4096episode；随后评价预定16/32/48/64轮，每轮完整validation 96次，汇总TAT/碳成本/miss/实际换规模，另对已有fixed结果解Fixed-Mix LP。此轮为development，不读取test，不自动启动多seed或其他panel。主策略不需要等待模型。
 
-预算范围改为从最快固定train平均TAT到Fixed-4 train第95百分位，四档s=[0,.25,.5,1]；原通用CLI的1–2倍T_ref在当前48h非终端chunk下可能过窄。来源仅train、右端不是可行性保证，各方法使用同一网格。输入/工作/开销/请求上限均不变，Frontera E1不重跑。
-
-IW完整E1尚未回传，后续单独处理。Sophia在PBS interactive内用bash；脚本不提交另一个作业。完整stage可跳过、PPO可按轮checkpoint恢复，细节见运行说明。
+单层scripts/sophia_main_train.sh现支持登录节点直接qsub和allocation内无参数bash。PBS头按作者成功作业填入Local-LLM/by-gpu、1GPU/32CPU/120GB、pack:shared、home:eagle，申请2h；程序仍CPU单线程，原Sophia Python环境及训练设置保持一致。中断后用qsub -v CARBON_RESUME=1 scripts/sophia_main_train.sh恢复；interactive使用bash scripts/sophia_main_train.sh --resume。现有PyTorch不重装，新空环境安装CPU分发。src/carbon核心文件未改，已有pilot的代码哈希兼容。详细命令、Git三连和恢复步骤见链接。IW完整E1尚未回传，后续单独处理。
 
 ## 主策略不依赖等待预测
 

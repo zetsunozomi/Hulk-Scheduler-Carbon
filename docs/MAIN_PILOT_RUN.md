@@ -1,4 +1,6 @@
-# 下一步：完整固定基准与主 PPO 开发运行
+# 完整固定基准与主 PPO 开发运行（已完成）
+
+作者已回传整条流程完成日志：train fixed 292次/114.5秒、validation fixed 96次/51.4秒，主PPO 5轮80episode/125chunk。下一步见 [主策略训练与validation曲线](MAIN_TRAIN_RUN.md)。以下保留本次pilot的配置与恢复说明。
 
 ## 已完成和这次的目的
 
@@ -31,7 +33,7 @@ Frontera E1 已完成。固定基准 hash 分片 0/16 的 3 个训练到达时�
 
 独立的一层 `scripts/sophia_main_pilot.sh` 使用：
 `/lus/eagle/projects/Local-LLM/shuyuanfan/conda_env/carbon/bin/python`。
-可用 CARBON_PYTHON 覆盖。脚本检查PyTorch；缺失或版本不兼容时，会按照 requirements-p3.txt 安装到同一环境。版本记录在checkpoint，恢复时必须一致。计算是CPU队列回放和小型调度策略训练，AMSP提供LLM速度输入。
+可用 CARBON_PYTHON 覆盖。脚本检查PyTorch；缺失或版本不兼容时，会按照 requirements-p3.txt 从官方CPU wheel源安装到同一环境；已有兼容torch保持不动。版本记录在checkpoint，恢复时必须一致。计算是CPU队列回放和小型调度策略训练，AMSP提供LLM速度输入。
 
 本机手动同步（本助手不自动commit/push）：
 
