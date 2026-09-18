@@ -1,0 +1,65 @@
+Using Python: /lus/eagle/projects/Local-LLM/shuyuanfan/conda_env/carbon/bin/python
+Python version: 3.11.14
+Repository: /lus/eagle/projects/Local-LLM/shuyuanfan/carbon-latest
+Config: configs/amsp-frontera-7b.development.json
+Pilot: results/amsp-main-frontera-7b-pilot
+Output: results/amsp-main-frontera-7b-seed11
+PBS job: 186777.sophia-pbs-01.lab.alcf.anl.gov
+Reusing complete fixed cohorts and exact budget-grid from results/amsp-main-frontera-7b-pilot
+Main PPO: 64 iterations x 4 budgets x 16 arrivals = 4096 episodes; seed=11; CPU; no wait predictor.
+PPO iteration 1/64: episodes=64, chunks=109, checkpoint=checkpoint-000001.json
+PPO iteration 2/64: episodes=128, chunks=199, checkpoint=checkpoint-000002.json
+PPO iteration 3/64: episodes=192, chunks=290, checkpoint=checkpoint-000003.json
+PPO iteration 4/64: episodes=256, chunks=384, checkpoint=checkpoint-000004.json
+PPO iteration 5/64: episodes=320, chunks=459, checkpoint=checkpoint-000005.json
+PPO iteration 6/64: episodes=384, chunks=534, checkpoint=checkpoint-000006.json
+PPO iteration 7/64: episodes=448, chunks=608, checkpoint=checkpoint-000007.json
+PPO iteration 8/64: episodes=512, chunks=674, checkpoint=checkpoint-000008.json
+PPO iteration 9/64: episodes=576, chunks=740, checkpoint=checkpoint-000009.json
+PPO iteration 10/64: episodes=640, chunks=804, checkpoint=checkpoint-000010.json
+PPO iteration 11/64: episodes=704, chunks=869, checkpoint=checkpoint-000011.json
+PPO iteration 12/64: episodes=768, chunks=934, checkpoint=checkpoint-000012.json
+PPO iteration 13/64: episodes=832, chunks=999, checkpoint=checkpoint-000013.json
+PPO iteration 14/64: episodes=896, chunks=1064, checkpoint=checkpoint-000014.json
+PPO iteration 15/64: episodes=960, chunks=1129, checkpoint=checkpoint-000015.json
+PPO iteration 16/64: episodes=1024, chunks=1193, checkpoint=checkpoint-000016.json
+PPO iteration 17/64: episodes=1088, chunks=1257, checkpoint=checkpoint-000017.json
+PPO iteration 18/64: episodes=1152, chunks=1321, checkpoint=checkpoint-000018.json
+PPO iteration 19/64: episodes=1216, chunks=1385, checkpoint=checkpoint-000019.json
+PPO iteration 20/64: episodes=1280, chunks=1449, checkpoint=checkpoint-000020.json
+PPO iteration 21/64: episodes=1344, chunks=1513, checkpoint=checkpoint-000021.json
+PPO iteration 22/64: episodes=1408, chunks=1578, checkpoint=checkpoint-000022.json
+PPO iteration 23/64: episodes=1472, chunks=1642, checkpoint=checkpoint-000023.json
+PPO iteration 24/64: episodes=1536, chunks=1706, checkpoint=checkpoint-000024.json
+PPO iteration 25/64: episodes=1600, chunks=1770, checkpoint=checkpoint-000025.json
+PPO iteration 26/64: episodes=1664, chunks=1834, checkpoint=checkpoint-000026.json
+PPO iteration 27/64: episodes=1728, chunks=1898, checkpoint=checkpoint-000027.json
+PPO iteration 28/64: episodes=1792, chunks=1962, checkpoint=checkpoint-000028.json
+PPO iteration 29/64: episodes=1856, chunks=2026, checkpoint=checkpoint-000029.json
+PPO iteration 30/64: episodes=1920, chunks=2090, checkpoint=checkpoint-000030.json
+PPO iteration 31/64: episodes=1984, chunks=2154, checkpoint=checkpoint-000031.json
+PPO iteration 32/64: episodes=2048, chunks=2218, checkpoint=checkpoint-000032.json
+PPO iteration 33/64: episodes=2112, chunks=2282, checkpoint=checkpoint-000033.json
+PPO iteration 34/64: episodes=2176, chunks=2346, checkpoint=checkpoint-000034.json
+PPO iteration 35/64: episodes=2240, chunks=2410, checkpoint=checkpoint-000035.json
+PPO iteration 36/64: episodes=2304, chunks=2474, checkpoint=checkpoint-000036.json
+PPO iteration 37/64: episodes=2368, chunks=2538, checkpoint=checkpoint-000037.json
+PPO iteration 38/64: episodes=2432, chunks=2603, checkpoint=checkpoint-000038.json
+PPO iteration 39/64: episodes=2496, chunks=2667, checkpoint=checkpoint-000039.json
+PPO iteration 40/64: episodes=2560, chunks=2731, checkpoint=checkpoint-000040.json
+PPO iteration 41/64: episodes=2624, chunks=2795, checkpoint=checkpoint-000041.json
+PPO iteration 42/64: episodes=2688, chunks=2859, checkpoint=checkpoint-000042.json
+PPO iteration 43/64: episodes=2752, chunks=2923, checkpoint=checkpoint-000043.json
+PPO iteration 44/64: episodes=2816, chunks=2987, checkpoint=checkpoint-000044.json
+PPO iteration 45/64: episodes=2880, chunks=3051, checkpoint=checkpoint-000045.json
+PPO iteration 46/64: episodes=2944, chunks=3115, checkpoint=checkpoint-000046.json
+PPO iteration 47/64: episodes=3008, chunks=3179, checkpoint=checkpoint-000047.json
+PPO iteration 48/64: episodes=3072, chunks=3243, checkpoint=checkpoint-000048.json
+PPO iteration 49/64: episodes=3136, chunks=3307, checkpoint=checkpoint-000049.json
+PPO iteration 50/64: episodes=3200, chunks=3371, checkpoint=checkpoint-000050.json
+PPO iteration 51/64: episodes=3264, chunks=3435, checkpoint=checkpoint-000051.json
+PPO iteration 52/64: episodes=3328, chunks=3499, checkpoint=checkpoint-000052.json
+PPO iteration 53/64: episodes=3392, chunks=3563, checkpoint=checkpoint-000053.json
+PPO iteration 54/64: episodes=3456, chunks=3627, checkpoint=checkpoint-000054.json
+PPO iteration 55/64: episodes=3520, chunks=3691, checkpoint=checkpoint-000055.json
+=>> PBS: job killed: walltime 7229 exceeded limit 7200
