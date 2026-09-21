@@ -6,6 +6,10 @@ Wait-model fitting and the Fixed-Mix LP need `requirements-p2.txt`; no GPU or
 PyTorch is needed for these components. Budget-conditioned PPO uses PyTorch 2.6+
 on CPU (`requirements-p3.txt`) and has synthetic functional coverage.
 
+## Continue the research on cluster
+
+Read [RESEARCH_HANDOFF.md](docs/RESEARCH_HANDOFF.md) for the goal, latest verified progress, current idea, result paths and next decisions. The current manuscript, PDF and method specifications are in [paper/](paper/README.md). Analyze results on the cluster; transferring result archives to a laptop is not a prerequisite.
+
 ## Start here
 
 ```bash

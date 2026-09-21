@@ -1,0 +1,36 @@
+{
+  "status": "pass",
+  "kind": "manuscript_QA_not_experimental_evidence",
+  "source_files": 8,
+  "labels": 22,
+  "citations": 12,
+  "synthetic_algebra_cases": 1000,
+  "properties": [
+    "fixed_hull",
+    "affine_exposure",
+    "endpoint_ratio",
+    "independent_scale_error_box",
+    "constant_CI_energy_ranking"
+  ],
+  "pdf_pages": 8,
+  "references_start_page": 8,
+  "last_body_page": 7,
+  "pending_experiments": [
+    "E1",
+    "E2",
+    "E3",
+    "E4"
+  ],
+  "visual_review_required": false,
+  "visual_review": "All eight pages inspected in contact sheet; updated pages 5 and 7 inspected at full resolution; no clipping or overlap.",
+  "pdf_sha256": "dfdcfe9c55fa1de3e5beb41485ef65ba44e7b650609ee9b7fc615761ef706860",
+  "revision": "2026-09-17: train-derived four-tick budget span and complete-work checkpoint interpretation; formal outcomes pending",
+  "software_checks": {
+    "unit_tests_passed": 158,
+    "scope": "synthetic fixtures only; no real trace experiments on this host",
+    "main_pilot": "full train/validation fixed, train-only grid, five iterations/80 episodes, no wait artifact",
+    "resume": "completed stages checked; resumed PPO final model tensors equal uninterrupted run",
+    "installed_changed_or_new_files": 7,
+    "installed_files_equal_tested_stage": true
+  }
+}

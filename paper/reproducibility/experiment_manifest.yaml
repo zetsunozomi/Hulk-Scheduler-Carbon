@@ -1,0 +1,171 @@
+# DESIGN PLACEHOLDER. Null means unfilled, not zero or a completed measurement.
+status: published_inputs_prepared_experimental_outcomes_pending
+draft_revision: 2026-09-17
+manuscript_entry: main.tex
+scope:
+  claim: modeled_job_attributed_operational_carbon
+  real_node_power_required: false
+  facility_carbon_claim: false
+  live_deployment_claim: false
+  target_model_family: AMSP_LLaMA
+  target_profiles: [7B, 13B, 30B]
+  profile_source: arXiv_2311_00257v2_Figure12_OurWork
+  published_platform: 128_nodes_eight_A800_80GB_per_node
+  gpus_per_node: 8
+  allowed_nodes: [4, 16, 64, 128]
+  gpu_counts: [32, 128, 512, 1024]
+  parallelism: data_parallel_with_state_sharding_no_TP_PP
+  scenario_capacity_nodes: 128
+  trace_role: separate_resource_demand_templates_not_production_wait_measurements
+  new_gpu_profiling_required: false
+  legacy_profiles_used_for_new_results: false
+  traces: [frontera, iw]
+data:
+  source_metadata_inventory:
+    path: reproducibility/trace_inventory.json
+    interpretation: raw_file_metadata_only_not_experiment_results_or_coverage_attestation
+    readiness_note: reproducibility/trace_readiness.md
+  provenance_and_hashes: {"frontera": {"trace": "ed555938a7532b05db3ec722fcaf7fa2cbe92ee254cea18c86cf66c0527bd67f", "ci": "4c6030d3a1ab2920842bc8e8db8884e794523a1bbc7da52588b89347e4da84db", "cohort": "d9e7b3729d76317536d292a5b56af8084b77892d6309a4f172e6cdd95647c5c9"}, "iw": {"trace": "6c714de85d71dfd2554d1fa1ba3040d63aff50dc1c7812c232a184686b3a7556", "ci": "4c6030d3a1ab2920842bc8e8db8884e794523a1bbc7da52588b89347e4da84db", "cohort": "cc2eb2fa5957c1f90d8c1f48ae17511bd34d283139c7ab70624c11fd7b3d97ab"}}
+  inspected_old_test_intervals: null
+  evaluation_design: retrospective_temporal
+  prior_use: author_reports_train_validation_binary_split
+  test_is_untouched: false
+  configuration_purpose: development_until_protocol_freeze
+  train_dates_by_trace: {"frontera": ["2020-01-05T00:00:00Z", "2020-09-01T00:00:00Z"], "iw": ["2023-02-01T00:00:00Z", "2023-10-01T00:00:00Z"]}
+  validation_dates_by_trace: {"frontera": ["2020-10-01T00:00:00Z", "2021-01-01T00:00:00Z"], "iw": ["2023-11-01T00:00:00Z", "2024-02-01T00:00:00Z"]}
+  new_test_dates_by_trace: {"frontera": ["2021-02-01T00:00:00Z", "2021-08-01T00:00:00Z"], "iw": ["2024-03-01T00:00:00Z", "2024-07-01T00:00:00Z"]}
+  purge_and_censoring_rule: "Every 3 days with seeded hour, 21-day end guard, retain censoring at split boundary"
+  episode_cohort: {"frontera": {"path": "data/amsp/cohorts/frontera.csv", "sha256": "d9e7b3729d76317536d292a5b56af8084b77892d6309a4f172e6cdd95647c5c9"}, "iw": {"path": "data/amsp/cohorts/iw.csv", "sha256": "cc2eb2fa5957c1f90d8c1f48ae17511bd34d283139c7ab70624c11fd7b3d97ab"}}
+  retained_jobs_by_trace: null
+  partitions_and_capacity: "Declared homogeneous 128-node scenario, not historical partition capacity"
+  simulator_commit_and_config: null
+  initial_state_and_cross_boundary_jobs: "Empty at fixed trace-prefix origin, omit earlier submissions, continuous replay, exclude at least 28 days before scoring"
+  visible_feature_schema: null
+  feature_normalizers: null
+work:
+  profile_provenance: "reproducibility/amsp/profiles.json; source PDF vector extraction verified"
+  global_batch_by_panel: 1024
+  microbatch_and_accumulation_by_panel: {"microbatch": 1, "accumulation": [32, 8, 2, 1]}
+  optimizer_updates_by_panel: {"7B": 22993, "13B": 11602, "30B": 4483}
+  sequence_length_precision_stack: "4096, BF16, FlashAttention-v2; source March 2024"
+  rates_and_uncertainty: "Figure 12 TGS per GPU digitized nearest 10; no source measurement confidence interval inferred"
+  checkpoint_restart_duration_profiles: {"assumed_total_seconds": 600, "initialization_or_restart_seconds": 300, "saving_seconds": 300, "sensitivity_total_seconds": [60, 1800]}
+  correctness_check_artifact: "Simulator work conservation only; no actual distributed restore claim"
+  proposed_max_request_hours: 48
+ci:
+  primary_region: Texas
+  type: average_consumption_based_operational_CO2
+  source_and_version:
+    source: EIA_ERCOT_Published_Hourly_Data
+    workbook_sha256: 66b4f49a5fe652b2a16745d8a9d520c94290a909e60d07a88b2b218923a2ed8f
+    prepared_csv_sha256: 4c6030d3a1ab2920842bc8e8db8884e794523a1bbc7da52588b89347e4da84db
+    prepared_path_in_code_repo: data/texas_eia/ci.csv
+    input_preparation_is_experiment_result: false
+  available_at_decision_rule: "24 hours after interval end as scenario, not archived vintages"
+  years_and_queue_alignment: "Naive timestamps assigned UTC scenario coordinates overlaid on ERCOT same calendar; no original timezone or A800 location assertion"
+  timezone_and_resolution: UTC_hour_ending_converted_to_hour_intervals
+  missing_value_rule: past_only_forward_fill_at_most_2_hours_11_hours_labeled_in_prepared_asset
+  unit_in_code: gCO2_per_kWh
+  unit_in_paper: kgCO2_per_kWh
+  proposed_availability_scenario: revised_archive_available_24h_after_interval_end_not_actual_release_history
+  forecast_design: rolling_past_hour_of_week
+  proposed_forecast_history_weeks: 8
+  historical_fallback_rule: training_climatology
+power:
+  factors: [normalization_unit, unknown_workload_coefficient, scale_coefficient]
+  normalization_unit_kw: 1.0
+  normalization_is_hardware_measurement: false
+  workload_coefficient: unknown_cancels_in_panel_ratios
+  proposed_training_rho_interval: [0.25, 1.0]
+  proposed_ideal_limit_rescore: 0.0
+  independent_scale_error: within_scale_factor_only
+  allocated_phase_power_assumption: same_mean_power_at_given_scale
+method:
+  implementation_commit: null
+  proposed_time_reference: minimum_training_mean_TAT_across_fixed_scales
+  proposed_budget_multipliers: derived_from_complete_training_fixed4_p95_and_fastest_fixed_mean
+  budget_span: {lower: fastest_fixed_training_mean_TAT, upper: training_Fixed4_inverse_empirical_CDF_p95, positions: [0.0, 0.25, 0.5, 1.0], is_deadline_guarantee: false}
+  proposed_miss_tolerance: 0.05
+  proposed_seeds: [11, 23, 37]
+  actor_action_encoder: {hidden_widths: [128, 128], activation: ReLU}
+  critic_heads: [minus_carbon, plus_carbon, terminal_miss]
+  discount: 1.0
+  test_action_rule: categorical
+  proposed_ppo: {learning_rate: 0.0003, clip: 0.2, epochs: 4, entropy: 0.01}
+  proposed_dual: {p_learning_rate: 0.05, lambda_learning_rate: 0.05}
+  primary_training: single_stage_end_to_end_PPO
+  primary_decision_mode: feedback
+  slider: {maps_to: completion_budget_hours, supported_beta: train_derived_four_ticks, supported_positions: [0.0, 0.25, 0.5, 1.0], interpolation_is_evaluation: false}
+  E3_plan_archive: plans.jsonl_before_first_target_submission
+  primary_wait_features: none
+  primary_requires_wait_predictor: false
+  policy_feature_schema: policy_inputs_v2
+  ci_input_bins: {count: 28, width_hours: 6, origin: decision_time}
+  auxiliary_wait_model_roles: [Rollout_MPC, Plan_once]
+  predictor_accuracy_gate: none
+  E3_retrained_variant: Precommitted_RL_replaces_predictor_advised_and_Current_CI
+  E3_retraining_scope: same_full_budget_grid_arrival_sampling_seeds_and_total_episodes_as_main
+  E3_evaluation_scope: one_prespecified_budget_per_panel
+  proposed_wait_model: {trees: 256, depth: 4, learning_rate: 0.05, residual_atoms: 32}
+  fixed_environment_interaction_budget: null
+  validation_checkpoint_map: null
+  proposed_validation_selection_rule: empirical_miss
+  empirical_target_attainment_is_population_feasibility: false
+  frozen_normalizers_and_references: null
+  selected_baseline_per_budget: null
+  mpc_proposed_paths: 256
+  mpc_frozen_internal_risk_threshold: null
+statistics:
+  proposed_calendar_block_days: 7
+  development_dependence_audit: null
+  final_block_length: null
+  bootstrap_repetitions: null
+  ratio_definition: ratio_of_means_within_panel
+  joint_endpoint_intervals: null
+  infeasibility_and_censoring_report: null
+results:
+  E1_input_validity: null
+  E2_main_results: null
+  E3_mechanism_results: null
+  E4_power_robustness: null
+  training_and_inference_compute_cost: null
+  final_claims_supported: null
+
+environment_sensitivity:
+  profile: 7B
+  sources: [frontera, iw]
+  budgets: one_prespecified_on_main_validation
+  methods: [ScaleDown, Rollout-MPC]
+  variants: [width2_capped128, strict_FCFS, overhead60_seconds, overhead1800_seconds]
+  frozen: [checkpoint, wait_predictor, normalizers, references, CI, work, physical_budget]
+  retrain: false
+  status: runner_synthetically_checked_results_pending
+
+
+development_main_training:
+  status: interrupted_by_PBS_walltime
+  latest_reported_job: 186777.sophia-pbs-01.lab.alcf.anl.gov
+  latest_reported_completed_iteration: 55
+  latest_reported_training_episodes: 3520
+  latest_reported_training_chunks: 3691
+  evidence_available_locally: console_log_only
+  validation_status: not_started_in_reported_job
+  panel: AMSP-7B-frontera-C128
+  seed: 11
+  iterations: 64
+  episodes_per_budget_per_iteration: 16
+  budget_count: 4
+  total_training_episodes: 4096
+  epochs: 4
+  minibatch_episodes: 16
+  initialization: fresh_seed_not_extended_pilot
+  validation_iterations: [16, 32, 48, 64]
+  validation_arrivals: 24
+  total_validation_episodes: 384
+  checkpoint_selection: none_all_reported
+  wait_features: none
+  reuse: [complete_pilot_fixed_train, complete_pilot_fixed_validation, training_references, training_budget_grid]
+  fixed_mix: LP_on_existing_validation_fixed_outcomes_no_new_replay
+  test_access: false
+  convergence_claim: false
+  formal_multiseed_protocol_frozen: false

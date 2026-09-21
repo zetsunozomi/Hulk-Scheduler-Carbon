@@ -1,0 +1,548 @@
+{
+  "existing_validation_config": {
+    "actual_access_history_confirmed": false,
+    "job_log": "/pscratch/sd/s/syfan/carbon/src/workload/filtered_iw_validate.log",
+    "naive_interval": [
+      "2024-08-01T00:00:00",
+      "2025-01-03T00:00:00"
+    ],
+    "path": "src/model/policy-gradient-moe/sim_validation.json",
+    "sha256": "4bf94f2c59cee341cbaaca9e1b0f4aa9141709c1be6244f482b1fa45eb51aae1"
+  },
+  "experiment_results": false,
+  "files": [
+    {
+      "bytes": 23112144,
+      "duplicate_job_ids": 0,
+      "malformed_line_numbers": [],
+      "maximum_single_job_nodes": 64,
+      "naive_timestamp_ranges": {
+        "End": [
+          "2019-12-04T10:24:58",
+          "2021-08-30T11:34:17"
+        ],
+        "Start": [
+          "2019-12-04T10:24:58",
+          "2021-08-30T11:34:17"
+        ],
+        "Submit": [
+          "2019-12-04T10:24:54",
+          "2021-08-19T23:58:17"
+        ]
+      },
+      "parsed_rows": 175090,
+      "path": "data/filtered/filtered-frontera-rtx.log",
+      "raw_row_flags_not_yet_cleaned": {
+        "invalid_time_order": 0,
+        "nonpositive_node_requests": 0,
+        "nonpositive_time_limits": 0,
+        "runtime_over_requested_limit": 7156,
+        "zero_duration": 5122
+      },
+      "rows_by_requested_nodes": {
+        "1": 163377,
+        "2": 3779,
+        "3": 362,
+        "4": 2079,
+        "5": 119,
+        "6": 521,
+        "7": 1754,
+        "8": 1731,
+        "9": 126,
+        "10": 307,
+        "12": 45,
+        "13": 4,
+        "14": 14,
+        "15": 7,
+        "16": 694,
+        "18": 18,
+        "19": 28,
+        "20": 74,
+        "21": 5,
+        "22": 31,
+        "32": 13,
+        "64": 2
+      },
+      "sha256": "ed555938a7532b05db3ec722fcaf7fa2cbe92ee254cea18c86cf66c0527bd67f",
+      "submitted_rows_by_month": {
+        "2019-12": 263,
+        "2020-01": 794,
+        "2020-02": 2641,
+        "2020-03": 4461,
+        "2020-04": 4440,
+        "2020-05": 2814,
+        "2020-06": 3558,
+        "2020-07": 8205,
+        "2020-08": 100329,
+        "2020-09": 3635,
+        "2020-10": 1428,
+        "2020-11": 3022,
+        "2020-12": 3144,
+        "2021-01": 3532,
+        "2021-02": 1782,
+        "2021-03": 2553,
+        "2021-04": 2542,
+        "2021-05": 4770,
+        "2021-06": 2686,
+        "2021-07": 11207,
+        "2021-08": 7284
+      }
+    },
+    {
+      "bytes": 8582494,
+      "duplicate_job_ids": 0,
+      "malformed_line_numbers": [],
+      "maximum_single_job_nodes": 96,
+      "naive_timestamp_ranges": {
+        "End": [
+          "2019-11-04T17:21:00",
+          "2021-08-22T08:22:53"
+        ],
+        "Start": [
+          "2019-11-04T17:21:00",
+          "2021-08-20T08:22:51"
+        ],
+        "Submit": [
+          "2019-11-04T17:20:52",
+          "2021-08-19T22:24:22"
+        ]
+      },
+      "parsed_rows": 65017,
+      "path": "data/filtered/filtered-longhorn-v100.log",
+      "raw_row_flags_not_yet_cleaned": {
+        "invalid_time_order": 0,
+        "nonpositive_node_requests": 0,
+        "nonpositive_time_limits": 0,
+        "runtime_over_requested_limit": 4571,
+        "zero_duration": 5163
+      },
+      "rows_by_requested_nodes": {
+        "1": 53742,
+        "2": 3277,
+        "3": 140,
+        "4": 2444,
+        "5": 432,
+        "6": 133,
+        "7": 154,
+        "8": 1547,
+        "9": 26,
+        "10": 112,
+        "12": 250,
+        "13": 3,
+        "14": 24,
+        "15": 8,
+        "16": 1301,
+        "17": 13,
+        "18": 10,
+        "19": 5,
+        "20": 57,
+        "22": 4,
+        "24": 19,
+        "25": 226,
+        "26": 27,
+        "28": 96,
+        "30": 36,
+        "31": 11,
+        "32": 731,
+        "35": 4,
+        "38": 2,
+        "40": 22,
+        "43": 1,
+        "44": 1,
+        "52": 1,
+        "63": 9,
+        "64": 140,
+        "74": 2,
+        "88": 2,
+        "90": 2,
+        "96": 3
+      },
+      "sha256": "98b4e41aa63d1f82b3f9658c7ec2c840c470930278d542af4c42bc412c477527",
+      "submitted_rows_by_month": {
+        "2019-11": 994,
+        "2019-12": 1425,
+        "2020-01": 1285,
+        "2020-02": 1835,
+        "2020-03": 3820,
+        "2020-04": 5921,
+        "2020-05": 4484,
+        "2020-06": 4566,
+        "2020-07": 2310,
+        "2020-08": 3025,
+        "2020-09": 3134,
+        "2020-10": 2250,
+        "2020-11": 2468,
+        "2020-12": 2730,
+        "2021-01": 4993,
+        "2021-02": 1456,
+        "2021-03": 4604,
+        "2021-04": 2995,
+        "2021-05": 3347,
+        "2021-06": 2848,
+        "2021-07": 1855,
+        "2021-08": 2672
+      }
+    },
+    {
+      "bytes": 2319225,
+      "duplicate_job_ids": 0,
+      "malformed_line_numbers": [],
+      "maximum_single_job_nodes": 64,
+      "naive_timestamp_ranges": {
+        "End": [
+          "2022-11-01T00:08:57",
+          "2023-03-01T08:49:56"
+        ],
+        "Start": [
+          "2022-10-30T15:33:29",
+          "2023-02-28T23:31:03"
+        ],
+        "Submit": [
+          "2022-10-05T11:52:48",
+          "2023-02-27T23:50:41"
+        ]
+      },
+      "parsed_rows": 17568,
+      "path": "data/filtered/filtered-ls6.log",
+      "raw_row_flags_not_yet_cleaned": {
+        "invalid_time_order": 0,
+        "nonpositive_node_requests": 0,
+        "nonpositive_time_limits": 0,
+        "runtime_over_requested_limit": 2772,
+        "zero_duration": 2299
+      },
+      "rows_by_requested_nodes": {
+        "1": 14041,
+        "2": 1177,
+        "3": 574,
+        "4": 1377,
+        "5": 3,
+        "6": 45,
+        "8": 89,
+        "10": 3,
+        "11": 1,
+        "12": 82,
+        "14": 2,
+        "15": 35,
+        "16": 122,
+        "32": 13,
+        "64": 4
+      },
+      "sha256": "10c5442f4bad44c64c60cd51263f5de5fe6eac361382025118e3e1041c2c259c",
+      "submitted_rows_by_month": {
+        "2022-10": 61,
+        "2022-11": 3392,
+        "2022-12": 4767,
+        "2023-01": 4626,
+        "2023-02": 4722
+      }
+    },
+    {
+      "bytes": 3270826,
+      "duplicate_job_ids": 0,
+      "malformed_line_numbers": [
+        19705
+      ],
+      "maximum_single_job_nodes": 64,
+      "naive_timestamp_ranges": {
+        "End": [
+          "2022-11-01T00:08:57",
+          "2023-04-03T03:32:00"
+        ],
+        "Start": [
+          "2022-10-30T15:33:29",
+          "2023-04-01T04:49:38"
+        ],
+        "Submit": [
+          "2022-10-05T11:52:48",
+          "2023-03-31T23:54:55"
+        ]
+      },
+      "parsed_rows": 24776,
+      "path": "data/filtered/filtered-ls6-new.log",
+      "raw_row_flags_not_yet_cleaned": {
+        "invalid_time_order": 0,
+        "nonpositive_node_requests": 0,
+        "nonpositive_time_limits": 0,
+        "runtime_over_requested_limit": 3752,
+        "zero_duration": 3327
+      },
+      "rows_by_requested_nodes": {
+        "1": 19708,
+        "2": 1785,
+        "3": 845,
+        "4": 1791,
+        "5": 16,
+        "6": 64,
+        "8": 176,
+        "9": 6,
+        "10": 3,
+        "11": 5,
+        "12": 82,
+        "14": 2,
+        "15": 35,
+        "16": 241,
+        "32": 13,
+        "64": 4
+      },
+      "sha256": "f4475288636b766e83e5328978f48532e6f9e9c93598fca9f4d79e6ec9e8b60f",
+      "submitted_rows_by_month": {
+        "2022-10": 61,
+        "2022-11": 3392,
+        "2022-12": 4767,
+        "2023-01": 4626,
+        "2023-02": 5129,
+        "2023-03": 6801
+      }
+    },
+    {
+      "bytes": 9169513,
+      "duplicate_job_ids": 0,
+      "malformed_line_numbers": [],
+      "maximum_single_job_nodes": 75,
+      "naive_timestamp_ranges": {
+        "End": [
+          "2023-01-01T01:03:27",
+          "2024-08-01T06:22:55"
+        ],
+        "Start": [
+          "2022-12-30T04:45:19",
+          "2024-07-30T09:48:34"
+        ],
+        "Submit": [
+          "2022-12-30T04:45:19",
+          "2024-07-22T13:25:08"
+        ]
+      },
+      "parsed_rows": 69464,
+      "path": "data/new/filtered_iw_log.log",
+      "raw_row_flags_not_yet_cleaned": {
+        "invalid_time_order": 0,
+        "nonpositive_node_requests": 0,
+        "nonpositive_time_limits": 0,
+        "runtime_over_requested_limit": 13750,
+        "zero_duration": 517
+      },
+      "rows_by_requested_nodes": {
+        "1": 56102,
+        "2": 4739,
+        "3": 1878,
+        "4": 3586,
+        "5": 197,
+        "6": 879,
+        "7": 247,
+        "8": 977,
+        "9": 21,
+        "10": 101,
+        "11": 12,
+        "12": 112,
+        "13": 1,
+        "14": 38,
+        "15": 55,
+        "16": 459,
+        "22": 2,
+        "27": 5,
+        "32": 24,
+        "34": 2,
+        "41": 2,
+        "48": 7,
+        "57": 2,
+        "64": 3,
+        "66": 3,
+        "75": 10
+      },
+      "sha256": "6c714de85d71dfd2554d1fa1ba3040d63aff50dc1c7812c232a184686b3a7556",
+      "submitted_rows_by_month": {
+        "2022-12": 32,
+        "2023-01": 3906,
+        "2023-02": 4163,
+        "2023-03": 5848,
+        "2023-04": 4917,
+        "2023-05": 5066,
+        "2023-06": 3299,
+        "2023-07": 2711,
+        "2023-08": 3094,
+        "2023-09": 2859,
+        "2023-10": 3793,
+        "2023-11": 4267,
+        "2023-12": 4684,
+        "2024-01": 3517,
+        "2024-02": 3402,
+        "2024-03": 1910,
+        "2024-04": 2525,
+        "2024-05": 2489,
+        "2024-06": 4213,
+        "2024-07": 2769
+      }
+    },
+    {
+      "bytes": 2496120,
+      "duplicate_job_ids": 0,
+      "malformed_line_numbers": [],
+      "maximum_single_job_nodes": 16,
+      "naive_timestamp_ranges": {
+        "End": [
+          "2024-07-31T22:39:29",
+          "2025-01-04T22:49:50"
+        ],
+        "Start": [
+          "2024-07-31T22:27:19",
+          "2025-01-03T22:49:47"
+        ],
+        "Submit": [
+          "2024-07-31T22:03:25",
+          "2024-12-30T23:52:45"
+        ]
+      },
+      "parsed_rows": 18908,
+      "path": "data/new/filtered_iw_validate.log",
+      "raw_row_flags_not_yet_cleaned": {
+        "invalid_time_order": 0,
+        "nonpositive_node_requests": 0,
+        "nonpositive_time_limits": 0,
+        "runtime_over_requested_limit": 3557,
+        "zero_duration": 35
+      },
+      "rows_by_requested_nodes": {
+        "1": 17159,
+        "2": 523,
+        "3": 309,
+        "4": 521,
+        "5": 27,
+        "6": 208,
+        "8": 127,
+        "10": 2,
+        "12": 7,
+        "13": 1,
+        "14": 1,
+        "15": 5,
+        "16": 18
+      },
+      "sha256": "8ac3773ee6a8809228e2c27320386cbf755962fee78ce60b3b3ce69f3cf38410",
+      "submitted_rows_by_month": {
+        "2024-07": 34,
+        "2024-08": 5002,
+        "2024-09": 3449,
+        "2024-10": 3691,
+        "2024-11": 2786,
+        "2024-12": 3946
+      }
+    }
+  ],
+  "kind": "read_only_source_metadata_inventory",
+  "limitations": [
+    "Raw timestamp ranges are naive local strings; timezone is unconfirmed.",
+    "First/last job timestamps do not establish complete collection coverage.",
+    "Maximum single-job size does not establish queue capacity or membership.",
+    "Shared IDs alone do not establish common source; IDs can recur across clusters.",
+    "Metadata inspection does not establish an untouched test period.",
+    "No scheduler replay, workload simulation, or policy evaluation was performed."
+  ],
+  "pairwise_overlap": [
+    {
+      "identical_full_rows": 0,
+      "left": "data/filtered/filtered-frontera-rtx.log",
+      "right": "data/filtered/filtered-longhorn-v100.log",
+      "shared_job_ids": 0
+    },
+    {
+      "identical_full_rows": 0,
+      "left": "data/filtered/filtered-frontera-rtx.log",
+      "right": "data/filtered/filtered-ls6.log",
+      "shared_job_ids": 802
+    },
+    {
+      "identical_full_rows": 0,
+      "left": "data/filtered/filtered-frontera-rtx.log",
+      "right": "data/filtered/filtered-ls6-new.log",
+      "shared_job_ids": 1098
+    },
+    {
+      "identical_full_rows": 0,
+      "left": "data/filtered/filtered-frontera-rtx.log",
+      "right": "data/new/filtered_iw_log.log",
+      "shared_job_ids": 6903
+    },
+    {
+      "identical_full_rows": 0,
+      "left": "data/filtered/filtered-frontera-rtx.log",
+      "right": "data/new/filtered_iw_validate.log",
+      "shared_job_ids": 253
+    },
+    {
+      "identical_full_rows": 0,
+      "left": "data/filtered/filtered-longhorn-v100.log",
+      "right": "data/filtered/filtered-ls6.log",
+      "shared_job_ids": 0
+    },
+    {
+      "identical_full_rows": 0,
+      "left": "data/filtered/filtered-longhorn-v100.log",
+      "right": "data/filtered/filtered-ls6-new.log",
+      "shared_job_ids": 0
+    },
+    {
+      "identical_full_rows": 0,
+      "left": "data/filtered/filtered-longhorn-v100.log",
+      "right": "data/new/filtered_iw_log.log",
+      "shared_job_ids": 0
+    },
+    {
+      "identical_full_rows": 0,
+      "left": "data/filtered/filtered-longhorn-v100.log",
+      "right": "data/new/filtered_iw_validate.log",
+      "shared_job_ids": 0
+    },
+    {
+      "identical_full_rows": 17568,
+      "left": "data/filtered/filtered-ls6.log",
+      "right": "data/filtered/filtered-ls6-new.log",
+      "shared_job_ids": 17568
+    },
+    {
+      "identical_full_rows": 7759,
+      "left": "data/filtered/filtered-ls6.log",
+      "right": "data/new/filtered_iw_log.log",
+      "shared_job_ids": 7759
+    },
+    {
+      "identical_full_rows": 0,
+      "left": "data/filtered/filtered-ls6.log",
+      "right": "data/new/filtered_iw_validate.log",
+      "shared_job_ids": 0
+    },
+    {
+      "identical_full_rows": 13949,
+      "left": "data/filtered/filtered-ls6-new.log",
+      "right": "data/new/filtered_iw_log.log",
+      "shared_job_ids": 13949
+    },
+    {
+      "identical_full_rows": 0,
+      "left": "data/filtered/filtered-ls6-new.log",
+      "right": "data/new/filtered_iw_validate.log",
+      "shared_job_ids": 0
+    },
+    {
+      "identical_full_rows": 0,
+      "left": "data/new/filtered_iw_log.log",
+      "right": "data/new/filtered_iw_validate.log",
+      "shared_job_ids": 0
+    }
+  ],
+  "planned_bound_design_check": {
+    "alpha": 0.05,
+    "epsilon": 0.05,
+    "formula_at_zero_misses": "1 - (alpha / comparisons) ** (1 / effective_blocks)",
+    "is_empirical_result": false,
+    "limitations": "Design calculation for the implemented conservative bound; does not establish block independence or select a final block length.",
+    "minimum_equal_independent_blocks": {
+      "1": 59,
+      "16": 113,
+      "32": 126,
+      "4": 86,
+      "64": 140
+    }
+  },
+  "schema_version": 1
+}

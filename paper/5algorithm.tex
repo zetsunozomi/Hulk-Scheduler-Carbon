@@ -1,0 +1,130 @@
+\section{\name{} Controller}
+\label{sec:method}
+
+\subsection{A Budget and a Causal Observation}
+A slider $s\in[0,1]$ selects a completion budget
+$D(s)=T_{\rm ref}[\beta_{\min}+s(\beta_{\max}-\beta_{\min})]$.
+Its left end requests a tighter finish; its right end permits more time to
+reduce carbon. The supported ticks are frozen before evaluation; intermediate
+positions require validation, not curve interpolation. The miss tolerance
+$\epsilon$ and power interval are experiment settings, not additional sliders.
+The chosen $D$ is fixed for the run. At boundary $k$, actual remaining time is
+$b_k=D-(t_k-t_0)$, which may be negative. The policy observes
+\begin{equation}
+ o_k=\left[U_k/U_\star,\ b_k/T_{\rm ref},\ D/T_{\rm ref},\ z_k,\
+                    g_k,\{\phi_{k,n}:n\in\mathcal A\}\right],
+ \label{eq:state}
+\end{equation}
+where $T_{\rm ref}>0$ is a frozen training-set time reference and $z_k$
+summarizes visible queue history and calendar time. Each $\phi_{k,n}$ contains
+node fraction, normalized rate $q_n$, planned work $v_{k,n}/U_\star$, allocation
+duration $d_{k,n}$, requested limit, and efficiency $\eta_n$. These descriptors
+include the shorter final chunk. The vector $g_k$ contains 28 consecutive
+six-hour averages of a causal CI forecast, starting at $t_k$, normalized by a
+positive training reference. A rolling past hour-of-week forecast supplies
+this one-week horizon; the controller is not given a predicted start time.
+
+\paragraph{Decisions without an admission predictor.}
+The main actor and critic consume neither predicted waits nor exposure
+integrated over a predicted execution window. They learn continuation costs
+from complete replay outcomes in one end-to-end training procedure. No
+supervised admission model precedes policy training. After each completed allocation, actual elapsed
+time updates $b_k$ and completed work updates $U_k$ before the next decision.
+Only physical work feasibility masks actions; a predicted deadline cannot
+exclude a request. This removes an explicit wait-calibration prerequisite,
+but the learned policy still depends on relationships present in its training
+environment. It neither eliminates uncertainty nor establishes transfer to
+unseen scheduling rules. Feedback cannot recover a wait already incurred.
+
+The queue history uses counts, node demand, requested limits, elapsed waits,
+occupied nodes, and elapsed running time at fixed lags. It never uses a running
+job's eventual completion time. Missing fields have explicit masks; site
+visibility must be checked rather than inferred from trace completeness.
+The observation is partially observed: hidden Slurm state need not be
+recoverable or Markov given $o_k$.
+
+\subsection{Learning across Power Scenarios}
+For endpoint $e\in\{-,+\}$ let
+$J_e(\pi)=\mathbb E[C_\pi(\rho_e)]/C_{{\rm ref},e}$, where
+$C_{{\rm ref},e}>0$ is the training-set mean for Fixed-4 under that endpoint.
+Let $J_V(\pi)=\Pr_\pi(T>D)$. For each configured budget, the objective is
+\begin{equation}
+ \min_\pi\max_{e\in\{-,+\}}J_e(\pi)
+       \quad\text{subject to}\quad J_V(\pi)\leq\epsilon .
+ \label{eq:objective}
+\end{equation}
+The reference and all normalizers are frozen before validation. By
+Proposition~\ref{prop:endpoints} and the ratio property following it, the maximum
+also covers the interior of the chosen $\rho$ interval for this same policy.
+This is robustness to power-accounting uncertainty; it does not imply
+robustness to arbitrary queue distributions. The chance constraint is a
+population target, not a guarantee for an individual job. If Slurm withholds
+all feasible allocations past $D$, every policy under this interface misses;
+no user-level controller can guarantee completion against unrestricted waits.
+
+We optimize Equation~\ref{eq:objective} through
+\begin{equation}
+ \min_\theta\max_{\substack{p\in\Delta_2\\\lambda\geq0}}
+       \sum_e p_eJ_e(\pi_\theta)
+                    +\lambda[J_V(\pi_\theta)-\epsilon],
+ \label{eq:lagrangian}
+\end{equation}
+where $\Delta_2$ is the probability simplex. At training iteration $j$,
+freeze $p,\lambda$ for rollout and PPO updates; then update
+\begin{align}
+ p_e&\leftarrow
+   \frac{p_e\exp(\eta_p\widehat J_e)}
+        {\sum_f p_f\exp(\eta_p\widehat J_f)},\nonumber\\
+ \lambda&\leftarrow
+       [\lambda+\eta_\lambda(\widehat J_V-\epsilon)]_+ .
+ \label{eq:dual}
+\end{align}
+Budget-specific dual variables prevent an easy budget from hiding violations
+at a tight one. One actor is conditioned on the budget; models are trained
+separately per machine--workload panel, without a cross-workload transfer claim.
+
+A shared two-layer, 128-unit ReLU action encoder and mean-pooled context
+produce four masked logits; the value network uses the same width.
+Three value heads estimate the remaining carbon cost at the two endpoints
+and the probability of an eventual deadline miss. For chunk $k$, the actor
+reward is
+\begin{equation}
+ r_k=-\sum_e p_e\frac{C_k(\rho_e)}{C_{{\rm ref},e}}
+        -\lambda\,\mathbf1\{k=K-1,\ T>D\}.
+ \label{eq:reward}
+\end{equation}
+The carbon increment includes the entire allocation. All returns use
+$\gamma=1$ and complete episodes. Their sum is exactly the negative
+Lagrangian cost up to the constant $\lambda\epsilon$, regardless of how many
+chunks the run needs. A fixed per-chunk discount would instead favor moving
+cost to later chunks. Value heads fit undiscounted Monte Carlo returns;
+the weighted cost advantage gives the PPO update. A missed deadline does not
+terminate training work or discard the job's later carbon.
+
+This construction reuses each execution to train both carbon heads and the
+miss head; it does not require a simulator run for every power parameter.
+The maximization is over expected episode cost, not a separate worst endpoint
+chosen at every chunk. PPO and the dual updates are numerical approximations,
+so validation and test must evaluate the attained carbon--deadline tradeoff.
+
+\subsection{Selection and Submission}
+Before evaluation, we freeze an empirical selection rule: among complete
+validation cohorts with observed miss rate at most $\epsilon$, select the
+checkpoint minimizing the endpoint objective. Apply the same rule to baseline
+selection. If none qualifies, retain the complete candidate with the smallest
+miss rate as a labeled fallback. Empirical target attainment is distinct from
+a confidence bound supporting population feasibility; an inconclusive bound
+does not prove infeasibility. Test reports every configured budget and seed.
+The deployed action
+rule remains the same categorical sampling rule used for evaluation; changing
+to argmax requires a separate validation because it changes the policy.
+
+The execution interface needs a profile, budget, visible queue snapshots, and
+a causal CI feed. It writes the selected node count and time limit into the
+submission and invokes \texttt{sbatch}~\cite{slurmsbatch}. The training process
+must save its checkpoint before allocation expiry; a wrapper cannot checkpoint
+a process after Slurm has killed it. Resubmission occurs only after a completed
+checkpoint and terminal job status are confirmed. A job-ID log prevents duplicate
+submission after wrapper restart. Missing inputs select a preconfigured fixed
+policy, whose outcomes remain part of evaluation. This describes the intended
+interface; live deployment is not an established result of this draft.

@@ -1,0 +1,266 @@
+\section{Evaluation}
+\label{sec:evaluation}
+
+\noindent\textbf{Evidence status.} The following four packages are reserved
+experiment designs and result slots. They specify the minimum evidence needed
+for the paper's claims; they do not report completed experiments. The historical data were previously used in a train/validation split. We
+therefore use a retrospective chronological benchmark, disclosing prior use
+and fixing this revision's train/validation/test intervals before execution.
+Fit on training and select on validation; do not revise methods using the
+new test outcomes. This protocol does not create a previously unseen holdout.
+
+\subsection{E1: Are the Work and Contention Scenarios Sound?}
+\slot{E1: inputs and scenario contract}{
+Use Figure~12 of AMSP's March 2024 revision~\cite{chen2024amsp}: LLaMA-7B/13B/30B,
+BF16, 4096-token sequences, and fixed global batch. Its 32/128/512/1024-GPU
+points map to 4/16/64/128 eight-A800 nodes. Archive PDF hash, vector-bar
+extraction, units, and the simulation configuration. Audit input workloads,
+state initialization, work accounting, and independent wait probes.
+Scenario statistics and validation outcomes: \pending{E1}.}
+
+\paragraph{What the traces represent.}
+A background job supplies a tuple of submission time, node demand, requested
+wall time, and occupied duration. These tuples define rigid, homogeneous-node
+workloads with no modeled network or I/O interference. Each source's time
+order and joint width--duration structure remain intact; traces are not pooled.
+The nominal cluster has 128 nodes, matching the profile testbed's size. This
+is a declared experimental capacity, not an estimate of either source cluster.
+Old durations specify scenario demands; they do not predict the old programs'
+runtimes on A800s. Queue state and waits are regenerated under the declared
+scheduler. Conditional on identical tuples, initial state, and scheduler,
+changing hardware labels cannot change admission. That conditional property
+neither makes workloads hardware-independent nor establishes universal transfer.
+
+\paragraph{Replay and validation.}
+The main scheduler is a node-level conservative-backfill approximation, not
+Slurm itself. Rebuild background state from an empty state at the declared
+trace-prefix origin, excluding at least 28 days before scored arrivals and
+checking prefix sensitivity in development. Do not transplant historical starts
+or running allocations into the constructed cluster. Methods branch from the
+same background state; their requests then affect subsequent admissions.
+State continues across all chunks. Original observed waits are not ground
+truth for this constructed scenario. Verify scheduling mechanics on
+independently solvable cases and evaluate the predictor on held-out simulator
+probes; source-calendar tests preserve chronology and report censoring.
+
+\begin{table}[t]
+\centering\small
+\begin{tabular}{@{}p{0.42\linewidth}p{0.50\linewidth}@{}}
+\toprule
+Input / check & Reserved evidence \\
+\midrule
+Trace demand and burstiness & Pending: counts, widths, durations \\
+Scenario contention & Pending: occupancy and wait tails \\
+Published throughput input & AMSP Fig.\ 12; extraction archived \\
+State and work conservation & Pending: scheduling/accounting checks \\
+Prediction vs.\ probe wait & Pending: errors and coverage \\
+Unmeasured execution costs & Declared overhead scenarios \\
+\bottomrule
+\end{tabular}
+\caption{Input and validity results placeholder. Report both source workloads
+separately, including time zones, cleaning, clipping, and calendar blocks.
+Probe labels come from the simulator; they are not observed alternative
+requests on a production cluster.}
+\label{tab:validity}
+\end{table}
+
+\paragraph{Execution inputs.}
+Figure~12 reports tokens per GPU per second, $z_n$; convert to updates per
+hour as $q_n=3600(8n)z_n/(1024\cdot4096)$. The 1024-sequence batch follows
+from the source's stated micro-batch and accumulation settings. Extract only
+published points; 64- and 256-GPU points are absent. For each model, freeze
+$U_\star=\lceil192q_4\rceil$ before scheduling experiments. This chooses a
+workload of approximately 192 useful-compute hours on four nodes; overhead
+and rounding determine the chunk count, rather than a convergence target. Use 600 seconds of total allocated overhead per chunk, split equally
+between initialization/restart and saving, as an explicit scenario. E4 varies
+this unmeasured cost. No checkpoint implementation, final-quality equivalence,
+or complete-node power measurement is claimed.
+
+\subsection{E2: Is Adaptation Better than Strong Alternatives?}
+\slot{E2: primary comparison}{
+Evaluate paired initial arrivals for both source workloads and all three published profiles.
+Use EIA's Texas ERCOT average consumption-based CO$_2$ intensity as the primary
+scenario~\cite{eia2026gridmonitor}. Set $T_{\rm ref}$ to the fastest fixed
+training mean TAT and $D_{\rm hi}$ to the training Fixed-4 95th-percentile TAT.
+Use $\beta_{\min}=1$, $\beta_{\max}=D_{\rm hi}/T_{\rm ref}$, and
+$s\in\{0,1/4,1/2,1\}$. This sets the budget span, not a feasibility guarantee.
+Freeze the grid, miss tolerance, power interval, seeds, and selection rule before test access. Compare \name{} with every fixed scale, a validation-fitted
+fixed mixture, plan-once control, and rollout planning. Main figure, carbon ratios,
+miss rates, TAT, and node-hours: \pending{E2}.}
+
+\paragraph{Baselines.}
+Fixed-4/16/64/128 retain the same scale across all chunks and use the identical
+work, checkpoint, and final-request rules. \emph{Best-Fixed} is selected on
+validation for each budget. \emph{Fixed-Mix} samples one scale at the start of
+a run and keeps it: its four mixture weights solve the same endpoint objective
+and miss constraint using validation statistics. Mixture feasibility depends
+on the mixture of miss probabilities, not on an interpolated mean TAT.
+All four fixed points remain visible even if dominated.
+
+For the planning baselines only, fit a request-conditioned boosted regressor
+for $\log(1+w)$; chronological training residuals supply 32 equal-mass atoms
+of $\widehat F_{k,n}$. Its causal exposure estimate is
+\begin{equation}
+ \widehat L_{k,n}=n\,\mathbb E_{w\sim\widehat F_{k,n}}
+ \left[\int_{t_k+w}^{t_k+w+d_{k,n}}\widehat c_{t_k}(s)\,ds\right].
+ \label{eq:forecast}
+\end{equation}
+E1 reports probe errors and coverage to document this approximation; prediction
+accuracy is not an acceptance criterion for \name{}.
+
+\emph{Rollout-MPC} enumerates two upcoming scale choices and a constant-scale
+tail to completion, uses the auxiliary wait model and causal CI forecast, and executes
+only the first action before replanning. There are at most $4^3$ candidate
+plans. Future queue observations are unavailable, so the rollout holds the
+current queue and wait-model calendar features fixed, updates request length
+and the forecast integration window, and samples conditional waits. Its carbon
+estimate adds past endpoint costs using released CI, retaining each chunk's
+submission forecast for unreleased intervals, to the planned continuation. It selects the
+lowest worst-endpoint normalized carbon plan meeting the estimated miss tolerance, or the
+plan with the smallest miss estimate if none qualifies. This is a strong
+causal baseline with an explicit approximation, not a clairvoyant scheduler.
+\emph{Plan-once} runs the identical planner only at the first submission and
+executes its selected scale sequence and constant tail without replanning.
+It receives the initial queue and forecast, allowing a planned within-run
+mix while removing feedback from later admissions. Both planning variants
+may tune their internal risk threshold on validation; test compares them
+under the same actual miss tolerance as every other method.
+
+\begin{figure*}[t]
+\centering
+\figslot{1.65in}{E2: Two source workloads $\times$ three published AMSP profiles.\\
+All fixed scales; Fixed-Mix; Plan-once; Rollout-MPC; \name{}.\\
+Mean TAT versus modeled carbon at a declared $\rho$; mark observed miss violations and label slider ticks.\\
+Companion labels: worst-endpoint carbon ratio and deadline-miss rate.}
+\caption{Primary results placeholder. Every point completes the same prescribed
+work from paired initial arrivals. Report hours, modeled carbon normalized
+within each contention--profile panel, 95\% paired block intervals, the power
+scenario, and the frozen budget grid. Mark observed miss-target violations
+explicitly. Fixed-Mix is an executable per-run randomized policy; connecting
+other points does not imply an evaluated intermediate policy. Report every
+slider tick; do not smooth reversals or select settings after test.}
+\label{fig:main}
+\end{figure*}
+
+\paragraph{Paired analysis and selection.}
+An episode is one initial arrival and complete run. Resample contiguous calendar
+blocks jointly across methods, with RL seeds as another replication level.
+Blocks must cover the history window and development dependence. Training fixes
+budgets and normalizers; validation fixes operating points. The primary
+comparator is the strongest validation-selected non-RL method meeting the
+empirical miss target at the same budget. Fixed-128 is not the automatic
+denominator. Confidence bounds are reported separately from this frozen
+empirical selection rule.
+
+Report the endpoint ratio of \emph{mean} carbon costs, mean and p95 TAT,
+miss rate, and allocated node-hours per panel; macro-averages use dimensionless
+panel ratios. Carbon includes all completed runs, including deadline misses.
+Episodes crossing a split must be purged or assigned entirely to one split,
+and any run not observed to completion is reported as censored, not silently
+dropped. Texas CI must have a documented source, release time, time zone,
+resolution, and missing-data rule. If CI and queue years do not overlap,
+their alignment is a labeled counterfactual pairing.
+
+\paragraph{Result slot and inference.}
+\pending{E2: effect sizes, intervals, eligible budgets, and failed panels}.
+An observed budgeted carbon reduction requires both frozen methods to meet
+the miss target on complete validation and test cohorts. This describes
+observed tradeoffs, not population feasibility. A stronger statistical claim
+also requires joint endpoint cost intervals and one-sided miss bounds to pass
+the declared criteria. Report inconclusive bounds, including for zero misses;
+nearby arrivals do not create independent calendar blocks. Gains over
+Fixed-128 alone establish neither adaptive nor RL value. An inspected former
+test period cannot be relabeled as untouched.
+
+\subsection{E3: Does Feedback Beat a Learned Sequence?}
+\slot{E3: matched feedback comparison}{
+Reuse E2 \name{}, Plan-once, and Rollout-MPC. Train one additional
+\emph{Precommitted-RL} policy with the same architecture, budget grid, seeds,
+arrival sampling, and episode-interaction budget. Before its first submission,
+it samples an entire scale sequence using only initial public queue/CI inputs,
+remaining planned work, and $D$ minus planned allocation time. It receives no
+later queue observations, CI releases, or realized elapsed time. Evaluate at
+one prespecified budget per panel. Results: \pending{E3}.}
+
+\begin{table}[t]
+\centering\small
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Method / variant & Carbon & Misses & Node-h \\
+\midrule
+\name{} & --- & --- & --- \\
+Precommitted-RL & --- & --- & --- \\
+Rollout-MPC & --- & --- & --- \\
+Plan-once & --- & --- & --- \\
+\bottomrule
+\end{tabular}
+\caption{Feedback results placeholder at prespecified budgets. All dashes
+are pending E3 results. Use E2 normalization and paired intervals; compare
+carbon jointly with misses. Precommitted-RL changes its scale within a run
+but commits its choices before seeing subsequent outcomes.}
+\label{tab:ablation}
+\end{table}
+
+The learned-sequence comparison removes feedback while retaining the capacity
+to mix scales and optimize from completed episodes. Its remaining-time input
+is planned allocation time only, not a zero-wait assumption in the execution
+environment: all actual waits and costs enter training returns and evaluation.
+Archive each full plan before executing it. Neither policy needs an admission
+predictor. Matching interaction budgets prevents extra replay from explaining
+a feedback gain, although it cannot guarantee equal optimization quality.
+Plan-once versus MPC separately tests replanning within an explicit planner.
+Report single-chunk frequency: those runs offer no later decision. A fixed-scale
+win without a learned-sequence win supports mixing, not a feedback advantage;
+a win only over MPC could reflect its modeling error. Action frequencies alone
+do not establish either claim. Results: \pending{E3: feedback increment}.
+
+\subsection{E4: Does the Conclusion Depend on the Power Model?}
+\slot{E4: robustness from existing logs}{
+Freeze policies and recompute every E2 execution over the declared $\rho$
+interval, including both endpoints. Report pairwise break-even points,
+componentwise exposure differences, and the independent scale-error radius
+supported by Equation~\ref{eq:box}. Compare the robust policy with a
+single-endpoint-trained counterpart at one prespecified budget per panel.
+Reuse existing logs for parameter sensitivity; queue and forecast perturbations
+require fresh replay. Outcomes: \pending{E4}.}
+
+\begin{figure}[t]
+\centering
+\figslot{1.05in}{E4: carbon advantage versus $\rho$.\\
+Endpoint intervals; zero-gain line; break-even $\rho$.\\
+Fixed policies and comparator throughout.\\
+Small inset: endpoint-trained versus robust policy.}
+\caption{Power-sensitivity results placeholder. The parameter range is an
+assumed scenario, not a measured power range. Endpoint comparisons characterize
+the interval only under Equation~\ref{eq:power}. Plot uncertainty from paired
+execution samples separately from power-scenario variation.}
+\label{fig:power}
+\end{figure}
+
+Figure~\ref{fig:power} reserves the sensitivity result.
+\pending{E4: interval-wide advantage or the exact region of reversal}.
+For $\Delta A=A_\pi-A_b$ and $\Delta B=B_\pi-B_b$, a possible break-even point
+is $\rho^\star=-\Delta B/(\Delta A-\Delta B)$ when the denominator is nonzero.
+A point outside the declared interval is not an in-range reversal.
+Simultaneous one-sided endpoint intervals, obtained from the paired block
+resamples, support an interval-wide statistical statement; two point estimates
+alone do not. A nominal gain that reverses near the selected power assumption
+must be reported as model-sensitive.
+
+\paragraph{Does the simulated environment determine the gain?}
+At one prespecified budget and the 7B profile, reuse frozen full-policy and
+Rollout-MPC models in each source workload. Independently change (i) background
+widths to $\min(2n,128)$, reporting the capped fraction, (ii) scheduling to
+strict FCFS, and (iii) total chunk overhead to 60 or 1800 seconds. Preserve
+physical budgets, workload, CI calendars, and all fitted parameters. These
+four additional settings require new replay, not new training or hardware
+measurements. Width and scheduler changes test learned queue relationships;
+E1 prediction accuracy alone cannot establish this robustness. Report carbon and misses together: a gain that disappears or
+violates the budget limits the claim. They test the selected contention and
+overhead scenarios, not every possible cluster. Results: \pending{E4: environment sensitivity}.
+
+A compact reuse analysis reports E2 outcomes by held-out calendar block and
+CI variability. A constant-CI rescore of the same logs removes timing-related
+carbon differences for those executions; it does not simulate policies reacting
+to constant CI. No cross-region, multi-user-adoption, or facility-wide
+experiment is needed for the scoped claim.

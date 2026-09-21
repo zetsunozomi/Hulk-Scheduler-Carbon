@@ -1,0 +1,450 @@
+{
+  "schema_version": 1,
+  "status": "published_input_not_new_experiment",
+  "paper": "AMSP: Reducing Communication Overhead of ZeRO for Efficient LLM Training",
+  "version": "arXiv:2311.00257v2",
+  "version_date": "2024-03-13",
+  "url": "https://arxiv.org/pdf/2311.00257v2",
+  "pdf_sha256": "7c5bb6a4d3fff9e63e837b6c9be7a14a8c8e9f39898ab910f6d0fdf72d001404",
+  "figure": 12,
+  "page_one_based": 10,
+  "series": "Our Work",
+  "method": "Extract filled blue PDF vector-bar rectangles; linearly map axis; round TGS to nearest 10. Digitization is not raw benchmark data or a measurement confidence interval.",
+  "gpus_per_node": 8,
+  "hardware": "8 x A800 80GB per node, NVLink; 4 HDR InfiniBand NICs per node, without SHARP; 128-node reported testbed",
+  "tokens_per_update": 4194304,
+  "global_batch_sequences": 1024,
+  "batch_inference": "Source says 4M tokens; exact 1024 * 4096 inferred from stated M=128 at 8 GPUs and M=1 at 1024 GPUs.",
+  "allowed_nodes": [
+    4,
+    16,
+    64,
+    128
+  ],
+  "selected_gpus": [
+    32,
+    128,
+    512,
+    1024
+  ],
+  "unpublished_points_not_interpolated": [
+    64,
+    256
+  ],
+  "rows": [
+    {
+      "model": "7B",
+      "gpus": 8,
+      "nodes": 1,
+      "tgs_digitized": 4360,
+      "tgs_before_rounding": 4362.732352323705,
+      "bar_rectangle_pdf_points": [
+        364.8830261230469,
+        74.75514221191406,
+        369.8929748535156,
+        118.89404296875
+      ],
+      "axis_pdf_points": [
+        68.3077392578125,
+        118.89404296875
+      ],
+      "axis_tgs_max": 5000,
+      "selected": false
+    },
+    {
+      "model": "7B",
+      "gpus": 32,
+      "nodes": 4,
+      "tgs_digitized": 4360,
+      "tgs_before_rounding": 4362.732352323705,
+      "bar_rectangle_pdf_points": [
+        409.9725341796875,
+        74.75514221191406,
+        414.98248291015625,
+        118.89404296875
+      ],
+      "axis_pdf_points": [
+        68.3077392578125,
+        118.89404296875
+      ],
+      "axis_tgs_max": 5000,
+      "selected": true
+    },
+    {
+      "model": "7B",
+      "gpus": 128,
+      "nodes": 16,
+      "tgs_digitized": 4230,
+      "tgs_before_rounding": 4226.397673279393,
+      "bar_rectangle_pdf_points": [
+        455.0620422363281,
+        76.13447570800781,
+        460.07196044921875,
+        118.89404296875
+      ],
+      "axis_pdf_points": [
+        68.3077392578125,
+        118.89404296875
+      ],
+      "axis_tgs_max": 5000,
+      "selected": true
+    },
+    {
+      "model": "7B",
+      "gpus": 512,
+      "nodes": 64,
+      "tgs_digitized": 3890,
+      "tgs_before_rounding": 3885.5594674748977,
+      "bar_rectangle_pdf_points": [
+        500.15155029296875,
+        79.58282470703125,
+        505.1614990234375,
+        118.89404296875
+      ],
+      "axis_pdf_points": [
+        68.3077392578125,
+        118.89404296875
+      ],
+      "axis_tgs_max": 5000,
+      "selected": true
+    },
+    {
+      "model": "7B",
+      "gpus": 1024,
+      "nodes": 128,
+      "tgs_digitized": 3480,
+      "tgs_before_rounding": 3476.553922148247,
+      "bar_rectangle_pdf_points": [
+        545.2410278320312,
+        83.72084045410156,
+        550.2509765625,
+        118.89404296875
+      ],
+      "axis_pdf_points": [
+        68.3077392578125,
+        118.89404296875
+      ],
+      "axis_tgs_max": 5000,
+      "selected": true
+    },
+    {
+      "model": "13B",
+      "gpus": 8,
+      "nodes": 1,
+      "tgs_digitized": 2270,
+      "tgs_before_rounding": 2273.139009611417,
+      "bar_rectangle_pdf_points": [
+        360.2488098144531,
+        138.66033935546875,
+        365.3840026855469,
+        184.65621948242188
+      ],
+      "axis_pdf_points": [
+        134.06991577148438,
+        184.65621948242188
+      ],
+      "axis_tgs_max": 2500,
+      "selected": false
+    },
+    {
+      "model": "13B",
+      "gpus": 32,
+      "nodes": 4,
+      "tgs_digitized": 2200,
+      "tgs_before_rounding": 2199.8113852940255,
+      "bar_rectangle_pdf_points": [
+        406.465576171875,
+        140.1440887451172,
+        411.60076904296875,
+        184.65621948242188
+      ],
+      "axis_pdf_points": [
+        134.06991577148438,
+        184.65621948242188
+      ],
+      "axis_tgs_max": 2500,
+      "selected": true
+    },
+    {
+      "model": "13B",
+      "gpus": 128,
+      "nodes": 16,
+      "tgs_digitized": 2130,
+      "tgs_before_rounding": 2126.4845150734914,
+      "bar_rectangle_pdf_points": [
+        452.68231201171875,
+        141.62782287597656,
+        457.8175048828125,
+        184.65621948242188
+      ],
+      "axis_pdf_points": [
+        134.06991577148438,
+        184.65621948242188
+      ],
+      "axis_tgs_max": 2500,
+      "selected": true
+    },
+    {
+      "model": "13B",
+      "gpus": 512,
+      "nodes": 64,
+      "tgs_digitized": 1940,
+      "tgs_before_rounding": 1939.5009206014436,
+      "bar_rectangle_pdf_points": [
+        498.8990478515625,
+        145.41134643554688,
+        504.03424072265625,
+        184.65621948242188
+      ],
+      "axis_pdf_points": [
+        134.06991577148438,
+        184.65621948242188
+      ],
+      "axis_tgs_max": 2500,
+      "selected": true
+    },
+    {
+      "model": "13B",
+      "gpus": 1024,
+      "nodes": 128,
+      "tgs_digitized": 1890,
+      "tgs_before_rounding": 1891.8382287290392,
+      "bar_rectangle_pdf_points": [
+        545.1157836914062,
+        146.3757781982422,
+        550.2509765625,
+        184.65621948242188
+      ],
+      "axis_pdf_points": [
+        134.06991577148438,
+        184.65621948242188
+      ],
+      "axis_tgs_max": 2500,
+      "selected": true
+    },
+    {
+      "model": "30B",
+      "gpus": 32,
+      "nodes": 4,
+      "tgs_digitized": 850,
+      "tgs_before_rounding": 850.0000150819417,
+      "bar_rectangle_pdf_points": [
+        406.465576171875,
+        214.58644104003906,
+        411.60076904296875,
+        250.41839599609375
+      ],
+      "axis_pdf_points": [
+        199.8321075439453,
+        250.41839599609375
+      ],
+      "axis_tgs_max": 1200,
+      "selected": true
+    },
+    {
+      "model": "30B",
+      "gpus": 128,
+      "nodes": 16,
+      "tgs_digitized": 820,
+      "tgs_before_rounding": 816.0001303079763,
+      "bar_rectangle_pdf_points": [
+        452.68231201171875,
+        216.01971435546875,
+        457.8175048828125,
+        250.41839599609375
+      ],
+      "axis_pdf_points": [
+        199.8321075439453,
+        250.41839599609375
+      ],
+      "axis_tgs_max": 1200,
+      "selected": true
+    },
+    {
+      "model": "30B",
+      "gpus": 512,
+      "nodes": 64,
+      "tgs_digitized": 790,
+      "tgs_before_rounding": 787.0999929718151,
+      "bar_rectangle_pdf_points": [
+        498.8990478515625,
+        217.23800659179688,
+        504.03424072265625,
+        250.41839599609375
+      ],
+      "axis_pdf_points": [
+        199.8321075439453,
+        250.41839599609375
+      ],
+      "axis_tgs_max": 1200,
+      "selected": true
+    },
+    {
+      "model": "30B",
+      "gpus": 1024,
+      "nodes": 128,
+      "tgs_digitized": 730,
+      "tgs_before_rounding": 727.5999231424252,
+      "bar_rectangle_pdf_points": [
+        545.1157836914062,
+        219.74624633789062,
+        550.2509765625,
+        250.41839599609375
+      ],
+      "axis_pdf_points": [
+        199.8321075439453,
+        250.41839599609375
+      ],
+      "axis_tgs_max": 1200,
+      "selected": true
+    }
+  ],
+  "primary_overhead_scenario_seconds_per_chunk": 600,
+  "overhead_sensitivity_seconds_per_chunk": [
+    60,
+    600,
+    1800
+  ],
+  "overhead_is_measured": false,
+  "work_rule": "ceil(192 hours * published four-node updates/hour), fixed thereafter for every method and sensitivity case",
+  "workloads": {
+    "7B": {
+      "name": "AMSP-LLaMA-7B",
+      "optimizer_updates": 22993,
+      "global_batch": 1024,
+      "gpus_per_node": 8,
+      "profile_status": "published",
+      "sequence_length": 4096,
+      "precision": "BF16",
+      "software": "AMSP arXiv:2311.00257v2 Figure 12 Our Work; FlashAttention-v2; TP=PP=1",
+      "correctness_artifact": "Simulation work-accounting checks only. No AMSP checkpoint switching implementation or convergence measurement is claimed.",
+      "provenance": "Published steady-state TGS digitized from PDF vector bars; 1024 sequences per optimizer update inferred from 8 GPUs * 128 accumulation, length 4096. Initialization/restart/save values are declared scenarios, not reported measurements.",
+      "profiles": {
+        "4": {
+          "updates_per_hour": 119.750976562,
+          "initialization_seconds": 300,
+          "restart_seconds": 300,
+          "checkpoint_seconds": 300,
+          "microbatch": 1,
+          "accumulation": 32
+        },
+        "16": {
+          "updates_per_hour": 464.721679688,
+          "initialization_seconds": 300,
+          "restart_seconds": 300,
+          "checkpoint_seconds": 300,
+          "microbatch": 1,
+          "accumulation": 8
+        },
+        "64": {
+          "updates_per_hour": 1709.47265625,
+          "initialization_seconds": 300,
+          "restart_seconds": 300,
+          "checkpoint_seconds": 300,
+          "microbatch": 1,
+          "accumulation": 2
+        },
+        "128": {
+          "updates_per_hour": 3058.59375,
+          "initialization_seconds": 300,
+          "restart_seconds": 300,
+          "checkpoint_seconds": 300,
+          "microbatch": 1,
+          "accumulation": 1
+        }
+      }
+    },
+    "13B": {
+      "name": "AMSP-LLaMA-13B",
+      "optimizer_updates": 11602,
+      "global_batch": 1024,
+      "gpus_per_node": 8,
+      "profile_status": "published",
+      "sequence_length": 4096,
+      "precision": "BF16",
+      "software": "AMSP arXiv:2311.00257v2 Figure 12 Our Work; FlashAttention-v2; TP=PP=1",
+      "correctness_artifact": "Simulation work-accounting checks only. No AMSP checkpoint switching implementation or convergence measurement is claimed.",
+      "provenance": "Published steady-state TGS digitized from PDF vector bars; 1024 sequences per optimizer update inferred from 8 GPUs * 128 accumulation, length 4096. Initialization/restart/save values are declared scenarios, not reported measurements.",
+      "profiles": {
+        "4": {
+          "updates_per_hour": 60.424804688,
+          "initialization_seconds": 300,
+          "restart_seconds": 300,
+          "checkpoint_seconds": 300,
+          "microbatch": 1,
+          "accumulation": 32
+        },
+        "16": {
+          "updates_per_hour": 234.008789062,
+          "initialization_seconds": 300,
+          "restart_seconds": 300,
+          "checkpoint_seconds": 300,
+          "microbatch": 1,
+          "accumulation": 8
+        },
+        "64": {
+          "updates_per_hour": 852.5390625,
+          "initialization_seconds": 300,
+          "restart_seconds": 300,
+          "checkpoint_seconds": 300,
+          "microbatch": 1,
+          "accumulation": 2
+        },
+        "128": {
+          "updates_per_hour": 1661.1328125,
+          "initialization_seconds": 300,
+          "restart_seconds": 300,
+          "checkpoint_seconds": 300,
+          "microbatch": 1,
+          "accumulation": 1
+        }
+      }
+    },
+    "30B": {
+      "name": "AMSP-LLaMA-30B",
+      "optimizer_updates": 4483,
+      "global_batch": 1024,
+      "gpus_per_node": 8,
+      "profile_status": "published",
+      "sequence_length": 4096,
+      "precision": "BF16",
+      "software": "AMSP arXiv:2311.00257v2 Figure 12 Our Work; FlashAttention-v2; TP=PP=1",
+      "correctness_artifact": "Simulation work-accounting checks only. No AMSP checkpoint switching implementation or convergence measurement is claimed.",
+      "provenance": "Published steady-state TGS digitized from PDF vector bars; 1024 sequences per optimizer update inferred from 8 GPUs * 128 accumulation, length 4096. Initialization/restart/save values are declared scenarios, not reported measurements.",
+      "profiles": {
+        "4": {
+          "updates_per_hour": 23.345947266,
+          "initialization_seconds": 300,
+          "restart_seconds": 300,
+          "checkpoint_seconds": 300,
+          "microbatch": 1,
+          "accumulation": 32
+        },
+        "16": {
+          "updates_per_hour": 90.087890625,
+          "initialization_seconds": 300,
+          "restart_seconds": 300,
+          "checkpoint_seconds": 300,
+          "microbatch": 1,
+          "accumulation": 8
+        },
+        "64": {
+          "updates_per_hour": 347.16796875,
+          "initialization_seconds": 300,
+          "restart_seconds": 300,
+          "checkpoint_seconds": 300,
+          "microbatch": 1,
+          "accumulation": 2
+        },
+        "128": {
+          "updates_per_hour": 641.6015625,
+          "initialization_seconds": 300,
+          "restart_seconds": 300,
+          "checkpoint_seconds": 300,
+          "microbatch": 1,
+          "accumulation": 1
+        }
+      }
+    }
+  }
+}

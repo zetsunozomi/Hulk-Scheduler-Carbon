@@ -1,0 +1,88 @@
+\section{Problem and Adaptive Opportunity}
+\label{sec:problem}
+
+\paragraph{Control and work.}
+A target run consists of $U_\star$ prescribed optimizer updates, executed as
+sequential checkpointed chunks. At boundary $k$, time is $t_k$ and remaining
+work is $U_k$. The action is a feasible node count
+$n_k\in\mathcal A=\{4,16,64,128\}$. The next chunk is submitted immediately;
+there is no intentional deferral, concurrent reservation, or resizing of a
+running chunk. Scale choices may rise or fall between allocations; ``down
+means using fewer than the maximum supported nodes, not irreversible shrinking. We use $H=48$ hours as the study's maximum requested wall time,
+subject to the chosen partition's limits; it is not a universal Slurm limit.
+
+For sharded or replicated data parallelism without tensor or pipeline
+parallelism, let $g$ be GPUs per node ($g=8$ for the published AMSP profiles),
+$b$ the per-GPU micro-batch, and $a_n$ accumulation. Each
+action satisfies
+\begin{equation}
+ B_\star=ngba_n,\qquad a_n=B_\star/(ngb)\in\mathbb N.
+ \label{eq:batch}
+\end{equation}
+The same data order, sequence length, optimizer-update target, and update-indexed
+learning-rate schedule apply across actions. Accumulation implements the fixed
+batch~\cite{shoeybi2019megatron}; it does not guarantee bitwise equality or equal
+final quality. A configuration that fails the batch, memory, or partition
+constraints is masked for every method.
+
+Published steady-state throughput determines $q_n$, the updates per hour.
+Initialization/restart $r_n$ and complete-checkpoint time $h_n$ are declared
+scenarios, not measurements supplied by the throughput source. Define
+\begin{align}
+ v_{k,n}&=\min\{U_k,\lfloor q_n(H-r_n-h_n)\rfloor\},\nonumber\\
+ d_{k,n}&=r_n+v_{k,n}/q_n+h_n,\label{eq:chunk}\\
+ U_{k+1}&=U_k-v_{k,n_k},\quad
+ t_{k+1}=t_k+w_k+d_{k,n_k}.\nonumber
+\end{align}
+Only positive-progress actions are allowed. The request's wall time is
+$d_{k,n}$ rounded up to the scheduler's time granularity, capped at $H$; the
+job releases resources on completion. Thus the final partial chunk has a
+shorter request, which can change admission. The assumed restart contract includes model,
+optimizer, learning-rate state, global update index, random-state metadata,
+and the next global sample position; this study does not implement or validate
+AMSP state migration. The final output save is included in
+$h_n$. End-to-end turnaround time is $T=t_K-t_0$, including every queue wait
+and allocation interval.
+
+\paragraph{A fixed-scale null case.}
+The following observation defines what scaling profiles alone can establish.
+
+\begin{proposition}[No improvement below the fixed hull]
+\label{prop:hull}
+Suppose update rates and per-node powers are constant for each scale, carbon
+intensity is constant, and there are no waits or restart/checkpoint overheads.
+Every execution of the same work, including one that switches scales, has a
+time--carbon pair in the convex hull of the fixed-scale pairs.
+\end{proposition}
+\noindent\emph{Proof.}
+Let $x_n$ be the fraction of updates executed at scale $n$, so
+$x_n\geq0$ and $\sum_nx_n=1$. If $T_n=U_\star/q_n$ and $C_n$ are the
+fixed-scale totals, additivity gives
+$(T,C)=\sum_nx_n(T_n,C_n)$.\hfill$\square$
+
+This is a statement about mean time--carbon geometry, not a per-job deadline
+guarantee for randomized fixed policies. A preplanned sequence can complete
+individual runs at an intermediate time--carbon point even when a per-run
+fixed mixture violates a deadline. Thus beating a feasible fixed mixture
+alone does not prove that queue feedback is useful. Under real queueing, a request changes
+both its current wait and the time and scheduler state at which the next
+request arrives; the linear decomposition need no longer hold. Likewise,
+time-varying carbon intensity makes an update's carbon depend on its execution
+window. These effects create an opportunity, not a guarantee of an adaptive
+gain. Our main comparison retains all fixed scales, a deployable mixture,
+and a plan-once controller; action-switch frequency alone is not evidence
+of improvement.
+
+\paragraph{What the slider can establish.}
+Let $V_{\cal P}(D)$ be the infimum of the endpoint objective in
+Equation~\ref{eq:objective} over feasible policies in class $\cal P$. These classes describe admissible
+controllers with history, not the expressiveness of a particular network.
+Fixed policies and their per-run mixtures are contained in preplanned
+sequences, which are contained in feedback policies. Therefore
+$V_{\rm feedback}(D)\leq V_{\rm preplanned}(D)\leq V_{\rm fixed}(D)$.
+Each ideal envelope is nonincreasing in $D$, since relaxing the budget retains
+every formerly feasible policy. This is an opportunity bound, not a guarantee
+that finite PPO training finds the envelope. Strict improvement requires
+useful timing or admission variation; the null case above rules out claiming
+it from scaling inefficiency alone. A sequence that beats both fixed points
+still needs a preplanned comparator to establish the value of feedback.

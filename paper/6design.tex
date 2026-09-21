@@ -1,0 +1,93 @@
+\section{Carbon Exposure with Unmeasured Power}
+\label{sec:accounting}
+
+Fix one machine--workload pair; its indices are suppressed below. The mean
+complete-node power assigned to scale $n$ is
+\begin{equation}
+ \widehat P_n=P_0\kappa s_n,\qquad
+ s_n=\rho+(1-\rho)\eta_n,\quad
+ \eta_n=\frac{W_4}{W_n},
+ \label{eq:power}
+\end{equation}
+where $W_n=nU_{\rm profile}/q_n$, $\kappa>0$, $s_4=1$, and
+$0\leq\rho\leq1$. The reference $P_0=1$\,kW fixes a normalization unit; $\kappa$ absorbs the
+unknown workload-specific node-power level. Neither is a reported A800 server
+measurement. We report within-panel carbon ratios and node-hours, rather than
+absolute carbon or specification-based node-power estimates.
+The workload coefficient $\kappa$ sets the four-node power level. The scale
+factor interpolates between constant per-node power ($\rho=1$) and a
+constant-useful-work dynamic-energy limit ($\rho=0$, without overhead).
+$\eta_n$ is a scaling-efficiency ratio, not measured utilization, and $\rho$
+is not the CPU fraction of node power. We use this family as a sensitivity
+model; its parameter interval is a declared scenario, not a confidence interval.
+At constant CI and without overhead, Equation~\ref{eq:power} gives total energy
+$P_0\kappa[\rho W_\pi+(1-\rho)W_4^\star]$, where $W_\pi$ is the
+execution's node-hours and $W_4^\star$ is the cost of doing all target updates
+at four nodes. For $\rho>0$, changing this parameter cannot reverse an energy
+ranking by node-hours. It changes the magnitude of savings in this limit,
+not which execution uses less energy.
+
+For an execution log $\pi$, let $\mathcal I_{\pi,n}$ contain all intervals
+allocated to the target at scale $n$, including restart and checkpoint. With
+realized average grid intensity $c(t)$, define the scale-resolved exposure
+\begin{equation}
+ L_{\pi,n}=n\int_{\mathcal I_{\pi,n}}c(t)\,dt,
+ \qquad
+ C_\pi(\rho)=P_0\kappa\sum_n s_n L_{\pi,n}.
+ \label{eq:exposure}
+\end{equation}
+Power is in kW and time in hours. For the primary EIA scenario, intensity is
+in kgCO$_2$/kWh; absolute $C_\pi$ remains unknown without $\kappa$.
+Non-CO$_2$ greenhouse gases are
+excluded. Replacing $c(t)$ with 1 yields IT energy; summing
+allocated node time yields node-hours without a power assumption. Applying
+the same mean $\widehat P_n$ to all allocated phases is an explicit
+approximation. Phase durations are retained in the log so its effect can be
+examined without claiming phase-specific power measurements.
+
+Writing $A_\pi=\sum_nL_{\pi,n}$ and
+$B_\pi=\sum_n\eta_nL_{\pi,n}$ gives
+\begin{equation}
+ C_\pi(\rho)=P_0\kappa
+              [B_\pi+\rho(A_\pi-B_\pi)].
+ \label{eq:affine}
+\end{equation}
+\begin{proposition}[Endpoint comparison]
+\label{prop:endpoints}
+For fixed policies and execution logs, $C_\pi(\rho)\leq C_b(\rho)$ for every
+$\rho\in[\rho_-,\rho_+]$ if and only if this inequality holds at both
+endpoints. The same statement holds for expected carbon under a fixed
+distribution of arrivals and policy randomness.
+\end{proposition}
+\noindent\emph{Proof.}
+The difference is affine in $\rho$ by Equation~\ref{eq:affine}; its maximum
+on a closed interval occurs at an endpoint. Expectation preserves the affine
+form.\hfill$\square$
+
+The common positive factor $P_0\kappa$ cancels from within-panel
+ratios and rankings. No workload coefficient sweep is needed for these
+comparisons, although unknown coefficients preclude pooling absolute carbon
+across workloads. For a positive affine reference $C_{\rm ref}(\rho)$, the
+ratio $\mathbb E[C_\pi(\rho)]/C_{\rm ref}(\rho)$ is linear-fractional and
+has a derivative of constant sign (or zero). Its worst value also occurs at
+an endpoint. Policies must remain fixed while computing this result: retraining
+at each $\rho$ would evaluate different policies, not certify one policy.
+
+For powers outside this family, Equation~\ref{eq:exposure} remains useful.
+If each scale exposure is no greater than a baseline's, dominance holds for
+all positive scale-power coefficients. Otherwise a reversal is possible,
+and the result must retain a power-model qualification. A more informative
+local test allows $s_n=s_n^0(1+\delta_n)$ for $n\ne4$, with
+$|\delta_n|\leq d<1$ and $s_4=1$. Writing
+$\Delta L_n=L_{\pi,n}-L_{b,n}$, the worst normalized difference is exactly
+\begin{equation}
+ \max_{\delta}\frac{C_\pi-C_b}{P_0\kappa}
+ =\sum_n s_n^0\Delta L_n
+       +d\sum_{n\ne4}s_n^0|\Delta L_n|.
+ \label{eq:box}
+\end{equation}
+This tests independent scale-power errors using the same logs, without
+adding a power-model layer. Queueing draws no
+allocated energy at this accounting boundary. We exclude embodied emissions,
+idle and background-job power, and shared facility overhead. The estimated
+quantity is job-attributed operational carbon, not avoided grid emissions.

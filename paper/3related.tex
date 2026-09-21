@@ -1,0 +1,34 @@
+\section{Related Work}
+
+\paragraph{Carbon-aware elasticity.}
+CarbonScaler varies a batch workload's cloud allocation with carbon intensity
+and uses a greedy marginal-resource allocation algorithm
+~\cite{hanafy2023carbonscaler}. It already establishes resource elasticity as a
+carbon-control mechanism. \name{} addresses the additional delay between
+requesting resources and obtaining them, as well as repeated admission for
+checkpointed chunks. A direct transplant of cloud autoscaling would change
+the available controls; our controls retain repeated admissions and charge every queue wait. Studies of temporal and spatial shifting
+also show that flexibility and overhead constrain attainable carbon savings
+~\cite{sukprasert2024limitations}. We report the scope of the opportunity rather
+than assume that lower-carbon timing is always available.
+
+\paragraph{User-side provisioning.}
+QBETS estimates wait bounds from historical time series~\cite{nurmi2007qbets};
+our main policy learns completed-run costs without an admission estimator.
+Mirage uses learning to provision follow-up resources for low-interruption
+services on batch GPU clusters~\cite{ding2023mirage}. We use its trace-replay
+infrastructure, but optimize the node count of a ready training chunk under a
+completion budget. Scheduler-level methods such as DRAS act on the scheduling
+policy itself~\cite{fan2021deep}. Our policy has no such authority and cannot
+observe hidden priority or reservation state.
+
+\paragraph{Constrained learning and accounting uncertainty.}
+Constrained policy optimization separates a resource objective from a service
+constraint~\cite{achiam2017cpo}; PPO supplies a practical actor--critic optimizer
+~\cite{schulman2017ppo}. We use these established ideas, without claiming a new
+general-purpose RL optimizer or a constraint-satisfaction theorem. The method
+contribution is the request-conditioned decision representation and its
+coupling to a tractable power-scenario objective. Unlike operational-carbon
+measurement, the latter assesses consequences conditional on a model. An
+algebraic sensitivity certificate does not validate the model's physical
+parameters.

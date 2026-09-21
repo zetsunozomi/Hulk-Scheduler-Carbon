@@ -1,0 +1,57 @@
+\documentclass[letterpaper]{article}
+\usepackage[submission]{aaai2027}
+\usepackage[hyphens]{url}
+\usepackage{graphicx}
+\urlstyle{rm}
+\def\UrlFont{\rm}
+\usepackage{natbib}
+\usepackage{caption}
+\frenchspacing
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{booktabs}
+\pdfinfo{/TemplateVersion (2027.1)}
+\setcounter{secnumdepth}{2}
+\newcommand{\name}{ScaleDown}
+\newcommand{\pending}[1]{\textbf{[#1: pending]}}
+\newcommand{\slot}[2]{\noindent\fbox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{\small\textbf{#1 --- experiment placeholder.} #2}}}
+\newcommand{\figslot}[2]{\fbox{\parbox[c][#1][c]{0.94\linewidth}{\centering\small\textbf{RESULT FIGURE PLACEHOLDER}\\[4pt]#2}}}
+\newtheorem{proposition}{Proposition}
+
+\title{\name{}: Learning Queue-Aware Resource Requests\\
+for Carbon-Efficient Training under Completion Budgets}
+\author{Anonymous Submission}
+\affiliations{}
+\begin{document}
+\maketitle
+\begin{abstract}
+An ordinary user of a shared GPU cluster controls resource requests, while the
+batch scheduler controls when they run. This separation makes carbon-aware
+training a sequential decision problem: node count changes training efficiency,
+queue wait, and the carbon intensity encountered during execution. We present
+\name{}, a controller that selects the node count of each checkpointed training
+chunk under a slider-selected completion budget. Its policy combines remaining
+work and time with public queue history and a causal carbon-intensity forecast
+sequence, without requiring an admission-time predictor. An undiscounted, constrained actor--critic
+objective accounts for variable chunk durations and deadline misses. To handle
+unmeasured node power, we factor carbon accounting into execution
+exposure and an explicit power scenario. Within a three-factor power model,
+two endpoint evaluations characterize the full sensitivity interval, enabling
+one policy to optimize across that interval. The evaluation compares against
+all fixed scales, a fixed-policy mixture, and a queue-aware planning baseline
+on two trace-derived demand scenarios with published AMSP throughput profiles
+\pending{E1: scenario and input validation}.
+\pending{E2: baseline-relative carbon and deadline results};
+\pending{E3--E4: mechanism and robustness results}.
+The resulting claims concern modeled job-attributed operational carbon;
+facility emissions and production deployment are outside the evaluation.
+\end{abstract}
+
+\input{1intro}
+\input{3related}
+\input{4Jobtrace}
+\input{6design}
+\input{5algorithm}
+\input{7exp}
+\input{8conclusion}
+\bibliography{reference,scaledown_refs}
+\end{document}

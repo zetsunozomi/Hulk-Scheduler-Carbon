@@ -1,0 +1,59 @@
+\section{Introduction}
+
+The operational carbon associated with training depends on electricity
+consumption and when that electricity is used~\cite{patterson2021carbon}.
+Carbon-aware systems exploit temporal, spatial, and allocation
+flexibility~\cite{hanafy2023carbonscaler,sukprasert2024limitations}. On a shared
+batch cluster, however, a user controls a \emph{request}, while Slurm determines
+admission, placement, and start time. A resource choice may take effect hours
+later, when the carbon intensity differs from that observed at submission.
+
+Node count couples three consequences. Fewer nodes can reduce node-hours under
+sublinear strong scaling, but lengthen execution and increase the number of
+queue admissions needed by a long run. A smaller request may start sooner,
+yet overlap a less favorable carbon interval. Near completion, a faster final
+chunk may avoid another queue wait. The useful decision therefore depends on
+remaining work, available time, and the execution window of each request.
+
+The central question is \emph{when adapting requests provides value beyond a
+good fixed scale}. With constant carbon intensity, no waiting, and no chunk
+overhead, we show that mixed-scale execution lies in the convex hull of
+fixed-scale time--carbon points. Scaling inefficiency alone offers no gain
+below that frontier. Under deadlines, a preplanned within-run mix can still
+outperform a per-run randomized fixed policy without new queue observations.
+We therefore retain both fixed mixtures and a plan chosen once at submission
+when testing the value of online adaptation.
+
+\name{} exposes a completion-budget slider and makes repeated node-count decisions without
+modifying Slurm. Its main actor--critic policy uses visible queue history,
+remaining work and time, action execution descriptors, and a causal CI forecast
+sequence. It requires no explicit wait predictor: continuation costs are
+learned from realized replay outcomes, and each checkpoint reveals how much
+budget remains. Hidden admissions still limit predictability and any deadline
+claim. We compare against explicit rollout planning and a matched learned policy
+that commits its full sequence before submission, separating dynamic feedback
+from the benefit of a preplanned mix.
+
+Complete-node power is unavailable, so we separate execution evidence from
+carbon estimates. The power model has three factors: a normalization
+reference, an unknown workload coefficient, and a scale coefficient. For a fixed
+execution log, carbon is affine in the scale-model parameter. Two endpoint
+comparisons thus characterize robustness within the declared interval,
+without determining absolute power or repeating scheduler simulations.
+We use this property to train against both endpoint objectives and report
+where comparative conclusions change.
+
+Our evaluation uses published AMSP performance profiles and two historical
+arrival streams to define controlled contention scenarios. Hardware labels do
+not determine admission once resource demands and scheduling rules are fixed;
+this abstraction does not predict how old jobs would run on new hardware.
+
+The paper makes three contributions:
+\begin{itemize}
+\item A completion-budget formulation and fixed-scale null case that separate
+scaling efficiency, preplanned mixing, and online adaptive value.
+\item A user-level controller combining realized budget feedback, public queue
+history, and undiscounted constrained learning without an admission predictor.
+\item An exposure-based sensitivity analysis and a matched evaluation against
+fixed, plan-once, and replanning baselines.
+\end{itemize}
