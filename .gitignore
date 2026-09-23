@@ -18,8 +18,44 @@ __pycache__/
 ._dbindex_/
 
 # P0/P1 generated outputs and local environment
-/results/
-/out/
+# Generated outputs: track text only. Checkpoints and binary artifacts stay ignored.
+# Reopen directories so text files at every depth can be discovered.
+/results/**
+/out/**
+!/results/**/
+!/out/**/
+!/results/**/*.log
+!/results/**/*.out
+!/results/**/*.err
+!/results/**/*.txt
+!/results/**/*.text
+!/results/**/*.json
+!/results/**/*.jsonl
+!/results/**/*.ndjson
+!/results/**/*.csv
+!/results/**/*.tsv
+!/results/**/*.md
+!/results/**/*.yaml
+!/results/**/*.yml
+!/out/**/*.log
+!/out/**/*.out
+!/out/**/*.err
+!/out/**/*.txt
+!/out/**/*.text
+!/out/**/*.json
+!/out/**/*.jsonl
+!/out/**/*.ndjson
+!/out/**/*.csv
+!/out/**/*.tsv
+!/out/**/*.md
+!/out/**/*.yaml
+!/out/**/*.yml
+
+# Exclude checkpoint names, including text metadata and whole checkpoint directories.
+/results/**/*[Cc][Hh][Ee][Cc][Kk][Pp][Oo][Ii][Nn][Tt]*
+/results/**/*[Cc][Kk][Pp][Tt]*
+/out/**/*[Cc][Hh][Ee][Cc][Kk][Pp][Oo][Ii][Nn][Tt]*
+/out/**/*[Cc][Kk][Pp][Tt]*
 /build/
 /dist/
 *.egg-info/
