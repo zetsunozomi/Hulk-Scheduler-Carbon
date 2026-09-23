@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=carbon-env
-#SBATCH --account=deep-learning-at-sca
+#SBATCH --account=CCR21013
 #SBATCH --partition=small
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
