@@ -6,6 +6,8 @@
 #SBATCH --cpus-per-task=1
 #SBATCH --time=01:00:00
 #SBATCH --output=out/frontera-env-%j.out
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=sf850@scarletmail.rutgers.edu
 
 # Submit from the repository: mkdir -p out; sbatch scripts/frontera_env.sh
 # The same file can run via bash inside an interactive allocation.

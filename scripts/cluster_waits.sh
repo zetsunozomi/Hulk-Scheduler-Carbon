@@ -7,6 +7,8 @@
 #SBATCH --mem=16G
 #SBATCH --time=02:00:00
 #SBATCH --output=slurm-%x-%j.out
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=sf850@scarletmail.rutgers.edu
 # Uncomment needed site options below (change ##SBATCH to #SBATCH).
 ##SBATCH --account=YOUR_ACCOUNT
 ##SBATCH --partition=YOUR_PARTITION

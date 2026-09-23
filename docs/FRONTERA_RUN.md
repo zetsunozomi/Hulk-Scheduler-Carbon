@@ -23,6 +23,7 @@
 | nodes / tasks / cpus-per-task | `1 / 1 / 1` |
 | time | `04:00:00` |
 | Python | `$HOME/.conda/envs/carbon/bin/python` |
+| 邮件提醒 | `--mail-type=ALL`，`sf850@scarletmail.rutgers.edu` |
 | 仓库 | `/scratch2/09796/shuyuanfan4814/carbon` |
 
 用户提供的成功 Frontera 脚本省略了 `-A/--account`。当前安装和训练脚本均沿用这种方式，不写死 `CCR21013` 或项目名称；提交命令也不再加 `-A`。此前小写项目名在 TACC 前置计费检查被拒绝，大小写是否是唯一原因尚未验证。
@@ -93,6 +94,14 @@ bash scripts/frontera_weighted84.sh
 ```
 
 普通登录 shell 不执行真实实验；仅有 salloc 环境变量但仍位于 login 节点也会拒绝。命令行可覆盖资源，例如 `sbatch --time=08:00:00 scripts/frontera_weighted84.sh --resume`；使用 development 时须把 time 改到2小时以内。
+
+Slurm 脚本统一包含 `--mail-type=ALL` 与 `--mail-user=sf850@scarletmail.rutgers.edu`。通过 sbatch 新提交时生效，交互式 bash 不读取这些指令。已经提交的作业不会因修改脚本自动获得邮件设置；仍在队列中或运行中的作业可在登录节点执行（替换 JOBID）：
+
+```bash
+scontrol update JobId=JOBID MailType=ALL MailUser=sf850@scarletmail.rutgers.edu
+```
+
+这是更新现有作业的通知参数，无需重新提交。参数含义见 [Slurm scontrol 文档](https://slurm.schedmd.com/scontrol.html)。
 
 ## 5. 中断、分阶段与状态
 

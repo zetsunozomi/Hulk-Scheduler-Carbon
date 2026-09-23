@@ -6,6 +6,8 @@
 #SBATCH --cpus-per-task=1
 #SBATCH --time=04:00:00
 #SBATCH --output=out/frontera-weighted84-%j.out
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=sf850@scarletmail.rutgers.edu
 
 set -euo pipefail
 if [[ "${1:-}" == '--help' || "${1:-}" == '-h' ]]; then

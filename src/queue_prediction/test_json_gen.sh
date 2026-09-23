@@ -9,7 +9,7 @@
 #SBATCH --output=off_training_generation.%j.out
 #SBATCH --job-name=off_training_generation
 #SBATCH --mail-user=sf850@scarletmail.rutgers.edu
-#SBATCH --mail-type=BEGIN,END,FAIL
+#SBATCH --mail-type=ALL
 
 conda activate carbon
 # Define the list of nodes
