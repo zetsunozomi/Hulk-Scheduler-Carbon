@@ -51,6 +51,14 @@ __pycache__/
 !/out/**/*.yaml
 !/out/**/*.yml
 
+# Current 64-iteration run: keep training text only at iteration 10, midpoint 32, and final 64.
+# A future run with a different length needs explicit midpoint/final entries here.
+/results/**/iteration-*/
+/results/**/.iteration-*/
+!/results/**/iteration-000010/
+!/results/**/iteration-000032/
+!/results/**/iteration-000064/
+
 # Exclude checkpoint names, including text metadata and whole checkpoint directories.
 /results/**/*[Cc][Hh][Ee][Cc][Kk][Pp][Oo][Ii][Nn][Tt]*
 /results/**/*[Cc][Kk][Pp][Tt]*
