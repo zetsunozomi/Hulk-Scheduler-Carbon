@@ -1,5 +1,6 @@
 """Undiscounted complete-episode constrained PPO and budget-specific dual updates."""
 
+from copy import deepcopy
 import math
 
 from .common import ContractError, require
@@ -17,23 +18,64 @@ def mlp(in_features, width):
 
 
 class ActorCritic(nn.Module):
-    def __init__(self, global_size, action_size, width=128):
+    def __init__(self, global_size, action_size, width=128, interaction='concat', actor_budgets=None):
         super().__init__()
+        require(interaction in {'concat', 'product'}, 'Unknown actor interaction')
+        self.interaction = interaction
         self.actor_actions = mlp(action_size,width)
         self.actor_context = mlp(global_size+width,width)
-        self.actor_score = nn.Sequential(nn.Linear(2*width,width),nn.ReLU(),nn.Linear(width,1))
+        score_width = (3 if interaction == 'product' else 2)*width
+        self.actor_score = nn.Sequential(nn.Linear(score_width,width),nn.ReLU(),nn.Linear(width,1))
         self.critic_actions = mlp(action_size,width)
         self.critic_context = mlp(global_size+width,width)
         self.critic_heads = nn.Linear(width,3)
+        # Clone after initializing the ordinary actor AND critic: no extra RNG
+        # consumption, identical starting functions, and no shared actor tensors.
+        self.actor_budget_values = None if actor_budgets is None else tuple(actor_budgets)
+        self.actor_branches = nn.ModuleList()
+        if self.actor_budget_values is not None:
+            grid = torch.tensor(self.actor_budget_values, dtype=torch.float32)
+            require(global_size >= 3 and grid.ndim == 1 and grid.numel() > 0 and
+                    bool(torch.isfinite(grid).all()) and bool((grid > 0).all()) and
+                    grid.unique().numel() == grid.numel(), 'Invalid independent actor budget grid')
+            for _ in self.actor_budget_values[1:]:
+                self.actor_branches.append(nn.ModuleDict({'actions': deepcopy(self.actor_actions),
+                                                         'context': deepcopy(self.actor_context),
+                                                         'score': deepcopy(self.actor_score)}))
+
+    def _actor_logits(self, global_state, action_state, mask, actions, context_net, score):
+        weights = mask.unsqueeze(-1).to(action_state.dtype)
+        actor = actions(action_state)
+        pooled = (actor*weights).sum(dim=1)/weights.sum(dim=1)
+        context = context_net(torch.cat((global_state,pooled),dim=-1))
+        repeated = context.unsqueeze(1).expand(-1,actor.shape[1],-1)
+        # A shared additive context can cancel in softmax when the score head's
+        # ReLU gates coincide across actions. The optional product supplies an
+        # explicit state/action interaction; it does not guarantee budget use.
+        joint = (actor, repeated, actor*repeated) if self.interaction == 'product' else (actor, repeated)
+        return score(torch.cat(joint,dim=-1)).squeeze(-1).masked_fill(~mask,-torch.inf)
 
     def forward(self, global_state, action_state, mask):
         require(bool(mask.any(dim=1).all()), 'All policy actions are masked')
+        if self.actor_budget_values is None:
+            logits = self._actor_logits(global_state, action_state, mask,
+                                        self.actor_actions, self.actor_context, self.actor_score)
+        else:
+            # policy_inputs_v2 puts the TOTAL budget/Tref at index 2. Never
+            # route on remaining budget, and never interpolate unknown ticks.
+            grid = global_state.new_tensor(self.actor_budget_values)
+            matches = global_state[:, 2:3] == grid.unsqueeze(0)
+            require(bool((matches.sum(dim=1) == 1).all()), 'Budget is outside independent actor grid')
+            logits = action_state.new_zeros(mask.shape)
+            for i in range(len(self.actor_budget_values)):
+                index = matches[:, i].nonzero(as_tuple=True)[0]
+                if index.numel() == 0:
+                    continue
+                modules = ((self.actor_actions, self.actor_context, self.actor_score) if i == 0 else
+                           tuple(self.actor_branches[i-1][k] for k in ('actions', 'context', 'score')))
+                values = self._actor_logits(global_state[index], action_state[index], mask[index], *modules)
+                logits = logits.index_copy(0, index, values)
         weights = mask.unsqueeze(-1).to(action_state.dtype)
-        actor = self.actor_actions(action_state)
-        pooled = (actor*weights).sum(dim=1)/weights.sum(dim=1)
-        context = self.actor_context(torch.cat((global_state,pooled),dim=-1))
-        repeated = context.unsqueeze(1).expand(-1,actor.shape[1],-1)
-        logits = self.actor_score(torch.cat((actor,repeated),dim=-1)).squeeze(-1).masked_fill(~mask,-torch.inf)
         critic = self.critic_actions(action_state)
         pooled_value = (critic*weights).sum(dim=1)/weights.sum(dim=1)
         heads = self.critic_heads(self.critic_context(torch.cat((global_state,pooled_value),dim=-1)))

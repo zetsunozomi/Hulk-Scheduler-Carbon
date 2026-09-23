@@ -19,6 +19,7 @@ __pycache__/
 
 # P0/P1 generated outputs and local environment
 /results/
+/out/
 /build/
 /dist/
 *.egg-info/

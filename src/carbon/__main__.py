@@ -105,6 +105,8 @@ def main(argv=None):
     training.add_argument("--decision-mode", choices=["feedback", "precommitted"], help="Default feedback; precommitted samples the whole scale sequence before submission")
     training.add_argument("--wait-features", choices=["none", "advice"], help="Default none: main policy has no wait-predictor dependency")
     training.add_argument("--objective", choices=["robust", "lower", "upper"])
+    training.add_argument("--actor-interaction", choices=["concat", "product"], help="Default concat; product adds explicit state/action interactions")
+    training.add_argument("--actor-budget-mode", choices=["shared", "independent"], help="Default shared; independent uses one actor branch per trained budget tick")
     policy = sub.add_parser("run-policy", help="Evaluate a checkpoint with its unchanged categorical sampling rule")
     policy.add_argument("--config", required=True)
     policy.add_argument("--output", required=True)

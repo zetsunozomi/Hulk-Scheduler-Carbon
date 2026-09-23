@@ -1,6 +1,10 @@
 # Cluster working draft
 
+当前待执行：[Frontera–7B 84节点实验与交互式步骤](../docs/CAPACITY84_RUN.md)。源trace对应容量修正为84，动作4/16/64；重建本容量的队列/fixed/规划/参考量/预算并从头训练同一候选算法。旧128节点结果保留为开发记录。本轮不增加算法技巧或扩展其他panel。
+
 从2026-09-21起可在本目录直接继续写稿，以本代码仓库的提交为准。总入口：[研究交接](../docs/RESEARCH_HANDOFF.md)。导入时文件记录在SNAPSHOT.json；后续正常修改不会自动更新旧快照哈希。
+
+Cluster最新真实进度：[2026-09-22总实验状态](../docs/PROJECT_STATUS_2026-09-22.md)、[development结果与限制](reproducibility/development_findings.md)。原PPO、product actor、独立预算actor三版均完成64轮与四轮validation。独立actor在两个宽预算保持多动作和任务内换规模，打破全预算选64，但有效状态反馈与稳定超越强fixed尚未证实。下方导入时的55轮状态仅为历史记录，六panel/三seed、Precommitted-RL、E4及正式统计仍待完成。
 
 # ScaleDown candidate draft
 

@@ -82,6 +82,80 @@ class PolicyInputTests(unittest.TestCase):
 class LearningTests(unittest.TestCase):
     def setUp(self): torch.set_num_threads(1);torch.manual_seed(11)
 
+    def test_default_actor_is_identical_to_explicit_concat(self):
+        implicit = ActorCritic(3, 2, width=4)
+        torch.manual_seed(11)
+        explicit = ActorCritic(3, 2, width=4, interaction='concat')
+        for name, value in implicit.state_dict().items():
+            self.assertTrue(torch.equal(value, explicit.state_dict()[name]), name)
+        with self.assertRaisesRegex(ContractError, 'Unknown actor interaction'):
+            ActorCritic(3, 2, interaction='unknown')
+
+    def test_product_retains_context_effect_when_relu_gates_are_shared(self):
+        def controlled(interaction):
+            model = ActorCritic(1, 1, width=1, interaction=interaction)
+            with torch.no_grad():
+                for parameter in model.parameters(): parameter.zero_()
+                model.actor_actions[0].weight.fill_(1)
+                model.actor_actions[2].weight.fill_(1)
+                model.actor_context[0].weight[0, 0] = 1
+                model.actor_context[2].weight.fill_(1)
+                model.actor_score[0].weight.fill_(1)
+                model.actor_score[2].weight.fill_(1)
+            return model
+        global_state = torch.tensor([[1.], [2.]], requires_grad=True)
+        actions = torch.tensor([[[1.], [2.]], [[1.], [2.]]])
+        mask = torch.ones(2, 2, dtype=torch.bool)
+        concat, _ = controlled('concat')(global_state, actions, mask)
+        product, _ = controlled('product')(global_state, actions, mask)
+        # All score ReLUs are active. Additive context shifts both logits equally.
+        self.assertTrue(torch.allclose(concat.probs[0], concat.probs[1]))
+        self.assertGreater(float(product.probs[1, 1].detach()), float(product.probs[0, 1].detach()))
+        product.probs[0, 1].backward()
+        self.assertGreater(float(global_state.grad[0, 0]), 0)
+        masked, _ = controlled('product')(global_state.detach(), actions, torch.tensor([[True, False], [True, False]]))
+        self.assertTrue(torch.equal(masked.probs[:, 1], torch.zeros(2)))
+
+    def test_budget_branches_preserve_initial_functions_rng_and_masks(self):
+        shared = ActorCritic(3, 2, width=4, interaction='product')
+        rng = torch.get_rng_state().clone()
+        torch.manual_seed(11)
+        branched = ActorCritic(3, 2, width=4, interaction='product', actor_budgets=[1., 2., 4.])
+        self.assertTrue(torch.equal(torch.get_rng_state(), rng))
+        for name, value in shared.state_dict().items():
+            self.assertTrue(torch.equal(value, branched.state_dict()[name]), name)
+        for beta in (1., 2., 4.):
+            state = torch.tensor([[1., -3., beta]])
+            actions = torch.tensor([[[.3, 1.], [.5, .5], [1., .2]]])
+            mask = torch.tensor([[True, False, True]])
+            p, v = shared(state, actions, mask); q, w = branched(state, actions, mask)
+            self.assertTrue(torch.equal(p.probs, q.probs))
+            self.assertTrue(torch.equal(v, w))
+            self.assertEqual(float(q.probs[0, 1].detach()), 0.)
+        with self.assertRaisesRegex(ContractError, 'outside independent actor grid'):
+            branched(torch.tensor([[1., 1., 3.]]), actions, mask)
+        for bad in ([1., 1.], [1., 1.+1e-10], [], [float('nan')]):
+            with self.assertRaisesRegex(ContractError, 'Invalid independent actor budget grid'):
+                ActorCritic(3, 2, actor_budgets=bad)
+
+    def test_budget_actor_update_cannot_change_other_budget_actor(self):
+        model = ActorCritic(3, 2, width=8, interaction='product', actor_budgets=[1., 2.])
+        state = torch.tensor([[1., 1., 1.], [1., 2., 2.]])
+        actions = torch.tensor([[[.1, 2.], [3., .2]]]*2)
+        mask = torch.ones(2, 2, dtype=torch.bool)
+        optimizer = torch.optim.Adam(model.parameters(), lr=.01)
+        # Alternate branches after Adam has momentum; absent branch grads must
+        # stay None so even momentum cannot move that branch's parameters.
+        for i in (0, 1, 0):
+            before = model(state, actions, mask)[0].probs.detach().clone()
+            optimizer.zero_grad(set_to_none=True)
+            dist, values = model(state[i:i+1], actions[i:i+1], mask[i:i+1])
+            (-dist.log_prob(torch.tensor([i])).sum()+values.square().sum()).backward()
+            optimizer.step()
+            after = model(state, actions, mask)[0].probs.detach()
+            self.assertTrue(torch.equal(before[1-i], after[1-i]))
+            self.assertFalse(torch.equal(before[i], after[i]))
+
     def test_returns_are_undiscounted_and_terminal_miss_occurs_once(self):
         returns=monte_carlo_costs([[1,2],[3,4],[5,6]],True)
         self.assertEqual(returns,[[9,12,1.0],[8,10,1.0],[5,6,1.0]])

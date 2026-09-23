@@ -191,6 +191,37 @@ class PolicyRunnerTests(unittest.TestCase):
         self.assertTrue(record['censor_flag']);self.assertIsNone(record['carbon_g_per_kappa'])
         self.assertEqual(load_json(self.root/'censored/manifest.json')['status'],'failed')
 
+    def test_product_checkpoint_resume_evaluation_and_architecture_guard(self):
+        from carbon.policy_runner import DEFAULTS
+        with patch.dict(DEFAULTS, {'actor_interaction': 'product'}):
+            self.test_resume_matches_uninterrupted_optimizer_model_and_sampling()
+        checkpoint = self.root/'resumed/checkpoint-000003.json'
+        metadata, _ = read_checkpoint(checkpoint)
+        self.assertEqual(metadata['architecture']['actor_interaction'], 'product')
+        with redirect_stdout(io.StringIO()):
+            result = evaluate_policy(self.bundle, self.root/'product-eval', None, checkpoint)
+        self.assertEqual(result['completed_episode_methods'], 2)
+        metadata['architecture']['actor_interaction'] = 'concat'
+        checkpoint.write_text(json_text(metadata))
+        with self.assertRaisesRegex(ContractError, 'architecture/settings differ'):
+            evaluate_policy(self.bundle, self.root/'wrong-architecture', None, checkpoint)
+
+    def test_budget_actor_checkpoint_resume_evaluation_and_grid_guard(self):
+        from carbon.policy_runner import DEFAULTS
+        with patch.dict(DEFAULTS, {'actor_interaction': 'product', 'actor_budget_mode': 'independent'}):
+            self.test_resume_matches_uninterrupted_optimizer_model_and_sampling()
+        checkpoint = self.root/'resumed/checkpoint-000003.json'
+        metadata, _ = read_checkpoint(checkpoint)
+        self.assertEqual(metadata['architecture']['actor_budget_mode'], 'independent')
+        self.assertEqual(metadata['architecture']['actor_budget_grid'], metadata['settings']['budgets'])
+        with redirect_stdout(io.StringIO()):
+            result = evaluate_policy(self.bundle, self.root/'budget-actor-eval', None, checkpoint)
+        self.assertEqual(result['completed_episode_methods'], 2)
+        metadata['architecture']['actor_budget_grid'] = [1., 3.]
+        checkpoint.write_text(json_text(metadata))
+        with self.assertRaisesRegex(ContractError, 'budget architecture/settings differ'):
+            evaluate_policy(self.bundle, self.root/'wrong-budget-grid', None, checkpoint)
+
     def test_single_endpoint_current_ci_and_checkpoint_tamper_detection(self):
         settings=settings_for(1,budgets=[1.5],episodes_per_budget=2,epochs=1,objective='lower',forecast_mode='current')
         self.run_train('ablation',settings)

@@ -21,7 +21,8 @@ from .slider import slider_contract, budget_at_position
 DEFAULTS = {'episodes_per_budget':32,'epochs':4,'minibatch_episodes':32,'learning_rate':3e-4,
             'clip':.2,'entropy':.01,'gradient_norm':.5,'value_coefficient':.5,
             'epsilon':.05,'dual_rate_p':.05,'dual_rate_lambda':.05,'seed':11,'threads':1,
-            'budgets':[1.,1.25,1.5,2.],'forecast_mode':'window','wait_features':'none','decision_mode':'feedback','objective':'robust'}
+            'budgets':[1.,1.25,1.5,2.],'forecast_mode':'window','wait_features':'none','decision_mode':'feedback','objective':'robust',
+            'actor_interaction':'concat','actor_budget_mode':'shared'}
 
 
 def settings_for(iterations, **options):
@@ -41,6 +42,8 @@ def settings_for(iterations, **options):
     require(settings['forecast_mode'] in {'window','current'}, 'Unknown forecast mode')
     require(settings['wait_features'] in {'none','advice'}, 'Unknown wait-feature mode')
     require(settings['decision_mode'] in {'feedback','precommitted'}, 'Unknown decision mode')
+    require(settings['actor_interaction'] in {'concat','product'}, 'Unknown actor interaction')
+    require(settings['actor_budget_mode'] in {'shared','independent'}, 'Unknown actor budget mode')
     require(settings['decision_mode'] != 'precommitted' or settings['wait_features'] == 'none',
             'Precommitted-RL does not use wait advice')
     return settings
@@ -93,6 +96,14 @@ def check_policy_inputs(metadata, encoder, predictor, bundle):
     require(metadata['feature_schema']==encoder.schema(), 'Checkpoint input schema/normalizers differ')
     require(metadata['predictor_sha256']==encoder.predictor_version, 'Checkpoint wait model differs')
     require(metadata['purpose']==bundle.raw['purpose'], 'Checkpoint experiment purpose differs')
+    require(metadata['architecture'].get('actor_interaction','concat') == metadata['settings'].get('actor_interaction','concat'),
+            'Checkpoint actor architecture/settings differ')
+    mode = metadata['settings'].get('actor_budget_mode', 'shared')
+    require(metadata['architecture'].get('actor_budget_mode', 'shared') == mode and
+            metadata['architecture'].get('actor_budget_grid') == (metadata['settings']['budgets'] if mode == 'independent' else None),
+            'Checkpoint actor budget architecture/settings differ')
+    if mode == 'independent':
+        require(encoder.global_names[2] == 'budget/Tref', 'Independent actor requires total-budget input at index 2')
 
 
 class ReplayCache:
@@ -154,7 +165,8 @@ def train_policy(bundle, output, predictor_path, references_path, settings, resu
     train_episodes = [e for e in bundle.episodes if e.split=='train']
     require(train_episodes,'No training cohort')
     configure_torch(settings['seed'],settings['threads'])
-    model = ActorCritic(len(encoder.global_names),len(encoder.action_names))
+    model = ActorCritic(len(encoder.global_names),len(encoder.action_names),interaction=settings['actor_interaction'],
+                        actor_budgets=settings['budgets'] if settings['actor_budget_mode']=='independent' else None)
     optimizer = torch.optim.Adam(model.parameters(),lr=settings['learning_rate'])
     generator = torch.Generator().manual_seed(settings['seed'])
     rng = random.Random(settings['seed'])
@@ -180,7 +192,10 @@ def train_policy(bundle, output, predictor_path, references_path, settings, resu
                 'predictor_sha256':encoder.predictor_version,'references':references,'software':source,
                 'slider':slider_contract(references['time_reference_hours'],settings['budgets']),
                 'training_cohort_sha256':bundle.manifest['asset_sha256']['cohort'],
-                'architecture':{'width':128,'critic_heads':['lower_endpoint','upper_endpoint','violation'],
+                'architecture':{'width':128,'actor_interaction':settings['actor_interaction'],
+                                'actor_budget_mode':settings['actor_budget_mode'],
+                                'actor_budget_grid':settings['budgets'] if settings['actor_budget_mode']=='independent' else None,
+                                'critic_heads':['lower_endpoint','upper_endpoint','violation'],
                                 'shared_actor_critic_parameters':False,'pooling':'mean_of_feasible_actions'}}
     manifest = {**bundle.manifest,**metadata,'kind':'ppo_training','status':'running',
                 'resume_checkpoint_sha256':digest(resume) if resume else None,
@@ -267,7 +282,8 @@ def evaluate_policy(bundle, output, predictor_path, checkpoint_path, split='vali
             'Evaluation budgets must be unique members of the trained grid')
     seed = settings['seed'] if sampling_seed is None else integer(sampling_seed,'sampling seed',0)
     configure_torch(seed,settings['threads'])
-    model = ActorCritic(len(encoder.global_names),len(encoder.action_names))
+    model = ActorCritic(len(encoder.global_names),len(encoder.action_names),interaction=settings.get('actor_interaction','concat'),
+                        actor_budgets=settings['budgets'] if settings.get('actor_budget_mode','shared')=='independent' else None)
     model.load_state_dict(state['model']); model.eval()
     episodes = [e for e in bundle.episodes if e.split==split]
     require(episodes,'Selected policy cohort is empty')

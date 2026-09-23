@@ -1,9 +1,9 @@
 # 最少必要实验：AMSP 公开性能 + 两种历史负载（E1–E4）
 
-2026-09-21 交接更新。所有本项目实验结果仍留空；AMSP 数值是引用输入。
+2026-09-22状态：[总实验进度与两个核心目标](../docs/PROJECT_STATUS_2026-09-22.md)。Frontera7B三版PPO与全部预定validation已完成；独立actor部分恢复多动作行为，尚未建立稳定fixed优势或有效反馈。正式论文结果槽仍留空；AMSP数值是引用输入。下方执行记录保留2026-09-21交接时状态，不用它判断是否需要重跑。
 取消 Qwen3/Vista profiling、实机恢复正确性和整节点功耗测量。详见 reproducibility/research_review.md。
 
-## 执行顺序更新：完整fixed与主PPO pilot完成，转validation曲线
+## 历史执行记录（2026-09-21交接）
 
 作者回传完整 `E1 queue stage complete: results/amsp-e1-frontera` 日志，末尾为 368 个 validation 快照、4,416 条探针，无删失。详情记录在 reproducibility/cluster_progress.md。证据目前为作者终端输出；尚未读取远端结果文件、拟合误差或完整 artifact。论文正式结果槽仍留空。
 

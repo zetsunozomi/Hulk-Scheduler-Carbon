@@ -75,7 +75,9 @@ def run_stress(source, output, predictor_path, checkpoint_path, variant, budget_
     require(episodes, 'Empty stress cohort')
     seed = settings['seed']
     configure_torch(seed, settings['threads'])
-    model = ActorCritic(len(encoder.global_names), len(encoder.action_names))
+    model = ActorCritic(len(encoder.global_names), len(encoder.action_names),
+                       interaction=settings.get('actor_interaction', 'concat'),
+                       actor_budgets=settings['budgets'] if settings.get('actor_budget_mode','shared')=='independent' else None)
     model.load_state_dict(state['model']); model.eval()
     forecast = CausalForecast(source.ci, *source.splits['train'], calendar_timezone=source.raw['trace']['timezone'])
     checkpoint_hash = digest(checkpoint_path)

@@ -143,13 +143,13 @@ environment_sensitivity:
 
 
 development_main_training:
-  status: interrupted_by_PBS_walltime
-  latest_reported_job: 186777.sophia-pbs-01.lab.alcf.anl.gov
-  latest_reported_completed_iteration: 55
-  latest_reported_training_episodes: 3520
-  latest_reported_training_chunks: 3691
-  evidence_available_locally: console_log_only
-  validation_status: not_started_in_reported_job
+  status: complete_development_validation
+  latest_reported_job: 186788.sophia-pbs-01.lab.alcf.anl.gov
+  latest_reported_completed_iteration: 64
+  latest_reported_training_episodes: 4096
+  latest_reported_training_chunks: 4270
+  evidence_available_locally: cluster_artifacts_and_hashes_verified
+  validation_status: complete_384_episodes_no_censoring
   panel: AMSP-7B-frontera-C128
   seed: 11
   iterations: 64
@@ -169,3 +169,138 @@ development_main_training:
   test_access: false
   convergence_claim: false
   formal_multiseed_protocol_frozen: false
+
+development_planner_diagnosis:
+  status: complete
+  reported_job: 187563.sophia-pbs-01.lab.alcf.anl.gov
+  evidence_note: reproducibility/development_findings.md
+  output_in_code_repo: results/amsp-diagnose-frontera-7b-seed11
+  planner_episodes: 192
+  completed_arrival_budget_units: 96
+  frozen_actor_input_probability_checks: 384
+  test_access: false
+  final_checkpoint_mean_max_budget_TV: 0.000006663780671563775
+  dependence_episode_rows: 676
+  dependence_max_observed_hours: 211.10973700333332
+  independence_certified: false
+  feedback_advantage_established: false
+  interval_wide_gain_over_fixed_mix_established: false
+
+development_actor_interaction_trial:
+  status: complete_negative_development_result
+  reported_job: 187569.sophia-pbs-01.lab.alcf.anl.gov
+  evidence_available_locally: log_and_checkpoint_and_validation_hashes_verified
+  scope: one_fresh_seed11_architecture_intervention_not_formal_main_method_adoption
+  actor_score_input: [action_embedding, context_embedding, elementwise_product]
+  additional_actor_parameters: 16384
+  iterations: 64
+  total_training_episodes: 4096
+  total_training_chunks: 4252
+  validation_iterations: [16, 32, 48, 64]
+  total_validation_episodes: 384
+  unchanged: [environment, features, budget_grid, objective, PPO, duals, entropy, arrival_sampling]
+  script_in_code_repo: scripts/sophia_actor_interaction.sh
+  output_in_code_repo: results/amsp-interaction-frontera-7b-seed11
+  test_access: false
+  candidate_adopted_as_main: false
+  validation_scale_switches: 0
+  final_checkpoint_all_96_sequences: single_chunk_64
+  final_checkpoint_mean_max_budget_TV: 0.00012434550402673494
+  final_worst_normalized_carbon_all_budgets: 1.1667806969650258
+  final_deadline_misses_by_budget: [14, 0, 0, 0]
+  rounds_10_to_64_loose_budget_initial_decisions: 2640
+  rounds_10_to_64_loose_budget_small_scale_samples: 0
+  training_elapsed_seconds: 8189.121767372359
+
+development_learning_diagnosis:
+  status: complete
+  reported_job: 187569.sophia-pbs-01.lab.alcf.anl.gov
+  source_trial: amsp-interaction-frontera-7b-seed11
+  training_rounds: [1, 4, 8, 16]
+  replayed_recorded_episodes: 256
+  replayed_recorded_chunks: 332
+  optimizer_steps: 0
+  new_action_sampling: false
+  split: train
+  test_access: false
+  script_in_code_repo: scripts/sophia_diagnose_learning.sh
+  output_in_code_repo: results/amsp-learning-diagnose-frontera-7b-seed11
+  interpretation: local_full_batch_preupdate_gradients_not_actual_Adam_trajectory_or_causal_proof
+  verified_episode_count: 256
+  verified_chunk_count: 332
+  stage_elapsed_seconds_sum: 103.24407506594434
+  widest_budget_own_shared_cosines_rounds_1_4: [-0.4181229735152563, -0.6867096716723367]
+  local_budget_gradient_conflict_observed: true
+  unique_cause_of_collapse_proven: false
+
+development_budget_actor_trial:
+  status: complete_development_partial_behavioral_recovery
+  final_reported_job: 187577.sophia-pbs-01.lab.alcf.anl.gov
+  evidence_note: reproducibility/development_findings.md
+  readonly_audit_in_code_repo: out/budget-actor-completed-audit.20260922T024912Z.json
+  scope: independent_actor_parameter_control_not_parameter_matched_causal_ablation
+  actor_interaction: product
+  actor_budget_mode: independent
+  actor_branches: 4
+  critic_shared: true
+  same_initial_actor_and_critic_functions: true
+  additional_actor_parameters: 365955
+  seed: 11
+  iterations: 64
+  total_training_episodes: 4096
+  total_training_chunks: 6534
+  validation_iterations: [16, 32, 48, 64]
+  total_validation_episodes: 384
+  validation_censored_episodes: 0
+  verified_training_checkpoint_metadata: 64
+  verified_evaluated_checkpoint_weights: 4
+  verified_validation_stage_seals: 4
+  training_arrival_pairing: checked_against_completed_shared_product_trial
+  unchanged: [environment, features, four_budgets, objective, PPO, duals, entropy, minibatch_size, arrival_sampling]
+  source_archive_in_code_repo: results/source-archives/product-shared-5e6c7ddcbb91
+  script_in_code_repo: scripts/sophia_budget_actor.sh
+  output_in_code_repo: results/amsp-budget-actor-frontera-7b-seed11
+  test_access: false
+  candidate_adopted_as_main: false
+  final_mean_max_pairwise_budget_TV: 0.999801733644731
+  final_deadline_misses_by_budget: [14, 0, 0, 0]
+  final_scale_change_episodes_by_budget: [0, 1, 10, 19]
+  final_validation_arrivals_per_budget: 24
+  final_initial_argmax_constant_within_each_budget: true
+  final_initial_argmax_nodes_by_budget: [64, 64, 16, 16]
+  final_worst_normalized_carbon_by_budget: [1.1667806969650258, 1.2114313080306016, 1.0922719696006422, 1.1315434943774636]
+  all_budget_fixed64_collapse_observed_at_final_checkpoint: false
+  useful_feedback_response_established: false
+  stable_gain_over_best_fixed_or_fixed_mix_established: false
+  convergence_claim: false
+
+development_capacity84_trial:
+  status: prepared_not_executed
+  capacity_correction_source: author_instruction_and_data_README_Frontera_RTX_84
+  panel: AMSP-7B-frontera-C84
+  capacity_nodes: 84
+  allowed_nodes: [4, 16, 64]
+  target_profile: existing_published_AMSP_7B_not_measured_RTX_throughput
+  config_in_code_repo: configs/amsp-frontera-7b-c84.development.json
+  script_in_code_repo: scripts/sophia_capacity84.sh
+  output_in_code_repo: results/amsp-frontera-7b-c84-seed11
+  run_instructions_in_code_repo: docs/CAPACITY84_RUN.md
+  retained_legacy_results: all_C128_outputs_unchanged_not_relabelled_as_C84
+  seed: 11
+  actor_interaction: product
+  actor_budget_mode: independent
+  critic_shared: true
+  initialization: fresh_no_C128_warm_start
+  iterations: 64
+  total_training_episodes: 4096
+  validation_iterations: [16, 32, 48, 64]
+  expected_validation_episodes: 384
+  expected_fixed_train_outcomes: 219
+  expected_fixed_validation_outcomes: 72
+  expected_planner_validation_outcomes: 192
+  baselines: [Fixed-4, Fixed-16, Fixed-64, Best-Fixed, Fixed-Mix, Plan-once, Rollout-MPC]
+  rebuilt_for_capacity: [queue_probes, wait_predictor, fixed_outcomes, normalizers, budget_grid, planner_outcomes, policy]
+  unchanged: [trace, CI, cohort, chronological_splits, work, throughput_at_retained_scales, chunk_rules, overhead, scheduler, PPO, duals, entropy]
+  algorithm_tricks_added: false
+  test_access: false
+  candidate_adopted_as_main: false
