@@ -1,0 +1,3 @@
+Environment: /home1/09796/shuyuanfan4814/.conda/envs/carbon
+Install log: /scratch2/09796/shuyuanfan4814/carbon/out/frontera-env.20260923T033214Z.vGhHDY.log
+scripts/frontera_env.sh: line 24: /home1/09796/shuyuanfan4814/.conda/envs/carbon/bin/python: No such file or directory

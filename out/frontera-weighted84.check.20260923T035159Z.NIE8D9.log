@@ -1,0 +1,8 @@
+Log: /scratch2/09796/shuyuanfan4814/carbon/out/frontera-weighted84.check.20260923T035159Z.NIE8D9.log
+Slurm job: none
+Host: login1.frontera.tacc.utexas.edu
+Python: /home1/09796/shuyuanfan4814/.conda/envs/carbon/bin/python
+PyTorch: 2.6.0+cpu
+sklearn: 1.6.1; scipy: 1.16.3; matplotlib: 3.11.2
+Fixed inputs will be built/resumed on compute: /scratch2/09796/shuyuanfan4814/carbon/results/amsp-frontera-7b-c84-fixed-frontera
+Read-only check complete. No simulation, training or test evaluation was run.

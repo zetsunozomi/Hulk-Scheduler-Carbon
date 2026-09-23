@@ -1,0 +1,320 @@
+{
+  "asset_sha256": {
+    "ci": "4c6030d3a1ab2920842bc8e8db8884e794523a1bbc7da52588b89347e4da84db",
+    "cohort": "d9e7b3729d76317536d292a5b56af8084b77892d6309a4f172e6cdd95647c5c9",
+    "trace": "ed555938a7532b05db3ec722fcaf7fa2cbe92ee254cea18c86cf66c0527bd67f"
+  },
+  "cohort_size": 151,
+  "command": [
+    "scripts/frontera_weighted84.py",
+    "--source",
+    "results/amsp-frontera-7b-c84-fixed-frontera",
+    "--output",
+    "results/amsp-frontera-7b-c84-weighted-seed11"
+  ],
+  "completed_episode_methods": 219,
+  "config_sha256": "8ef63c77971094d5d939aab47719881196ad992baea78c62ce38aff2ee5b899b",
+  "elapsed_seconds": 159.1184984073043,
+  "fixed_nodes": [
+    4,
+    16,
+    64
+  ],
+  "initial_state_rule": "empty_at_trace_coverage_start_then_continuous_replay_no_historical_admissions",
+  "panel": "AMSP-7B-frontera-C84",
+  "purpose": "development",
+  "resolved_config": {
+    "ci": {
+      "alignment_description": "UTC scenario coordinates from naive source timestamps overlaid on ERCOT calendar; no claim of actual source timezone or A800 testbed location.",
+      "availability_rule": "Revised archive made available 24h after interval end as a declared scenario; not vintage data.",
+      "path": "data/texas_eia/ci.csv",
+      "queue_to_ci_offset_seconds": 0,
+      "region": "Texas ERCOT scenario",
+      "sha256": "4c6030d3a1ab2920842bc8e8db8884e794523a1bbc7da52588b89347e4da84db",
+      "source": "EIA ERCOT Published Hourly Data; see data/texas_eia/source.json",
+      "type": "average_operational",
+      "unit": "gCO2/kWh"
+    },
+    "cluster": {
+      "allowed_nodes": [
+        4,
+        16,
+        64
+      ],
+      "max_request_seconds": 172800,
+      "name": "Frontera-RTX-capacity-84-AMSP-target-scenario",
+      "nodes": 84,
+      "partition": "frontera-rtx-demand-homogeneous-nodes",
+      "provenance": "84-node Frontera RTX resource pool per data/README.md and author instruction; historical demand retains its node counts. Target throughput uses published AMSP A800 profiles, not measured RTX performance.",
+      "scheduler": {
+        "age_max_seconds": 604800,
+        "age_weight": 7000.0,
+        "dispatch_interval_seconds": 60,
+        "max_job_test": 3000,
+        "model": "conservative_backfill_v1",
+        "size_weight": 100.0
+      },
+      "walltime_resolution_seconds": 60
+    },
+    "cohort": {
+      "path": "data/amsp/cohorts/frontera.csv",
+      "provenance": "Predeclared every-third-day arrivals with seeded hour, seed 20260917; 21-day end guard. Same arrivals across profiles/methods; 192h field is replaced by trained budget grid during policy evaluation.",
+      "sha256": "d9e7b3729d76317536d292a5b56af8084b77892d6309a4f172e6cdd95647c5c9"
+    },
+    "execution": {
+      "history_lags_seconds": [
+        0,
+        1800,
+        7200,
+        28800,
+        86400,
+        172800
+      ],
+      "history_sample_seconds": 600,
+      "initial_state_mode": "empty_warmup",
+      "max_episode_seconds": null,
+      "target_failure_model": "no_failures",
+      "warmup_seconds": 2419200
+    },
+    "holdout_audit": {
+      "evaluation_design": "retrospective_temporal",
+      "notes": "Author reports prior train/validation use. New chronological splits fixed before this revision runs; old data are reused and no previously unseen test claim is made. Development until protocol/software are frozen.",
+      "test_is_untouched": false
+    },
+    "panel": "AMSP-7B-frontera-C84",
+    "power": {
+      "phase_assumption": "same_mean_power_at_given_scale",
+      "provenance": "1 kW is a normalization unit, not a server specification or measured power; unknown kappa absorbs absolute node power. Report ratios and node-hours.",
+      "reference_kw": 1.0,
+      "rho_interval": [
+        0.25,
+        1.0
+      ],
+      "workload_coefficient": null
+    },
+    "purpose": "development",
+    "root": "..",
+    "schema_version": 1,
+    "splits": {
+      "test": [
+        "2021-02-01T00:00:00Z",
+        "2021-08-01T00:00:00Z"
+      ],
+      "train": [
+        "2020-01-05T00:00:00Z",
+        "2020-09-01T00:00:00Z"
+      ],
+      "validation": [
+        "2020-10-01T00:00:00Z",
+        "2021-01-01T00:00:00Z"
+      ]
+    },
+    "trace": {
+      "coverage_attestation": "Constructed finite arrival stream from retained records in this interval; collection completeness of the original cluster is not asserted.",
+      "coverage_end_utc": "2021-08-19T00:00:00Z",
+      "coverage_start_utc": "2019-12-05T00:00:00Z",
+      "dst_fold": null,
+      "node_multiplier": 1,
+      "overrun_policy": "clip",
+      "oversize_policy": "error",
+      "path": "data/filtered/filtered-frontera-rtx.log",
+      "provenance": "Historical frontera resource-demand template. Naive timestamps assigned UTC scenario coordinates, paired with ERCOT UTC calendar. Original timezone and deployment association not asserted.",
+      "role": "workload_template",
+      "sha256": "ed555938a7532b05db3ec722fcaf7fa2cbe92ee254cea18c86cf66c0527bd67f",
+      "timezone": "UTC",
+      "zero_duration_policy": "drop"
+    },
+    "workload": {
+      "correctness_artifact": "Simulation work-accounting checks only. No AMSP checkpoint switching implementation or convergence measurement is claimed.",
+      "global_batch": 1024,
+      "gpus_per_node": 8,
+      "name": "AMSP-LLaMA-7B",
+      "optimizer_updates": 22993,
+      "precision": "BF16",
+      "profile_status": "published",
+      "profiles": {
+        "16": {
+          "accumulation": 8,
+          "checkpoint_seconds": 300,
+          "initialization_seconds": 300,
+          "microbatch": 1,
+          "restart_seconds": 300,
+          "updates_per_hour": 464.721679688
+        },
+        "4": {
+          "accumulation": 32,
+          "checkpoint_seconds": 300,
+          "initialization_seconds": 300,
+          "microbatch": 1,
+          "restart_seconds": 300,
+          "updates_per_hour": 119.750976562
+        },
+        "64": {
+          "accumulation": 2,
+          "checkpoint_seconds": 300,
+          "initialization_seconds": 300,
+          "microbatch": 1,
+          "restart_seconds": 300,
+          "updates_per_hour": 1709.47265625
+        }
+      },
+      "provenance": "Published steady-state TGS digitized from PDF vector bars; 1024 sequences per optimizer update inferred from 8 GPUs * 128 accumulation, length 4096. Initialization/restart/save values are declared scenarios, not reported measurements. Input record SHA256: 05fa5c0d7915e265376ec66cd74b1c86dadb4341ed67c53b1145e543af290fe2.",
+      "sequence_length": 4096,
+      "software": "AMSP arXiv:2311.00257v2 Figure 12 Our Work; FlashAttention-v2; TP=PP=1"
+    }
+  },
+  "scheduler_model": "conservative_backfill_v1",
+  "schema_version": 1,
+  "selected_episode_ids": [
+    "frontera-train-0000",
+    "frontera-train-0001",
+    "frontera-train-0002",
+    "frontera-train-0003",
+    "frontera-train-0004",
+    "frontera-train-0005",
+    "frontera-train-0006",
+    "frontera-train-0007",
+    "frontera-train-0008",
+    "frontera-train-0009",
+    "frontera-train-0010",
+    "frontera-train-0011",
+    "frontera-train-0012",
+    "frontera-train-0013",
+    "frontera-train-0014",
+    "frontera-train-0015",
+    "frontera-train-0016",
+    "frontera-train-0017",
+    "frontera-train-0018",
+    "frontera-train-0019",
+    "frontera-train-0020",
+    "frontera-train-0021",
+    "frontera-train-0022",
+    "frontera-train-0023",
+    "frontera-train-0024",
+    "frontera-train-0025",
+    "frontera-train-0026",
+    "frontera-train-0027",
+    "frontera-train-0028",
+    "frontera-train-0029",
+    "frontera-train-0030",
+    "frontera-train-0031",
+    "frontera-train-0032",
+    "frontera-train-0033",
+    "frontera-train-0034",
+    "frontera-train-0035",
+    "frontera-train-0036",
+    "frontera-train-0037",
+    "frontera-train-0038",
+    "frontera-train-0039",
+    "frontera-train-0040",
+    "frontera-train-0041",
+    "frontera-train-0042",
+    "frontera-train-0043",
+    "frontera-train-0044",
+    "frontera-train-0045",
+    "frontera-train-0046",
+    "frontera-train-0047",
+    "frontera-train-0048",
+    "frontera-train-0049",
+    "frontera-train-0050",
+    "frontera-train-0051",
+    "frontera-train-0052",
+    "frontera-train-0053",
+    "frontera-train-0054",
+    "frontera-train-0055",
+    "frontera-train-0056",
+    "frontera-train-0057",
+    "frontera-train-0058",
+    "frontera-train-0059",
+    "frontera-train-0060",
+    "frontera-train-0061",
+    "frontera-train-0062",
+    "frontera-train-0063",
+    "frontera-train-0064",
+    "frontera-train-0065",
+    "frontera-train-0066",
+    "frontera-train-0067",
+    "frontera-train-0068",
+    "frontera-train-0069",
+    "frontera-train-0070",
+    "frontera-train-0071",
+    "frontera-train-0072"
+  ],
+  "selected_splits": [
+    "train"
+  ],
+  "shard_count": 1,
+  "shard_index": 0,
+  "software": {
+    "git_commit": "b3ae1514b6758671ae8dd292a80a73b95440830f",
+    "git_status": "",
+    "platform": "Linux-3.10.0-1160.90.1.el7.x86_64-x86_64-with-glibc2.17",
+    "python": "3.11.16 (main, Sep  2 2026, 23:39:52) [GCC 15.3.0]",
+    "source_sha256": {
+      "__init__.py": "83f7f86495e4cd9630b02b8e3a5ce6367120c80a10b1103e09e5354f916421b0",
+      "__main__.py": "a79bd576b8cc5fab9de8bbd5ce8220054752edecb49ce897319673991bef2dc0",
+      "baselines.py": "9e85f32d06b81bd1a0348d659965136b7f8584dea393ee7f00a62e79b6976aa5",
+      "carbon.py": "82f6114f02f54f04468df6ee3711c1231f1b59607a1f32012a71075afa132d21",
+      "common.py": "c8d0dbff6f586a5775a927c746f54dbeee649c44660635a69ca163281603d9f5",
+      "config.py": "0773746a89f3eb1ab69d0537f53d93d6d61227f2568497f3dddce09907857d93",
+      "dependence.py": "68fd0a292e4f92c773d0170d094d62dd03b90827c0fec1d681cf2f006f5f2580",
+      "diagnostics.py": "96910f87197d1f9eb2d3f122709b9e56a4e54025f9ce08859eba649957d59277",
+      "environment.py": "2132edf3378b2e11d7442d46a06bd167cbbdc5a5be8fcc5075204774ee119980",
+      "exporting.py": "6e70b5e32a3beddc778e8a893fad43899b0a485259fde68dcf344ea3a3e9c902",
+      "features.py": "1edb43824a077d2909d0d06775d3b31cd50a4c4ebea8e38d7e8db24aeeda1910",
+      "fidelity.py": "24cf515f06ccf529ccc782338e5da8beb67bc5dc2cea87ed5ba92fb9e127527f",
+      "forecast.py": "57da428356a894be8ff1d0feef5133cab015570510600f6facad86521f39b9e6",
+      "heldout.py": "772be8511115ef341d29bbaf37916b52a84f9664853f9615b790577cc904e1a5",
+      "inputs.py": "d0a93315f0f2bb8372c890f84c6e1f0ffb3a2c49910d6b5c17600d0a676fc85d",
+      "learning.py": "6ecbcc955b120ac50d812cd3c8c2d61a9690a49776917a1c12933489f11150d8",
+      "main_pilot.py": "4438cecd745af78d2d3b98c2307ad533115039651b99a045105eec9e96c4de94",
+      "planning.py": "028bc30f05e16a2d0acc2ca185f93387ff349d760450d4e2cef394ed414469ff",
+      "plotting.py": "72e958b46028bbd74e9a071ccbcf11ed96dc42479331c56704d77d163f312fcd",
+      "policy_inputs.py": "db470ad421ce43568edebc528dc98ab72d823e5e36aba91ef2d8fb7e8cfdb548",
+      "policy_runner.py": "5308aaa335d67d78298e943df782c8a85b7d707094838825dffe043a1c0fa9f3",
+      "power_analysis.py": "d4372e8b8da3fb5bae74b7e283cce17db74577fc19c77db806f2f1dfe94a75c4",
+      "precommit.py": "d7401bd5c853b4985d51a7d0c40f6efba88f70557ebebc51b8006983727ec8c8",
+      "probe_resume.py": "51c532ba550ce54a75b9287720770e0388f8c506b08637d5180a7ea99d236dea",
+      "probes.py": "47889d464fb2f8417f120972a5e2a0b09e45eba8797546b104fdae1e1a7fb03c",
+      "replay.py": "74ac5c9aa3b194faf6b2756721319c9c1c477acff92af71b4184e647d819b3bb",
+      "reporting.py": "483d953a1d20e87bafc3f419ba50973e6d1a229aafa482ce1ebb76349f8594c9",
+      "results.py": "7e76177d82d24daae2b9f99badd2a4b65270e0e4cde1ebc682f7ceab1dd41f3d",
+      "runner.py": "c72c47f563c2268b5a2267153071f8fa01c1842f05079a674a6233e3073c70fd",
+      "selection.py": "12ffa0bb4ae9f259d0d16fac99a33b47ff1a53220f2b62b1f6f2e00d0df10b6c",
+      "slider.py": "e4f5e2bdd086040d10e91de4b171d8ae2d44ae79a8bb7ca959a524d99f1cc3b0",
+      "statistics.py": "6f95d72a54b595e379773cdcd069d801705951927ba3bc2e1c8e76037b05289b",
+      "stress.py": "a60631cf1f9a0a13bdfb00481bfcafeeb1ea6b3c9ae6ac29bb148680c2f33bca",
+      "trace.py": "e4dbb02f0a39ad95e6c91edec79a9899f7e3cef8e0047a2e8a6901b87a6b4829",
+      "wait_pipeline.py": "930ab998c7229e54a3a9f90f82a78f740c37d6f55bcc635e06ad276f524d2ce0",
+      "waits.py": "b2cb4748eb494a8478bbd5bc72aecf1f60e5572cbcc50541e80d1922b012581f",
+      "workload.py": "42e1bc091fb68495a7657c2ba5a5f1ff14243555549d1f9d97939d7bc637aa97"
+    },
+    "version": "0.1.0"
+  },
+  "status": "complete",
+  "target_failure_model": "no_failures",
+  "trace_audit": {
+    "cleaning": {
+      "overrun_policy": "clip",
+      "zero_duration_policy": "drop"
+    },
+    "counts": {
+      "duration_over_request_rows": 7156,
+      "input_rows": 175090,
+      "original_node_seconds": 2789959680,
+      "retained_rows": 169968,
+      "scenario_node_seconds": 2789959680,
+      "zero_duration_rows": 5122
+    },
+    "max_requested_nodes": 64,
+    "node_multiplier": 1,
+    "observed_end_utc": "2021-08-21T23:42:46Z",
+    "oversize_policy": "error",
+    "role": "workload_template",
+    "sha256": "ed555938a7532b05db3ec722fcaf7fa2cbe92ee254cea18c86cf66c0527bd67f",
+    "submit_end_utc": "2021-08-19T23:58:17Z",
+    "submit_start_utc": "2019-12-04T18:21:26Z",
+    "timezone": "UTC"
+  },
+  "validated_scope": "full_experiment"
+}
