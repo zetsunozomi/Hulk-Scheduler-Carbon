@@ -18,12 +18,14 @@
 
 | 设置 | 本次默认 |
 |---|---|
-| account | `deep-learning-at-sca`（用户提供的 association） |
+| account | 不显式指定，沿用用户成功脚本的默认项目选择 |
 | partition | `small` |
 | nodes / tasks / cpus-per-task | `1 / 1 / 1` |
 | time | `04:00:00` |
 | Python | `$HOME/.conda/envs/carbon/bin/python` |
 | 仓库 | `/scratch2/09796/shuyuanfan4814/carbon` |
+
+用户提供的成功 Frontera 脚本省略了 `-A/--account`。当前安装和训练脚本均沿用这种方式，不写死 `CCR21013` 或项目名称；提交命令也不再加 `-A`。此前小写项目名在 TACC 前置计费检查被拒绝，大小写是否是唯一原因尚未验证。
 
 没有强制指定 QoS：用户 association 是 qdefault，分区里的 qsmall 是分区策略，不直接当成用户 QoS 参数。`scontrol` 输出的 UNLIMITED 不代表实际无限时长；当前 [TACC 文档](https://docs.tacc.utexas.edu/hpc/frontera/running/)规定 small 用于1–2节点、最长48h，normal至少3节点，development最多2h，实时限制可用 `qlimits`。Frontera按整节点分配/收费，即使程序只使用一个核。
 
@@ -47,7 +49,7 @@ mkdir -p out &&
 sbatch scripts/frontera_env.sh
 ```
 
-安装脚本申请 `deep-learning-at-sca / small / 1节点 / 1任务 / 1 CPU / 1小时`，由 Slurm 在计算节点执行，不受登录 SSH 连接中断影响。计算节点联网情况由此次作业实际验证，Conda/pip 的失败信息保留在日志中。
+安装脚本申请 `small / 1节点 / 1任务 / 1 CPU / 1小时`，由 Slurm 在计算节点执行，不受登录 SSH 连接中断影响。计算节点联网情况由此次作业实际验证，Conda/pip 的失败信息保留在日志中。
 
 脚本用现有 Conda，在 `$HOME/.conda/envs/carbon` 创建 Python3.11。安装项目所需 scikit-learn/SciPy、matplotlib，以及 [PyTorch 官方 CPU 分发](https://docs.pytorch.org/get-started/previous-versions/)，不拉 CUDA toolkit。不改 `/work2/.../miniconda3/envs/carbon` 旧环境。使用二进制包。这个安装作业只创建/检查环境，不执行模拟或 PPO；已有计算节点交互 shell 也可 `bash scripts/frontera_env.sh`。
 
