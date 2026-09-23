@@ -13,7 +13,7 @@
 总64轮（5轮观察+59轮更新），重新训练PPO；复用已完成C84的fixed结果，不重跑wait probes。
 
 当前集群为 Frontera Slurm；本地改代码，远程只 pull/运行。安装和启动见 docs/FRONTERA_RUN.md。
-登录节点安装：bash scripts/frontera_env.sh
+登录节点提交安装：mkdir -p out && sbatch scripts/frontera_env.sh（安装作业成功结束后再提交实验）
 登录节点提交：sbatch scripts/frontera_weighted84.sh
 中断后：sbatch scripts/frontera_weighted84.sh --resume
 计算节点交互式：bash scripts/frontera_weighted84.sh [--resume]

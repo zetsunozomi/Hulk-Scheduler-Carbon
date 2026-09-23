@@ -38,19 +38,38 @@ git push
 
 显式列出文件，避免把本地无关文件带进提交。远程之后不再产生研究代码提交，从而避免两端各自提交引起分叉。
 
-## 3. 在 Frontera 登录节点安装
+## 3. 从登录节点提交环境安装作业
 
 ```bash
 cd /scratch2/09796/shuyuanfan4814/carbon &&
 git pull --ff-only &&
-bash scripts/frontera_env.sh
+mkdir -p out &&
+sbatch scripts/frontera_env.sh
 ```
 
-脚本用现有 Conda，在 `$HOME/.conda/envs/carbon` 创建 Python3.11。安装项目所需 scikit-learn/SciPy、matplotlib，以及 [PyTorch 官方 CPU 分发](https://docs.pytorch.org/get-started/previous-versions/)，不拉 CUDA toolkit。不改 `/work2/.../miniconda3/envs/carbon` 旧环境。使用二进制包，不在登录节点编译大包、回放真实队列或训练。
+安装脚本申请 `deep-learning-at-sca / small / 1节点 / 1任务 / 1 CPU / 1小时`，由 Slurm 在计算节点执行，不受登录 SSH 连接中断影响。计算节点联网情况由此次作业实际验证，Conda/pip 的失败信息保留在日志中。
+
+脚本用现有 Conda，在 `$HOME/.conda/envs/carbon` 创建 Python3.11。安装项目所需 scikit-learn/SciPy、matplotlib，以及 [PyTorch 官方 CPU 分发](https://docs.pytorch.org/get-started/previous-versions/)，不拉 CUDA toolkit。不改 `/work2/.../miniconda3/envs/carbon` 旧环境。使用二进制包。这个安装作业只创建/检查环境，不执行模拟或 PPO；已有计算节点交互 shell 也可 `bash scripts/frontera_env.sh`。
 
 首次成功后，确切依赖写到环境中的 `carbon-pip-freeze.txt`、`carbon-conda-explicit.txt`。再次运行安装脚本只检查已冻结环境，不自动升级。中断恢复必须保持同一个环境；不同 PyTorch 版本会被实验检查拒绝。本次是新训练，不加载 Sophia 的 PPO 权重。
 
 环境路径可在**安装和运行两边**统一通过 `export CARBON_ENV=...` 覆盖；Conda可用 `CONDA_EXE` 覆盖。默认不用 activate；运行器始终调用完整 Python 路径，并隔离旧模块/base 的 Python 包路径。安装报错时保留 `out/frontera-env.*.log`，不要接着提交作业。
+
+## 3.1 查看安装结果和重试
+
+提交返回 job ID 后，使用 `squeue -u "$USER"` 看状态，日志为 `out/frontera-env-JOBID.out`（替换 JOBID）。脚本另保存每次独立日志 `out/frontera-env.JOBID.UTC.UNIQUE.log`。
+
+```bash
+tail -n 60 out/frontera-env-JOBID.out
+```
+
+看到 `Ready. Python: ...` 与 `Frozen packages: ...`，且安装作业成功结束后，再执行下一节的检查和实验提交。提交成功仅代表排队，不代表安装完成。
+
+此前 `Executing transaction` 被断开后，可能已有 `conda-meta/` 却没有 `bin/python`。安装器会检查 Python、标准库和 pip；对没有冻结记录的残缺环境，将整个目录保存在 `$HOME/.conda/envs/carbon.incomplete.XXXXXX/prefix` 后重新创建。健康环境继续使用；已有冻结记录的损坏环境拒绝自动替换。此恢复逻辑同样适用于安装作业超时。
+
+安装失败后先查看该作业日志；需要重试时仍提交 `sbatch scripts/frontera_env.sh`，不用 `--resume`。网络问题按实际日志处理。Frontera 提供 flock 时，脚本阻止同一环境的并发安装。
+
+这次此前中断发生在环境安装阶段，尚未启动实验，首次实验 sbatch 也不加 `--resume`。
 
 ## 4. 登录节点检查，然后提交
 
