@@ -1,18 +1,20 @@
-# ScaleDown：研究与集群交接（更新于2026-09-22）
+# ScaleDown：研究与集群交接（运行入口更新于2026-09-23）
 
-> 2026-09-23 新候选方向：[C84 加权目标](WEIGHTED84_RUN.md)。用户授权改为 `alpha*TAT/Tbar+(1-alpha)*carbon(rho=1)/Cbar`，alpha=0/0.2/0.5/0.8/1；前5轮不更新模型，用400个完整训练任务的均值确定公共参考量，随后冻结。旧强预算C84已完成，固定规模结果复用；新PPO从头训练，独立输出目录。入口 `bash scripts/sophia_weighted84.sh`，实机待用户启动。下方关于deadline/四档预算的叙述为旧方法背景，不代表这次候选目标。
+> 当前工作流：**本地修改，Frontera 只 pull/安装/运行**，远程没有 Codex，不再往 Git 提交日志。环境在 `$HOME/.conda/envs/carbon`。完整流程见 [FRONTERA_RUN.md](FRONTERA_RUN.md)，当前入口 `sbatch scripts/frontera_weighted84.sh`。Git 不带 results/，脚本在计算节点补齐必要的 C84 fixed train/validation，然后执行下述加权候选。
 
-> 当前执行方向：[Frontera 84节点实验](CAPACITY84_RUN.md)。用户指出源资源池容量应随trace设置，并授权只先做Frontera–7B的84节点修正，动作4/16/64；沿用当前独立actor算法，不加trick。新配置和可恢复的fixed/E1/规划/PPO/曲线流水线已准备，真实运行待用户启动。入口 `bash scripts/sophia_capacity84.sh --stage prepare`，完成后 `bash scripts/sophia_capacity84.sh --stage train --resume`。旧C128产物保留为旧容量场景，不继续当作84节点结果或在旧目录覆盖重跑。
+> 2026-09-23 新候选方向：[C84 加权目标](WEIGHTED84_RUN.md)。用户授权改为 `alpha*TAT/Tbar+(1-alpha)*carbon(rho=1)/Cbar`，alpha=0/0.2/0.5/0.8/1；前5轮不更新模型，用400个完整训练任务的均值确定公共参考量，随后冻结。旧强预算C84已完成，固定规模结果复用；新PPO从头训练，独立输出目录。Frontera 入口见上方；Sophia 脚本保留作历史入口，实机仍待用户启动。下方关于deadline/四档预算的叙述为旧方法背景，不代表这次候选目标。
+
+> 历史容量修正：[Frontera 84节点实验](CAPACITY84_RUN.md)。用户指出源资源池容量应随trace设置，并授权只先做Frontera–7B的84节点修正，动作4/16/64；沿用当前独立actor算法，不加trick。新配置和可恢复的fixed/E1/规划/PPO/曲线流水线已准备，真实运行待用户启动。入口 `bash scripts/sophia_capacity84.sh --stage prepare`，完成后 `bash scripts/sophia_capacity84.sh --stage train --resume`。旧C128产物保留为旧容量场景，不继续当作84节点结果或在旧目录覆盖重跑。
 
 > 最新核验：[2026-09-22项目现状与两个核心目标](PROJECT_STATUS_2026-09-22.md)。独立预算actor已完成64轮/4096 episodes/6534 chunks及384次validation。两个宽预算持续出现任务内换规模，最终分别10/24、19/24；尚无稳定超越Best-Fixed/Fixed-Mix的证据，也未证明有效状态反馈。下文“55/64、恢复未知”保留为历史交接记录，当前状态以最新核验和原始产物为准。
 
 > 原PPO、product actor、规划对照、冻结梯度诊断及[独立预算actor对照](BUDGET_ACTOR_RUN.md)均已完成，见[真实development发现](../paper/reproducibility/development_findings.md)。独立actor打破了所有预算都选64的旧现象，但各预算的首次argmax仍在24个到达上保持不变；最宽预算主要维持4/16随机混合。这些均为C128开发结果。下一步先按上方入口修正容量并重建对照，待C84结果后再考虑方法优化。候选增加365,955参数，未采用为正式方法。旧product源码已按哈希归档，实机实验仍由用户启动。
 
-这是继续本项目的总入口。**后续直接在cluster读结果、诊断和推进，不要求把实验压缩包传回Mac。** 目标是把user-level动态scale-down做成有证据支持的顶会候选研究；当前已有候选稿和模拟实现，核心动态收益尚未证实。
+这是继续本项目的总入口。**代码与稿件在本地推进；远程保留 out/ 和 results/，按需直接同步文件供本地分析，无需压缩包。** 目标是把user-level动态scale-down做成有证据支持的顶会候选研究；当前已有候选稿和模拟实现，核心动态收益尚未证实。
 
 ## 1. 不要丢失的目标和限制
 
-- 用户控制一个slider，选择完成预算D；希望对应的实际时间—碳曲线优于固定规模。4→8→4是机制例子，意图是任务内规模切换有真实收益，不是硬编码这条序列。
+- 用户控制一个slider；当前候选是时间/碳权重 alpha，旧方案用完成预算D。希望对应的实际时间—碳曲线优于固定规模。4→8→4是机制例子，意图是任务内规模切换有真实收益，不是硬编码这条序列。
 - 只能在checkpoint完成后提交下一次资源请求；不改Slurm调度器、不修改排队优先级、不resize正在运行的allocation。任务之间/各chunk之间可降规模，也可重新增配。
 - 主方法不能依赖准确预测queue wait。现行设计已取消“等待回归预训练→RL”的两阶段主流程。
 - 不要求Qwen/GPU throughput重测、整节点功率或碳脚印实测，也不要求获得新机器的历史作业日志。

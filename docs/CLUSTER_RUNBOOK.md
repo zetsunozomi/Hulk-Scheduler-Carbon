@@ -1,6 +1,8 @@
 # 当前方案与集群运行
 
-2026-09-21：改为直接在cluster继续研究。先读 [RESEARCH_HANDOFF.md](RESEARCH_HANDOFF.md)，其中包含最新核验进度、当前idea、paper/稿件与PDF、结果路径和下一步判断。下方是各运行阶段的说明；不再要求传回结果压缩包。
+2026-09-23：工作流改回**本地修改，远程只 pull/启动**。新集群为 Frontera Slurm，安装、提交、交互式运行、恢复与日志统一见 [FRONTERA_RUN.md](FRONTERA_RUN.md)。当前目标为 [C84 加权 PPO](WEIGHTED84_RUN.md)。Git 不同步 results/；新集群缺旧结果时只重建必要 fixed，不重跑 E1。
+
+下方保留早期 C128/预算目标/Sophia 阶段记录，不作为本轮启动流程；研究总览见 [RESEARCH_HANDOFF.md](RESEARCH_HANDOFF.md)。
 
 ## 当前执行进度
 

@@ -1,6 +1,8 @@
 # C84：TAT 与 carbon 加权目标（2026-09-23）
 
-这是新候选目标的独立实验。源 fixed 数据来自已完成的 `results/amsp-frontera-7b-c84-seed11`，新结果默认写入 `results/amsp-frontera-7b-c84-weighted-seed11`。不加载旧 PPO 权重，也不重跑 fixed、wait probes 或等待预测器。
+> **当前为 Frontera Slurm**，安装与一条命令启动见 [FRONTERA_RUN.md](FRONTERA_RUN.md)。入口 `sbatch scripts/frontera_weighted84.sh`；计算节点可用 `bash`。Git 不带 results/，若没有旧 fixed，当前入口只重建 C84 fixed train/validation 和 references，随后运行本文算法；不会重跑 wait probes。原 Sophia PBS 命令保留在下方作为历史入口。
+
+这是新候选目标的独立实验。Sophia 源 fixed 数据来自已完成的 `results/amsp-frontera-7b-c84-seed11`；Frontera 默认源为 `results/amsp-frontera-7b-c84-fixed-frontera`，缺失时按相同配置重建，新结果默认写入 `results/amsp-frontera-7b-c84-weighted-seed11`。不加载旧 PPO 权重。已有完整 fixed 校验后复用；缺失时只重建必要 fixed，不运行 wait probes 或等待预测器。
 
 ## 目标与观察阶段
 
@@ -29,7 +31,7 @@
 - PPO 每个 rollout 做 4 次优化遍历，minibatch 16 个完整任务，Adam 3e-4，clip 0.2，entropy 0.01，value coefficient 0.5，gradient clip 0.5；seed=11、CPU 单线程，与旧实验主要优化配置一致。熵项是原有正则化，不是额外性能指标。
 - 任务若触及数据覆盖边界而未完成，保留其临时日志并停止，不丢弃、不把截断任务当作完整样本。取消预算约束并不取消模拟数据覆盖边界。
 
-## 启动与恢复
+## Sophia 历史启动与恢复（当前 Frontera 见页首）
 
 在已有 PBS 交互 allocation（1 GPU）中：
 

@@ -6,9 +6,9 @@ Wait-model fitting and the Fixed-Mix LP need `requirements-p2.txt`; no GPU or
 PyTorch is needed for these components. Budget-conditioned PPO uses PyTorch 2.6+
 on CPU (`requirements-p3.txt`) and has synthetic functional coverage.
 
-## Continue the research on cluster
+## Current entry: Frontera Slurm
 
-Read [RESEARCH_HANDOFF.md](docs/RESEARCH_HANDOFF.md) for the goal, latest verified progress, current idea, result paths and next decisions. The current manuscript, PDF and method specifications are in [paper/](paper/README.md). Analyze results on the cluster; transferring result archives to a laptop is not a prerequisite.
+Edit code and [paper/](paper/README.md) locally; the cluster only pulls and runs. Follow [FRONTERA_RUN.md](docs/FRONTERA_RUN.md) for the HOME Conda environment, one-script sbatch/interactive launch, logs and resume. The current candidate is [C84 weighted PPO](docs/WEIGHTED84_RUN.md). Git excludes results/: missing C84 fixed inputs are rebuilt in the same compute job, without wait probes. [RESEARCH_HANDOFF.md](docs/RESEARCH_HANDOFF.md) retains the research history and limitations.
 
 ## Start here
 
@@ -29,7 +29,9 @@ python3 -B -m carbon run-fixed --config configs/synthetic.json \
 Each output directory is new and immutable to this runner. A second invocation
 with the same output path fails instead of overwriting results.
 
-## Cluster handoff
+## Earlier pipeline reference
+
+The following describes earlier C128/budget experiments. Use the Frontera entry above for the current C84/weighted run.
 
 Read [the short Chinese runbook](docs/CLUSTER_RUNBOOK.md) for the current story,
 portable site settings and first CPU submission. Published AMSP March 2024
@@ -44,8 +46,7 @@ precludes an untouched-test claim.
 
 The shared wait predictor, causal CI forecast, planners, and Fixed-Mix are
 implemented and verified on synthetic fixtures, alongside complete-episode PPO
-training, checkpoint resume and categorical evaluation. No paper experiment
-has run. `configs/synthetic.json` is a software test, and
+training, checkpoint resume and categorical evaluation. Development experiments have run; the current weighted candidate has not yet established an advantage over fixed scales. `configs/synthetic.json` is a software test, and
 `configs/cluster.template.json` is an internal configuration reference.
 
 Each `scripts/cluster_*.sh` is both an interactive job script and an sbatch
