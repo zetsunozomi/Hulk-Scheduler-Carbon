@@ -1,6 +1,6 @@
 # Frontera：本地修改，远程 pull 与运行（2026-09-23）
 
-当前入口是本页。代码和 paper/ 在本地修改并提交；Frontera 只 `git pull --ff-only`、安装环境、启动计算。远程不 commit/push 日志，不需要 Codex。`out/`、`results/` 被忽略：**Git 同步的是代码/输入，不包含旧实验结果**。本次按 Frontera 上只有 Git 仓库处理，不要求传输结果压缩包。
+当前入口是本页。代码和 paper/ 在本地修改并提交；Frontera 只 `git pull --ff-only`、安装环境、启动计算。不需要 Codex。按后续确认的结果回传流程，远程仅可另外提交 `out/`、`results/` 中 ignore 规则允许的输出文本；checkpoint 和二进制产物始终留在集群。初次迁移时缺失的 fixed 结果仍在计算节点重建。
 
 研究目标与细节见 [WEIGHTED84_RUN.md](WEIGHTED84_RUN.md)；draft/PDF 是 `paper/main.tex` / `paper/main.pdf`。加权 PPO 仍是 development 候选，尚不能声称优于 fixed。
 
@@ -141,4 +141,8 @@ sbatch scripts/frontera_weighted84.sh --stage validate --resume
 
 可用 `CARBON_SOURCE`、`CARBON_OUTPUT` 覆盖两个结果目录。若后来找回旧 fixed 数据，指定包含 references.json、fixed-train/、fixed-validation/ 的目录即可验证复用；不要在同一次 PPO 中途换 source 路径。跨机器搬迁旧 weighted checkpoint 也涉及绝对 source 路径绑定，本次不进行该操作。
 
-结果不提交到 Git。需要在本地分析时可用 rsync/scp 直接同步指定 out/ 日志和结果文件，无需打包；地址/连接方式确定后再给出具体同步命令。
+结果文本用 Git 回传：在集群 `git add -- out/ results/`，检查 `git status --short` 后 commit/push，本地再 `git pull --ff-only`。不使用 `git add -f`、压缩包或 checkpoint 同步；训练轮次只回传 10/32/64 的文本，其余 validation 文本保留。避免本地代码 push 与集群结果 push 同时进行导致分叉。
+
+## 新增 old GPT-2 入口
+
+[OLD_GPT_RUN.md](OLD_GPT_RUN.md) 使用旧稿的 Medium/Large/XL 节点速度表，另建每个模型的 Fixed-4/8/16/32 baseline 和 PPO 输出。入口是 `scripts/frontera_old_gpt.sh --model medium`（也可 `large` / `xl`），48h 分段和训练配方不变。本页 AMSP 入口继续保留。

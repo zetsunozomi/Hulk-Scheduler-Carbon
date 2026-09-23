@@ -1,0 +1,38 @@
+\subsection{Training-Workload Profiles}
+\label{sec:impl:workload}
+
+The simulator represents completion of 100,000 iterations for three GPT-2
+configurations.  For each model, define the reference work in 4-node-equivalent
+node-hours as
+
+\begin{equation}
+    W_{\mathrm{total}} = 4T_4,
+\end{equation}
+
+where $T_4$ is the wall-clock duration of that workload's 4-node profile.  For
+node count $n$, Table~\ref{tab:scaling_efficiency} gives the node-hour cost
+$W_n=nT_n$ supplied to the simulator.  These values are workload-profile
+inputs to the trace-driven evaluation; the reported scheduling results are
+conditional on them.
+The current artifact does not identify the machine on which every profile was
+measured or report the software stack, sequence length, micro-batch and
+accumulation settings, repetitions, or measurement uncertainty.  We therefore
+do not treat this table as evidence of cross-machine scaling generality.
+
+\begin{table}[t]
+    \centering
+    \caption{Node-hour workload profiles used by the simulator for 100,000
+    GPT-2 training iterations.}
+    \label{tab:scaling_efficiency}
+    \begin{tabular}{lrrrr}
+        \toprule
+        \textbf{Profile} & \textbf{4 nodes} & \textbf{8 nodes}
+                         & \textbf{16 nodes} & \textbf{32 nodes} \\
+        \midrule
+        Medium (345M) & 139.87 & 207.09 & 361.60 & 640.42 \\
+        Large         & 272.68 & 410.66 & 680.00 & 1262.41 \\
+        XL (1.5B)     & 866.80 & 1220.00 & 1760.00 & 2894.16 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+

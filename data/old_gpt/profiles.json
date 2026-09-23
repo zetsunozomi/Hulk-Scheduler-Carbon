@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "unit": "nodes",
+  "work_iterations": 100000,
+  "source": {
+    "original": "old_formats/carbon_SC26/6design.tex",
+    "original_sha256": "f36cd825d6ee864b8db55a8df8a280041c06fa0a611c4b49c5b8a8da185e7f89",
+    "snapshot": "data/old_gpt/source-table.tex",
+    "snapshot_sha256": "e9afb9c32fbb26e561a8f5599e72ed712138851e2fd1165b47bde3b7fadf12a0",
+    "confirmation": "Author confirms node counts, not GPU counts, and measured training speeds (2026-09-23)."
+  },
+  "unknown_measurement_metadata": [
+    "machine_by_profile",
+    "physical_gpus_per_node",
+    "global_batch",
+    "sequence_length",
+    "microbatch",
+    "accumulation",
+    "precision",
+    "software",
+    "repetitions",
+    "uncertainty",
+    "large_parameter_count"
+  ],
+  "profiles": {
+    "medium": {
+      "label": "Medium (345M)",
+      "node_hours": {
+        "4": "139.87",
+        "8": "207.09",
+        "16": "361.60",
+        "32": "640.42"
+      }
+    },
+    "large": {
+      "label": "Large",
+      "node_hours": {
+        "4": "272.68",
+        "8": "410.66",
+        "16": "680.00",
+        "32": "1262.41"
+      }
+    },
+    "xl": {
+      "label": "XL (1.5B)",
+      "node_hours": {
+        "4": "866.80",
+        "8": "1220.00",
+        "16": "1760.00",
+        "32": "2894.16"
+      }
+    }
+  }
+}

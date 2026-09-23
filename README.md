@@ -8,7 +8,15 @@ on CPU (`requirements-p3.txt`) and has synthetic functional coverage.
 
 ## Current entry: Frontera Slurm
 
-Edit code and [paper/](paper/README.md) locally; the cluster only pulls and runs. Follow [FRONTERA_RUN.md](docs/FRONTERA_RUN.md) for the HOME Conda environment, one-script sbatch/interactive launch, logs and resume. The current candidate is [C84 weighted PPO](docs/WEIGHTED84_RUN.md). Git excludes results/: missing C84 fixed inputs are rebuilt in the same compute job, without wait probes. [RESEARCH_HANDOFF.md](docs/RESEARCH_HANDOFF.md) retains the research history and limitations.
+Edit code and [paper/](paper/README.md) locally; the cluster only pulls and runs. Follow [FRONTERA_RUN.md](docs/FRONTERA_RUN.md) for the HOME Conda environment, one-script sbatch/interactive launch, logs and resume. The current candidate is [C84 weighted PPO](docs/WEIGHTED84_RUN.md). Missing C84 fixed inputs are rebuilt in the same compute job, without wait probes. Git returns selected output text; checkpoints and binary results stay on the cluster. [RESEARCH_HANDOFF.md](docs/RESEARCH_HANDOFF.md) retains the research history and limitations.
+
+
+### Additional profile: old GPT-2
+
+[OLD_GPT_RUN.md](docs/OLD_GPT_RUN.md) adds Medium / Large / XL at **4/8/16/32 nodes**.
+Use `sbatch scripts/frontera_old_gpt.sh --model medium` (or `large` / `xl`).
+Each model builds its own fixed baselines and trains from scratch; both fixed
+and dynamic retain the 48h request cap. AMSP's existing entry remains unchanged.
 
 ## Start here
 
