@@ -1,0 +1,15 @@
+{
+  "checkpoint_sha256": "ca84d773d2e537f51d3cc9c6ba847d1e96f8ceb95bf80d9e0833786efa8564f4",
+  "iteration": 16,
+  "normalizers": {
+    "carbon_g_per_kappa": 123395.50212308805,
+    "episodes": 400,
+    "kind": "weighted_reward_normalizers_v1",
+    "observation_iterations": 5,
+    "rho": "1.0",
+    "rule": "common arithmetic means over complete episodes, then frozen",
+    "split": "train",
+    "tat_hours": 36.55436015806182
+  },
+  "split": "validation"
+}
