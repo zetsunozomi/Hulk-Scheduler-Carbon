@@ -1,0 +1,789 @@
+{
+  "checkpoints": [
+    {
+      "action_counts": {
+        "16": 1,
+        "4": 101,
+        "8": 33
+      },
+      "alpha": 0.0,
+      "iteration": 16,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 433878.80369973485,
+        "1.0": 463136.1410412897
+      },
+      "mean_chunks": 5.625,
+      "mean_nodehours": 1215.8843881210184,
+      "mean_tat_hours": 307.65044591181714,
+      "method": "Weighted-PPO",
+      "outcomes": 24,
+      "switched_episodes": 19
+    },
+    {
+      "action_counts": {
+        "16": 9,
+        "32": 8,
+        "4": 48,
+        "8": 41
+      },
+      "alpha": 0.2,
+      "iteration": 16,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 459504.13324312837,
+        "1.0": 558225.1659763099
+      },
+      "mean_chunks": 4.416666666666667,
+      "mean_nodehours": 1455.117987906389,
+      "mean_tat_hours": 240.33227767936341,
+      "method": "Weighted-PPO",
+      "outcomes": 24,
+      "switched_episodes": 23
+    },
+    {
+      "action_counts": {
+        "16": 16,
+        "32": 29,
+        "4": 3,
+        "8": 8
+      },
+      "alpha": 0.5,
+      "iteration": 16,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 518226.0626787042,
+        "1.0": 782432.8375474919
+      },
+      "mean_chunks": 2.3333333333333335,
+      "mean_nodehours": 2014.513616036713,
+      "mean_tat_hours": 141.67426595923612,
+      "method": "Weighted-PPO",
+      "outcomes": 24,
+      "switched_episodes": 18
+    },
+    {
+      "action_counts": {
+        "16": 3,
+        "32": 45
+      },
+      "alpha": 0.8,
+      "iteration": 16,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 528072.860497425,
+        "1.0": 839698.1293216753
+      },
+      "mean_chunks": 2.0,
+      "mean_nodehours": 2205.3137922214814,
+      "mean_tat_hours": 122.32298861395833,
+      "method": "Weighted-PPO",
+      "outcomes": 24,
+      "switched_episodes": 3
+    },
+    {
+      "action_counts": {
+        "32": 48
+      },
+      "alpha": 1.0,
+      "iteration": 16,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 531970.9918241632,
+        "1.0": 851153.5869186614
+      },
+      "mean_chunks": 2.0,
+      "mean_nodehours": 2228.127714488889,
+      "mean_tat_hours": 121.67961074,
+      "method": "Weighted-PPO",
+      "outcomes": 24,
+      "switched_episodes": 0
+    },
+    {
+      "action_counts": {
+        "4": 144
+      },
+      "alpha": 0.0,
+      "iteration": 32,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 424573.9369536571,
+        "1.0": 424573.9369536571
+      },
+      "mean_chunks": 6.0,
+      "mean_nodehours": 1112.730523908889,
+      "mean_tat_hours": 346.22459585916664,
+      "method": "Weighted-PPO",
+      "outcomes": 24,
+      "switched_episodes": 0
+    },
+    {
+      "action_counts": {
+        "16": 3,
+        "32": 1,
+        "4": 37,
+        "8": 74
+      },
+      "alpha": 0.2,
+      "iteration": 32,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 447975.4608255482,
+        "1.0": 516276.38709762477
+      },
+      "mean_chunks": 4.791666666666667,
+      "mean_nodehours": 1350.2750669487962,
+      "mean_tat_hours": 255.32363841964118,
+      "method": "Weighted-PPO",
+      "outcomes": 24,
+      "switched_episodes": 19
+    },
+    {
+      "action_counts": {
+        "16": 1,
+        "32": 47
+      },
+      "alpha": 0.5,
+      "iteration": 32,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 531655.7892435907,
+        "1.0": 849105.8387323498
+      },
+      "mean_chunks": 2.0,
+      "mean_nodehours": 2222.1128779466667,
+      "mean_tat_hours": 122.05005612583334,
+      "method": "Weighted-PPO",
+      "outcomes": 24,
+      "switched_episodes": 1
+    },
+    {
+      "action_counts": {
+        "32": 48
+      },
+      "alpha": 0.8,
+      "iteration": 32,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 531970.9918241632,
+        "1.0": 851153.5869186614
+      },
+      "mean_chunks": 2.0,
+      "mean_nodehours": 2228.127714488889,
+      "mean_tat_hours": 121.67961074,
+      "method": "Weighted-PPO",
+      "outcomes": 24,
+      "switched_episodes": 0
+    },
+    {
+      "action_counts": {
+        "32": 48
+      },
+      "alpha": 1.0,
+      "iteration": 32,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 531970.9918241632,
+        "1.0": 851153.5869186614
+      },
+      "mean_chunks": 2.0,
+      "mean_nodehours": 2228.127714488889,
+      "mean_tat_hours": 121.67961074,
+      "method": "Weighted-PPO",
+      "outcomes": 24,
+      "switched_episodes": 0
+    },
+    {
+      "action_counts": {
+        "4": 134,
+        "8": 9
+      },
+      "alpha": 0.0,
+      "iteration": 48,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 427345.5375463851,
+        "1.0": 433727.5679850537
+      },
+      "mean_chunks": 5.958333333333333,
+      "mean_nodehours": 1135.6263371267594,
+      "mean_tat_hours": 337.27861814689817,
+      "method": "Weighted-PPO",
+      "outcomes": 24,
+      "switched_episodes": 7
+    },
+    {
+      "action_counts": {
+        "16": 3,
+        "32": 1,
+        "4": 39,
+        "8": 73
+      },
+      "alpha": 0.2,
+      "iteration": 48,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 447504.7582808063,
+        "1.0": 515114.50438142056
+      },
+      "mean_chunks": 4.833333333333333,
+      "mean_nodehours": 1348.1351925392594,
+      "mean_tat_hours": 256.80064259894675,
+      "method": "Weighted-PPO",
+      "outcomes": 24,
+      "switched_episodes": 20
+    },
+    {
+      "action_counts": {
+        "16": 3,
+        "32": 45
+      },
+      "alpha": 0.5,
+      "iteration": 48,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 530781.8455443549,
+        "1.0": 844633.2445405959
+      },
+      "mean_chunks": 2.0,
+      "mean_nodehours": 2210.0832048622224,
+      "mean_tat_hours": 122.42844689750001,
+      "method": "Weighted-PPO",
+      "outcomes": 24,
+      "switched_episodes": 3
+    },
+    {
+      "action_counts": {
+        "32": 48
+      },
+      "alpha": 0.8,
+      "iteration": 48,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 531970.9918241632,
+        "1.0": 851153.5869186614
+      },
+      "mean_chunks": 2.0,
+      "mean_nodehours": 2228.127714488889,
+      "mean_tat_hours": 121.67961074,
+      "method": "Weighted-PPO",
+      "outcomes": 24,
+      "switched_episodes": 0
+    },
+    {
+      "action_counts": {
+        "16": 13,
+        "32": 33,
+        "4": 7,
+        "8": 6
+      },
+      "alpha": 1.0,
+      "iteration": 48,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 512775.3994674131,
+        "1.0": 779521.7038862751
+      },
+      "mean_chunks": 2.4583333333333335,
+      "mean_nodehours": 2048.425836614491,
+      "mean_tat_hours": 143.80486393387733,
+      "method": "Weighted-PPO",
+      "outcomes": 24,
+      "switched_episodes": 15
+    },
+    {
+      "action_counts": {
+        "16": 2,
+        "4": 101,
+        "8": 31
+      },
+      "alpha": 0.0,
+      "iteration": 64,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 433659.6805528801,
+        "1.0": 464273.24919798743
+      },
+      "mean_chunks": 5.583333333333333,
+      "mean_nodehours": 1221.9662864222223,
+      "mean_tat_hours": 306.366971230544,
+      "method": "Weighted-PPO",
+      "outcomes": 24,
+      "switched_episodes": 19
+    },
+    {
+      "action_counts": {
+        "16": 4,
+        "32": 3,
+        "4": 41,
+        "8": 67
+      },
+      "alpha": 0.2,
+      "iteration": 64,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 447476.7390908164,
+        "1.0": 516892.78688262217
+      },
+      "mean_chunks": 4.791666666666667,
+      "mean_nodehours": 1355.8842368756943,
+      "mean_tat_hours": 258.3028932883796,
+      "method": "Weighted-PPO",
+      "outcomes": 24,
+      "switched_episodes": 20
+    },
+    {
+      "action_counts": {
+        "16": 12,
+        "32": 37,
+        "4": 1,
+        "8": 3
+      },
+      "alpha": 0.5,
+      "iteration": 64,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 527464.3278460806,
+        "1.0": 817770.6883033215
+      },
+      "mean_chunks": 2.2083333333333335,
+      "mean_nodehours": 2109.4094508159724,
+      "mean_tat_hours": 134.98748536688657,
+      "method": "Weighted-PPO",
+      "outcomes": 24,
+      "switched_episodes": 13
+    },
+    {
+      "action_counts": {
+        "16": 3,
+        "32": 45
+      },
+      "alpha": 0.8,
+      "iteration": 64,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 528072.860497425,
+        "1.0": 839698.1293216753
+      },
+      "mean_chunks": 2.0,
+      "mean_nodehours": 2205.3137922214814,
+      "mean_tat_hours": 122.32298861395833,
+      "method": "Weighted-PPO",
+      "outcomes": 24,
+      "switched_episodes": 3
+    },
+    {
+      "action_counts": {
+        "16": 1,
+        "32": 47
+      },
+      "alpha": 1.0,
+      "iteration": 64,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 531600.4357156458,
+        "1.0": 848809.5432227766
+      },
+      "mean_chunks": 2.0,
+      "mean_nodehours": 2219.7281716262964,
+      "mean_tat_hours": 121.9817019840625,
+      "method": "Weighted-PPO",
+      "outcomes": 24,
+      "switched_episodes": 1
+    }
+  ],
+  "comparison": "Full fixed-scale and alpha-ordered dynamic curves; inspect lower-left shift. No per-alpha best-fixed ranking.",
+  "fixed": [
+    {
+      "action_counts": {
+        "4": 144
+      },
+      "alpha": 0.0,
+      "iteration": null,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 424573.9369536571,
+        "1.0": 424573.9369536571
+      },
+      "mean_chunks": 6.0,
+      "mean_nodehours": 1112.730523908889,
+      "mean_tat_hours": 346.22459585916664,
+      "method": "Fixed-4",
+      "outcomes": 24,
+      "switched_episodes": 0
+    },
+    {
+      "action_counts": {
+        "4": 144
+      },
+      "alpha": 0.2,
+      "iteration": null,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 424573.9369536571,
+        "1.0": 424573.9369536571
+      },
+      "mean_chunks": 6.0,
+      "mean_nodehours": 1112.730523908889,
+      "mean_tat_hours": 346.22459585916664,
+      "method": "Fixed-4",
+      "outcomes": 24,
+      "switched_episodes": 0
+    },
+    {
+      "action_counts": {
+        "4": 144
+      },
+      "alpha": 0.5,
+      "iteration": null,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 424573.9369536571,
+        "1.0": 424573.9369536571
+      },
+      "mean_chunks": 6.0,
+      "mean_nodehours": 1112.730523908889,
+      "mean_tat_hours": 346.22459585916664,
+      "method": "Fixed-4",
+      "outcomes": 24,
+      "switched_episodes": 0
+    },
+    {
+      "action_counts": {
+        "4": 144
+      },
+      "alpha": 0.8,
+      "iteration": null,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 424573.9369536571,
+        "1.0": 424573.9369536571
+      },
+      "mean_chunks": 6.0,
+      "mean_nodehours": 1112.730523908889,
+      "mean_tat_hours": 346.22459585916664,
+      "method": "Fixed-4",
+      "outcomes": 24,
+      "switched_episodes": 0
+    },
+    {
+      "action_counts": {
+        "4": 144
+      },
+      "alpha": 1.0,
+      "iteration": null,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 424573.9369536571,
+        "1.0": 424573.9369536571
+      },
+      "mean_chunks": 6.0,
+      "mean_nodehours": 1112.730523908889,
+      "mean_tat_hours": 346.22459585916664,
+      "method": "Fixed-4",
+      "outcomes": 24,
+      "switched_episodes": 0
+    },
+    {
+      "action_counts": {
+        "8": 96
+      },
+      "alpha": 0.0,
+      "iteration": null,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 453518.7413627957,
+        "1.0": 536533.7076178124
+      },
+      "mean_chunks": 4.0,
+      "mean_nodehours": 1402.246259068889,
+      "mean_tat_hours": 225.5422871175,
+      "method": "Fixed-8",
+      "outcomes": 24,
+      "switched_episodes": 0
+    },
+    {
+      "action_counts": {
+        "8": 96
+      },
+      "alpha": 0.2,
+      "iteration": null,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 453518.7413627957,
+        "1.0": 536533.7076178124
+      },
+      "mean_chunks": 4.0,
+      "mean_nodehours": 1402.246259068889,
+      "mean_tat_hours": 225.5422871175,
+      "method": "Fixed-8",
+      "outcomes": 24,
+      "switched_episodes": 0
+    },
+    {
+      "action_counts": {
+        "8": 96
+      },
+      "alpha": 0.5,
+      "iteration": null,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 453518.7413627957,
+        "1.0": 536533.7076178124
+      },
+      "mean_chunks": 4.0,
+      "mean_nodehours": 1402.246259068889,
+      "mean_tat_hours": 225.5422871175,
+      "method": "Fixed-8",
+      "outcomes": 24,
+      "switched_episodes": 0
+    },
+    {
+      "action_counts": {
+        "8": 96
+      },
+      "alpha": 0.8,
+      "iteration": null,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 453518.7413627957,
+        "1.0": 536533.7076178124
+      },
+      "mean_chunks": 4.0,
+      "mean_nodehours": 1402.246259068889,
+      "mean_tat_hours": 225.5422871175,
+      "method": "Fixed-8",
+      "outcomes": 24,
+      "switched_episodes": 0
+    },
+    {
+      "action_counts": {
+        "8": 96
+      },
+      "alpha": 1.0,
+      "iteration": null,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 453518.7413627957,
+        "1.0": 536533.7076178124
+      },
+      "mean_chunks": 4.0,
+      "mean_nodehours": 1402.246259068889,
+      "mean_tat_hours": 225.5422871175,
+      "method": "Fixed-8",
+      "outcomes": 24,
+      "switched_episodes": 0
+    },
+    {
+      "action_counts": {
+        "16": 72
+      },
+      "alpha": 0.0,
+      "iteration": null,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 488053.43346155,
+        "1.0": 675534.1640436338
+      },
+      "mean_chunks": 3.0,
+      "mean_nodehours": 1768.0,
+      "mean_tat_hours": 164.0949222222222,
+      "method": "Fixed-16",
+      "outcomes": 24,
+      "switched_episodes": 0
+    },
+    {
+      "action_counts": {
+        "16": 72
+      },
+      "alpha": 0.2,
+      "iteration": null,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 488053.43346155,
+        "1.0": 675534.1640436338
+      },
+      "mean_chunks": 3.0,
+      "mean_nodehours": 1768.0,
+      "mean_tat_hours": 164.0949222222222,
+      "method": "Fixed-16",
+      "outcomes": 24,
+      "switched_episodes": 0
+    },
+    {
+      "action_counts": {
+        "16": 72
+      },
+      "alpha": 0.5,
+      "iteration": null,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 488053.43346155,
+        "1.0": 675534.1640436338
+      },
+      "mean_chunks": 3.0,
+      "mean_nodehours": 1768.0,
+      "mean_tat_hours": 164.0949222222222,
+      "method": "Fixed-16",
+      "outcomes": 24,
+      "switched_episodes": 0
+    },
+    {
+      "action_counts": {
+        "16": 72
+      },
+      "alpha": 0.8,
+      "iteration": null,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 488053.43346155,
+        "1.0": 675534.1640436338
+      },
+      "mean_chunks": 3.0,
+      "mean_nodehours": 1768.0,
+      "mean_tat_hours": 164.0949222222222,
+      "method": "Fixed-16",
+      "outcomes": 24,
+      "switched_episodes": 0
+    },
+    {
+      "action_counts": {
+        "16": 72
+      },
+      "alpha": 1.0,
+      "iteration": null,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 488053.43346155,
+        "1.0": 675534.1640436338
+      },
+      "mean_chunks": 3.0,
+      "mean_nodehours": 1768.0,
+      "mean_tat_hours": 164.0949222222222,
+      "method": "Fixed-16",
+      "outcomes": 24,
+      "switched_episodes": 0
+    },
+    {
+      "action_counts": {
+        "32": 48
+      },
+      "alpha": 0.0,
+      "iteration": null,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 531970.9918241632,
+        "1.0": 851153.5869186614
+      },
+      "mean_chunks": 2.0,
+      "mean_nodehours": 2228.127714488889,
+      "mean_tat_hours": 121.67961074,
+      "method": "Fixed-32",
+      "outcomes": 24,
+      "switched_episodes": 0
+    },
+    {
+      "action_counts": {
+        "32": 48
+      },
+      "alpha": 0.2,
+      "iteration": null,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 531970.9918241632,
+        "1.0": 851153.5869186614
+      },
+      "mean_chunks": 2.0,
+      "mean_nodehours": 2228.127714488889,
+      "mean_tat_hours": 121.67961074,
+      "method": "Fixed-32",
+      "outcomes": 24,
+      "switched_episodes": 0
+    },
+    {
+      "action_counts": {
+        "32": 48
+      },
+      "alpha": 0.5,
+      "iteration": null,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 531970.9918241632,
+        "1.0": 851153.5869186614
+      },
+      "mean_chunks": 2.0,
+      "mean_nodehours": 2228.127714488889,
+      "mean_tat_hours": 121.67961074,
+      "method": "Fixed-32",
+      "outcomes": 24,
+      "switched_episodes": 0
+    },
+    {
+      "action_counts": {
+        "32": 48
+      },
+      "alpha": 0.8,
+      "iteration": null,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 531970.9918241632,
+        "1.0": 851153.5869186614
+      },
+      "mean_chunks": 2.0,
+      "mean_nodehours": 2228.127714488889,
+      "mean_tat_hours": 121.67961074,
+      "method": "Fixed-32",
+      "outcomes": 24,
+      "switched_episodes": 0
+    },
+    {
+      "action_counts": {
+        "32": 48
+      },
+      "alpha": 1.0,
+      "iteration": null,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 531970.9918241632,
+        "1.0": 851153.5869186614
+      },
+      "mean_chunks": 2.0,
+      "mean_nodehours": 2228.127714488889,
+      "mean_tat_hours": 121.67961074,
+      "method": "Fixed-32",
+      "outcomes": 24,
+      "switched_episodes": 0
+    }
+  ],
+  "fixed_request_policy": {
+    "actual_runtime_rule": "unchanged_work_plan_release_on_completion",
+    "dynamic_rule": "ceil_planned_allocation_to_walltime_resolution",
+    "fixed_rule": "request_max_walltime_every_chunk_including_final",
+    "implementation_sha256": "0d3291ab01f2ca0c0d2fa7502dbaea7e9907905f3375fcbcd07c1f392e62e29b",
+    "kind": "fixed_max_walltime_v1",
+    "requested_seconds": 172800
+  },
+  "kind": "analytic_scaling_summary_v2",
+  "measurement_status": "Analytically assumed throughput, modeled carbon, historical-demand replay.",
+  "profile_inputs": {
+    "anchor_nodes": 16,
+    "anchor_training_hours": 110.0,
+    "design_sha256": "c434190a7f6fe07c43e5792e235e0d04f459fccfef8c198f9789670c2163040b",
+    "efficiency32_vs4": 0.49999999999999994,
+    "efficiency_vs4": {
+      "16": 0.6299605249474366,
+      "32": 0.49999999999999994,
+      "4": 1.0,
+      "8": 0.7937005259840997
+    },
+    "implementation_sha256": {
+      "frontera_scaling_sensitivity.py": "917ada149bfb37888ce232c76bda0a6b6fa35a9ffda0698e3d46946f9fe03dae",
+      "scaling_profiles.py": "e05985e521503894fca8f4a7f69c1a381c05dc534d246d65b2bc54aa583622f0",
+      "scaling_report.py": "f306d057b415c6bf97e1dc7ea97c61acec036fcb5e16fde20308c41e77cfc1e2"
+    },
+    "kind": "analytic_scaling_profile_v2",
+    "model": "xl",
+    "profile_status": "assumed",
+    "scenario": "e050"
+  },
+  "reward_normalizers": {
+    "carbon_g_per_kappa": 637853.7732548864,
+    "episodes": 400,
+    "kind": "weighted_reward_normalizers_v1",
+    "observation_iterations": 5,
+    "rho": "1.0",
+    "rule": "common arithmetic means over complete episodes, then frozen",
+    "split": "train",
+    "tat_hours": 139.27954473819722
+  },
+  "settings": {
+    "alphas": [
+      0.0,
+      0.2,
+      0.5,
+      0.8,
+      1.0
+    ],
+    "clip": 0.2,
+    "entropy": 0.01,
+    "episodes_per_alpha": 16,
+    "gradient_norm": 0.5,
+    "iterations": 64,
+    "learning_rate": 0.0003,
+    "minibatch_episodes": 16,
+    "observation_iterations": 5,
+    "ppo_epochs": 4,
+    "rho": "1.0",
+    "seed": 11,
+    "threads": 1,
+    "validation_iterations": [
+      16,
+      32,
+      48,
+      64
+    ],
+    "value_coefficient": 0.5,
+    "width": 128
+  },
+  "status": "complete"
+}
