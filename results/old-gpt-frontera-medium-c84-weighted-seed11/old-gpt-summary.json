@@ -1,0 +1,938 @@
+{
+  "checkpoints": [
+    {
+      "action_counts": {
+        "4": 24
+      },
+      "alpha": 0.0,
+      "best_fixed": "Fixed-4",
+      "best_fixed_cost": 0.44058864324470437,
+      "improvement_percent": 0.0,
+      "initial_argmax_counts": {
+        "4": 24
+      },
+      "initial_mean_probabilities": [
+        0.9994345257679621,
+        0.0005555693302691603,
+        9.373020039523302e-06,
+        5.172569987147805e-07
+      ],
+      "iteration": 16,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 52685.637398659426,
+        "1.0": 52685.637398659426
+      },
+      "mean_nodehours": 140.53666666666666,
+      "mean_tat_hours": 47.09111111111111,
+      "mean_weighted_cost": 0.44058864324470437,
+      "method": "Weighted-PPO",
+      "outcomes": 24,
+      "paired_ties": 24,
+      "paired_wins": 0,
+      "switched_episodes": 0
+    },
+    {
+      "action_counts": {
+        "4": 24
+      },
+      "alpha": 0.2,
+      "best_fixed": "Fixed-4",
+      "best_fixed_cost": 0.662543829482334,
+      "improvement_percent": 0.0,
+      "initial_argmax_counts": {
+        "4": 24
+      },
+      "initial_mean_probabilities": [
+        0.996799369653066,
+        0.0030608918896177784,
+        0.000127524496595773,
+        1.2217810554678485e-05
+      ],
+      "iteration": 16,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 52685.637398659426,
+        "1.0": 52685.637398659426
+      },
+      "mean_nodehours": 140.53666666666666,
+      "mean_tat_hours": 47.09111111111111,
+      "mean_weighted_cost": 0.662543829482334,
+      "method": "Weighted-PPO",
+      "outcomes": 24,
+      "paired_ties": 24,
+      "paired_wins": 0,
+      "switched_episodes": 0
+    },
+    {
+      "action_counts": {
+        "4": 24
+      },
+      "alpha": 0.5,
+      "best_fixed": "Fixed-8",
+      "best_fixed_cost": 0.971251776702907,
+      "improvement_percent": -2.4941866482970143,
+      "initial_argmax_counts": {
+        "4": 24
+      },
+      "initial_mean_probabilities": [
+        0.9387648304303488,
+        0.053639094500492014,
+        0.0064603626960888505,
+        0.0011357221083017066
+      ],
+      "iteration": 16,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 52685.637398659426,
+        "1.0": 52685.637398659426
+      },
+      "mean_nodehours": 140.53666666666666,
+      "mean_tat_hours": 47.09111111111111,
+      "mean_weighted_cost": 0.9954766088387784,
+      "method": "Weighted-PPO",
+      "outcomes": 24,
+      "paired_ties": 0,
+      "paired_wins": 3,
+      "switched_episodes": 0
+    },
+    {
+      "action_counts": {
+        "4": 3,
+        "8": 7,
+        "16": 11,
+        "32": 3
+      },
+      "alpha": 0.8,
+      "best_fixed": "Fixed-8",
+      "best_fixed_cost": 1.160539798519123,
+      "improvement_percent": -7.438172952298228,
+      "initial_argmax_counts": {
+        "8": 24
+      },
+      "initial_mean_probabilities": [
+        0.12504340739299855,
+        0.37953904395302135,
+        0.31465619554122287,
+        0.1807613546649615
+      ],
+      "iteration": 16,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 70075.97999291083,
+        "1.0": 121723.63292850782
+      },
+      "mean_nodehours": 326.03194444444443,
+      "mean_tat_hours": 39.610928819444446,
+      "mean_weighted_cost": 1.2468627559132288,
+      "method": "Weighted-PPO",
+      "outcomes": 24,
+      "paired_ties": 7,
+      "paired_wins": 0,
+      "switched_episodes": 0
+    },
+    {
+      "action_counts": {
+        "4": 1,
+        "16": 7,
+        "32": 16
+      },
+      "alpha": 1.0,
+      "best_fixed": "Fixed-16",
+      "best_fixed_cost": 1.284280904033797,
+      "improvement_percent": -6.235468997561089,
+      "initial_argmax_counts": {
+        "32": 24
+      },
+      "initial_mean_probabilities": [
+        0.008561343129258603,
+        0.09635638104130824,
+        0.3422117158770561,
+        0.5528705641627312
+      ],
+      "iteration": 16,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 90825.60959564055,
+        "1.0": 204323.56705931734
+      },
+      "mean_nodehours": 542.6023611111111,
+      "mean_tat_hours": 41.44142361111111,
+      "mean_weighted_cost": 1.3643618416464218,
+      "method": "Weighted-PPO",
+      "outcomes": 24,
+      "paired_ties": 7,
+      "paired_wins": 9,
+      "switched_episodes": 0
+    },
+    {
+      "action_counts": {
+        "4": 24
+      },
+      "alpha": 0.0,
+      "best_fixed": "Fixed-4",
+      "best_fixed_cost": 0.44058864324470437,
+      "improvement_percent": 0.0,
+      "initial_argmax_counts": {
+        "4": 24
+      },
+      "initial_mean_probabilities": [
+        0.9996096168955168,
+        0.00038619276104630745,
+        4.022464144289491e-06,
+        1.610294379320957e-07
+      ],
+      "iteration": 32,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 52685.637398659426,
+        "1.0": 52685.637398659426
+      },
+      "mean_nodehours": 140.53666666666666,
+      "mean_tat_hours": 47.09111111111111,
+      "mean_weighted_cost": 0.44058864324470437,
+      "method": "Weighted-PPO",
+      "outcomes": 24,
+      "paired_ties": 24,
+      "paired_wins": 0,
+      "switched_episodes": 0
+    },
+    {
+      "action_counts": {
+        "4": 24
+      },
+      "alpha": 0.2,
+      "best_fixed": "Fixed-4",
+      "best_fixed_cost": 0.662543829482334,
+      "improvement_percent": 0.0,
+      "initial_argmax_counts": {
+        "4": 24
+      },
+      "initial_mean_probabilities": [
+        0.9997677157322565,
+        0.00022957909944428442,
+        2.588692133542736e-06,
+        1.0110916918530204e-07
+      ],
+      "iteration": 32,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 52685.637398659426,
+        "1.0": 52685.637398659426
+      },
+      "mean_nodehours": 140.53666666666666,
+      "mean_tat_hours": 47.09111111111111,
+      "mean_weighted_cost": 0.662543829482334,
+      "method": "Weighted-PPO",
+      "outcomes": 24,
+      "paired_ties": 24,
+      "paired_wins": 0,
+      "switched_episodes": 0
+    },
+    {
+      "action_counts": {
+        "4": 24
+      },
+      "alpha": 0.5,
+      "best_fixed": "Fixed-8",
+      "best_fixed_cost": 0.971251776702907,
+      "improvement_percent": -2.4941866482970143,
+      "initial_argmax_counts": {
+        "4": 24
+      },
+      "initial_mean_probabilities": [
+        0.9997951835393906,
+        0.00020298500536834277,
+        1.7635341672909515e-06,
+        5.680752076150005e-08
+      ],
+      "iteration": 32,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 52685.637398659426,
+        "1.0": 52685.637398659426
+      },
+      "mean_nodehours": 140.53666666666666,
+      "mean_tat_hours": 47.09111111111111,
+      "mean_weighted_cost": 0.9954766088387784,
+      "method": "Weighted-PPO",
+      "outcomes": 24,
+      "paired_ties": 0,
+      "paired_wins": 3,
+      "switched_episodes": 0
+    },
+    {
+      "action_counts": {
+        "8": 24
+      },
+      "alpha": 0.8,
+      "best_fixed": "Fixed-8",
+      "best_fixed_cost": 1.160539798519123,
+      "improvement_percent": 0.0,
+      "initial_argmax_counts": {
+        "8": 24
+      },
+      "initial_mean_probabilities": [
+        0.00039802240280550905,
+        0.9963374013702074,
+        0.003263920972434183,
+        6.652679083174462e-07
+      ],
+      "iteration": 32,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 59326.976083372254,
+        "1.0": 78417.25531900789
+      },
+      "mean_nodehours": 208.42333333333332,
+      "mean_tat_hours": 39.08347222222222,
+      "mean_weighted_cost": 1.160539798519123,
+      "method": "Weighted-PPO",
+      "outcomes": 24,
+      "paired_ties": 24,
+      "paired_wins": 0,
+      "switched_episodes": 0
+    },
+    {
+      "action_counts": {
+        "32": 24
+      },
+      "alpha": 1.0,
+      "best_fixed": "Fixed-16",
+      "best_fixed_cost": 1.284280904033797,
+      "improvement_percent": -7.530130133694124,
+      "initial_argmax_counts": {
+        "32": 24
+      },
+      "initial_mean_probabilities": [
+        2.4764266175490756e-12,
+        2.229088350939416e-08,
+        0.0005762681867054198,
+        0.9994237124919891
+      ],
+      "iteration": 32,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 100948.49623166816,
+        "1.0": 243953.2313488672
+      },
+      "mean_nodehours": 645.7533333333333,
+      "mean_tat_hours": 41.94645833333333,
+      "mean_weighted_cost": 1.3809889273897253,
+      "method": "Weighted-PPO",
+      "outcomes": 24,
+      "paired_ties": 0,
+      "paired_wins": 12,
+      "switched_episodes": 0
+    },
+    {
+      "action_counts": {
+        "4": 23,
+        "8": 1
+      },
+      "alpha": 0.0,
+      "best_fixed": "Fixed-4",
+      "best_fixed_cost": 0.44058864324470437,
+      "improvement_percent": -1.6402237276382792,
+      "initial_argmax_counts": {
+        "4": 24
+      },
+      "initial_mean_probabilities": [
+        0.872871975104014,
+        0.09711198881268501,
+        0.022812216309830546,
+        0.0072038077826922136
+      ],
+      "iteration": 48,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 52792.28843559784,
+        "1.0": 53549.7997243297
+      },
+      "mean_nodehours": 143.36527777777778,
+      "mean_tat_hours": 46.71272569444444,
+      "mean_weighted_cost": 0.44781528271248355,
+      "method": "Weighted-PPO",
+      "outcomes": 24,
+      "paired_ties": 23,
+      "paired_wins": 0,
+      "switched_episodes": 0
+    },
+    {
+      "action_counts": {
+        "4": 22,
+        "8": 2
+      },
+      "alpha": 0.2,
+      "best_fixed": "Fixed-4",
+      "best_fixed_cost": 0.662543829482334,
+      "improvement_percent": -1.808475098495621,
+      "initial_argmax_counts": {
+        "4": 24
+      },
+      "initial_mean_probabilities": [
+        0.9900736113389333,
+        0.009146359943163892,
+        0.0006766761786517842,
+        0.0001033234198075661
+      ],
+      "iteration": 48,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 53411.349516682356,
+        "1.0": 55221.47135763759
+      },
+      "mean_nodehours": 146.1938888888889,
+      "mean_tat_hours": 46.33434027777778,
+      "mean_weighted_cost": 0.6745257696551413,
+      "method": "Weighted-PPO",
+      "outcomes": 24,
+      "paired_ties": 22,
+      "paired_wins": 0,
+      "switched_episodes": 0
+    },
+    {
+      "action_counts": {
+        "4": 24
+      },
+      "alpha": 0.5,
+      "best_fixed": "Fixed-8",
+      "best_fixed_cost": 0.971251776702907,
+      "improvement_percent": -2.4941866482970143,
+      "initial_argmax_counts": {
+        "4": 24
+      },
+      "initial_mean_probabilities": [
+        0.999899630745252,
+        9.97654237835377e-05,
+        5.996010686478334e-07,
+        1.5091495294180152e-08
+      ],
+      "iteration": 48,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 52685.637398659426,
+        "1.0": 52685.637398659426
+      },
+      "mean_nodehours": 140.53666666666666,
+      "mean_tat_hours": 47.09111111111111,
+      "mean_weighted_cost": 0.9954766088387784,
+      "method": "Weighted-PPO",
+      "outcomes": 24,
+      "paired_ties": 0,
+      "paired_wins": 3,
+      "switched_episodes": 0
+    },
+    {
+      "action_counts": {
+        "8": 24
+      },
+      "alpha": 0.8,
+      "best_fixed": "Fixed-8",
+      "best_fixed_cost": 1.160539798519123,
+      "improvement_percent": 0.0,
+      "initial_argmax_counts": {
+        "8": 24
+      },
+      "initial_mean_probabilities": [
+        7.37324365521393e-05,
+        0.9993892684578896,
+        0.0005369944725922929,
+        1.525328921503366e-08
+      ],
+      "iteration": 48,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 59326.976083372254,
+        "1.0": 78417.25531900789
+      },
+      "mean_nodehours": 208.42333333333332,
+      "mean_tat_hours": 39.08347222222222,
+      "mean_weighted_cost": 1.160539798519123,
+      "method": "Weighted-PPO",
+      "outcomes": 24,
+      "paired_ties": 24,
+      "paired_wins": 0,
+      "switched_episodes": 0
+    },
+    {
+      "action_counts": {
+        "32": 24
+      },
+      "alpha": 1.0,
+      "best_fixed": "Fixed-16",
+      "best_fixed_cost": 1.284280904033797,
+      "improvement_percent": -7.530130133694124,
+      "initial_argmax_counts": {
+        "32": 24
+      },
+      "initial_mean_probabilities": [
+        6.64475524993532e-15,
+        3.0316635689133414e-10,
+        6.40561008064348e-05,
+        0.9999359448750814
+      ],
+      "iteration": 48,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 100948.49623166816,
+        "1.0": 243953.2313488672
+      },
+      "mean_nodehours": 645.7533333333333,
+      "mean_tat_hours": 41.94645833333333,
+      "mean_weighted_cost": 1.3809889273897253,
+      "method": "Weighted-PPO",
+      "outcomes": 24,
+      "paired_ties": 0,
+      "paired_wins": 12,
+      "switched_episodes": 0
+    },
+    {
+      "action_counts": {
+        "4": 23,
+        "8": 1
+      },
+      "alpha": 0.0,
+      "best_fixed": "Fixed-4",
+      "best_fixed_cost": 0.44058864324470437,
+      "improvement_percent": -1.6402237276382792,
+      "initial_argmax_counts": {
+        "4": 24
+      },
+      "initial_mean_probabilities": [
+        0.9636721114317576,
+        0.030732612979287904,
+        0.004337960039265454,
+        0.0012573101072727393
+      ],
+      "iteration": 64,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 52792.28843559784,
+        "1.0": 53549.7997243297
+      },
+      "mean_nodehours": 143.36527777777778,
+      "mean_tat_hours": 46.71272569444444,
+      "mean_weighted_cost": 0.44781528271248355,
+      "method": "Weighted-PPO",
+      "outcomes": 24,
+      "paired_ties": 23,
+      "paired_wins": 0,
+      "switched_episodes": 0
+    },
+    {
+      "action_counts": {
+        "4": 22,
+        "8": 2
+      },
+      "alpha": 0.2,
+      "best_fixed": "Fixed-4",
+      "best_fixed_cost": 0.662543829482334,
+      "improvement_percent": -1.808475098495621,
+      "initial_argmax_counts": {
+        "4": 24
+      },
+      "initial_mean_probabilities": [
+        0.9764703089992205,
+        0.021689038258045912,
+        0.0015992844031037141,
+        0.0002413617682274586
+      ],
+      "iteration": 64,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 53411.349516682356,
+        "1.0": 55221.47135763759
+      },
+      "mean_nodehours": 146.1938888888889,
+      "mean_tat_hours": 46.33434027777778,
+      "mean_weighted_cost": 0.6745257696551413,
+      "method": "Weighted-PPO",
+      "outcomes": 24,
+      "paired_ties": 22,
+      "paired_wins": 0,
+      "switched_episodes": 0
+    },
+    {
+      "action_counts": {
+        "4": 24
+      },
+      "alpha": 0.5,
+      "best_fixed": "Fixed-8",
+      "best_fixed_cost": 0.971251776702907,
+      "improvement_percent": -2.4941866482970143,
+      "initial_argmax_counts": {
+        "4": 24
+      },
+      "initial_mean_probabilities": [
+        0.9760284697016081,
+        0.02230122177085529,
+        0.0015012848549910511,
+        0.00016902677634789143
+      ],
+      "iteration": 64,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 52685.637398659426,
+        "1.0": 52685.637398659426
+      },
+      "mean_nodehours": 140.53666666666666,
+      "mean_tat_hours": 47.09111111111111,
+      "mean_weighted_cost": 0.9954766088387784,
+      "method": "Weighted-PPO",
+      "outcomes": 24,
+      "paired_ties": 0,
+      "paired_wins": 3,
+      "switched_episodes": 0
+    },
+    {
+      "action_counts": {
+        "8": 24
+      },
+      "alpha": 0.8,
+      "best_fixed": "Fixed-8",
+      "best_fixed_cost": 1.160539798519123,
+      "improvement_percent": 0.0,
+      "initial_argmax_counts": {
+        "8": 24
+      },
+      "initial_mean_probabilities": [
+        1.8064831995919423e-05,
+        0.9998527243733406,
+        0.00012920197483860343,
+        7.751896335487599e-10
+      ],
+      "iteration": 64,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 59326.976083372254,
+        "1.0": 78417.25531900789
+      },
+      "mean_nodehours": 208.42333333333332,
+      "mean_tat_hours": 39.08347222222222,
+      "mean_weighted_cost": 1.160539798519123,
+      "method": "Weighted-PPO",
+      "outcomes": 24,
+      "paired_ties": 24,
+      "paired_wins": 0,
+      "switched_episodes": 0
+    },
+    {
+      "action_counts": {
+        "32": 24
+      },
+      "alpha": 1.0,
+      "best_fixed": "Fixed-16",
+      "best_fixed_cost": 1.284280904033797,
+      "improvement_percent": -7.530130133694124,
+      "initial_argmax_counts": {
+        "32": 24
+      },
+      "initial_mean_probabilities": [
+        1.0261485177495128e-14,
+        4.081021686673976e-10,
+        7.424193790939171e-05,
+        0.9999257425467173
+      ],
+      "iteration": 64,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 100948.49623166816,
+        "1.0": 243953.2313488672
+      },
+      "mean_nodehours": 645.7533333333333,
+      "mean_tat_hours": 41.94645833333333,
+      "mean_weighted_cost": 1.3809889273897253,
+      "method": "Weighted-PPO",
+      "outcomes": 24,
+      "paired_ties": 0,
+      "paired_wins": 12,
+      "switched_episodes": 0
+    }
+  ],
+  "comparison": "same validation arrivals; best fixed chosen on validation, no significance claim",
+  "fixed": [
+    {
+      "alpha": 0.0,
+      "iteration": null,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 52685.637398659426,
+        "1.0": 52685.637398659426
+      },
+      "mean_nodehours": 140.53666666666666,
+      "mean_tat_hours": 47.09111111111111,
+      "mean_weighted_cost": 0.44058864324470437,
+      "method": "Fixed-4",
+      "outcomes": 24
+    },
+    {
+      "alpha": 0.0,
+      "iteration": null,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 59326.976083372254,
+        "1.0": 78417.25531900789
+      },
+      "mean_nodehours": 208.42333333333332,
+      "mean_tat_hours": 39.08347222222222,
+      "mean_weighted_cost": 0.6557717403425468,
+      "method": "Fixed-8",
+      "outcomes": 24
+    },
+    {
+      "alpha": 0.0,
+      "iteration": null,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 74628.02536213516,
+        "1.0": 138172.80357879738
+      },
+      "mean_nodehours": 364.26666666666665,
+      "mean_tat_hours": 39.00902777777778,
+      "mean_weighted_cost": 1.1554831841827236,
+      "method": "Fixed-16",
+      "outcomes": 24
+    },
+    {
+      "alpha": 0.0,
+      "iteration": null,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 100948.49623166816,
+        "1.0": 243953.2313488672
+      },
+      "mean_nodehours": 645.7533333333333,
+      "mean_tat_hours": 41.94645833333333,
+      "mean_weighted_cost": 2.0400820512402835,
+      "method": "Fixed-32",
+      "outcomes": 24
+    },
+    {
+      "alpha": 0.2,
+      "iteration": null,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 52685.637398659426,
+        "1.0": 52685.637398659426
+      },
+      "mean_nodehours": 140.53666666666666,
+      "mean_tat_hours": 47.09111111111111,
+      "mean_weighted_cost": 0.662543829482334,
+      "method": "Fixed-4",
+      "outcomes": 24
+    },
+    {
+      "alpha": 0.2,
+      "iteration": null,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 59326.976083372254,
+        "1.0": 78417.25531900789
+      },
+      "mean_nodehours": 208.42333333333332,
+      "mean_tat_hours": 39.08347222222222,
+      "mean_weighted_cost": 0.781963754886691,
+      "method": "Fixed-8",
+      "outcomes": 24
+    },
+    {
+      "alpha": 0.2,
+      "iteration": null,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 74628.02536213516,
+        "1.0": 138172.80357879738
+      },
+      "mean_nodehours": 364.26666666666665,
+      "mean_tat_hours": 39.00902777777778,
+      "mean_weighted_cost": 1.1812427281529383,
+      "method": "Fixed-16",
+      "outcomes": 24
+    },
+    {
+      "alpha": 0.2,
+      "iteration": null,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 100948.49623166816,
+        "1.0": 243953.2313488672
+      },
+      "mean_nodehours": 645.7533333333333,
+      "mean_tat_hours": 41.94645833333333,
+      "mean_weighted_cost": 1.9082634264701719,
+      "method": "Fixed-32",
+      "outcomes": 24
+    },
+    {
+      "alpha": 0.5,
+      "iteration": null,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 52685.637398659426,
+        "1.0": 52685.637398659426
+      },
+      "mean_nodehours": 140.53666666666666,
+      "mean_tat_hours": 47.09111111111111,
+      "mean_weighted_cost": 0.9954766088387784,
+      "method": "Fixed-4",
+      "outcomes": 24
+    },
+    {
+      "alpha": 0.5,
+      "iteration": null,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 59326.976083372254,
+        "1.0": 78417.25531900789
+      },
+      "mean_nodehours": 208.42333333333332,
+      "mean_tat_hours": 39.08347222222222,
+      "mean_weighted_cost": 0.971251776702907,
+      "method": "Fixed-8",
+      "outcomes": 24
+    },
+    {
+      "alpha": 0.5,
+      "iteration": null,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 74628.02536213516,
+        "1.0": 138172.80357879738
+      },
+      "mean_nodehours": 364.26666666666665,
+      "mean_tat_hours": 39.00902777777778,
+      "mean_weighted_cost": 1.2198820441082603,
+      "method": "Fixed-16",
+      "outcomes": 24
+    },
+    {
+      "alpha": 0.5,
+      "iteration": null,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 100948.49623166816,
+        "1.0": 243953.2313488672
+      },
+      "mean_nodehours": 645.7533333333333,
+      "mean_tat_hours": 41.94645833333333,
+      "mean_weighted_cost": 1.7105354893150044,
+      "method": "Fixed-32",
+      "outcomes": 24
+    },
+    {
+      "alpha": 0.8,
+      "iteration": null,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 52685.637398659426,
+        "1.0": 52685.637398659426
+      },
+      "mean_nodehours": 140.53666666666666,
+      "mean_tat_hours": 47.09111111111111,
+      "mean_weighted_cost": 1.3284093881952228,
+      "method": "Fixed-4",
+      "outcomes": 24
+    },
+    {
+      "alpha": 0.8,
+      "iteration": null,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 59326.976083372254,
+        "1.0": 78417.25531900789
+      },
+      "mean_nodehours": 208.42333333333332,
+      "mean_tat_hours": 39.08347222222222,
+      "mean_weighted_cost": 1.160539798519123,
+      "method": "Fixed-8",
+      "outcomes": 24
+    },
+    {
+      "alpha": 0.8,
+      "iteration": null,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 74628.02536213516,
+        "1.0": 138172.80357879738
+      },
+      "mean_nodehours": 364.26666666666665,
+      "mean_tat_hours": 39.00902777777778,
+      "mean_weighted_cost": 1.2585213600635823,
+      "method": "Fixed-16",
+      "outcomes": 24
+    },
+    {
+      "alpha": 0.8,
+      "iteration": null,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 100948.49623166816,
+        "1.0": 243953.2313488672
+      },
+      "mean_nodehours": 645.7533333333333,
+      "mean_tat_hours": 41.94645833333333,
+      "mean_weighted_cost": 1.5128075521598368,
+      "method": "Fixed-32",
+      "outcomes": 24
+    },
+    {
+      "alpha": 1.0,
+      "iteration": null,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 52685.637398659426,
+        "1.0": 52685.637398659426
+      },
+      "mean_nodehours": 140.53666666666666,
+      "mean_tat_hours": 47.09111111111111,
+      "mean_weighted_cost": 1.5503645744328525,
+      "method": "Fixed-4",
+      "outcomes": 24
+    },
+    {
+      "alpha": 1.0,
+      "iteration": null,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 59326.976083372254,
+        "1.0": 78417.25531900789
+      },
+      "mean_nodehours": 208.42333333333332,
+      "mean_tat_hours": 39.08347222222222,
+      "mean_weighted_cost": 1.2867318130632672,
+      "method": "Fixed-8",
+      "outcomes": 24
+    },
+    {
+      "alpha": 1.0,
+      "iteration": null,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 74628.02536213516,
+        "1.0": 138172.80357879738
+      },
+      "mean_nodehours": 364.26666666666665,
+      "mean_tat_hours": 39.00902777777778,
+      "mean_weighted_cost": 1.284280904033797,
+      "method": "Fixed-16",
+      "outcomes": 24
+    },
+    {
+      "alpha": 1.0,
+      "iteration": null,
+      "mean_carbon_g_per_kappa": {
+        "0.25": 100948.49623166816,
+        "1.0": 243953.2313488672
+      },
+      "mean_nodehours": 645.7533333333333,
+      "mean_tat_hours": 41.94645833333333,
+      "mean_weighted_cost": 1.3809889273897253,
+      "method": "Fixed-32",
+      "outcomes": 24
+    }
+  ],
+  "fixed_mix": "For a fixed linear scalar cost, a mixture expectation cannot beat the cheapest fixed constituent.",
+  "kind": "old_gpt_summary_v1",
+  "reward_normalizers": {
+    "carbon_g_per_kappa": 119580.1076729017,
+    "episodes": 400,
+    "kind": "weighted_reward_normalizers_v1",
+    "observation_iterations": 5,
+    "rho": "1.0",
+    "rule": "common arithmetic means over complete episodes, then frozen",
+    "split": "train",
+    "tat_hours": 30.374217708333394
+  },
+  "settings": {
+    "alphas": [
+      0.0,
+      0.2,
+      0.5,
+      0.8,
+      1.0
+    ],
+    "clip": 0.2,
+    "entropy": 0.01,
+    "episodes_per_alpha": 16,
+    "gradient_norm": 0.5,
+    "iterations": 64,
+    "learning_rate": 0.0003,
+    "minibatch_episodes": 16,
+    "observation_iterations": 5,
+    "ppo_epochs": 4,
+    "rho": "1.0",
+    "seed": 11,
+    "threads": 1,
+    "validation_iterations": [
+      16,
+      32,
+      48,
+      64
+    ],
+    "value_coefficient": 0.5,
+    "width": 128
+  },
+  "status": "complete"
+}
