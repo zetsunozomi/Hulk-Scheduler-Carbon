@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "kind": "analytic_scaling_design_v1",
+  "status": "declared_inputs_not_experiment_results",
+  "family": "power_law_throughput",
+  "template": "configs/old-gpt-frontera-medium-c84.development.json",
+  "template_sha256": "ba7955d290825d827bfdbc286603df9a3bbcac5981a2df2f4b7a4c03fdd4a2fb",
+  "nodes": [
+    4,
+    8,
+    16,
+    32
+  ],
+  "anchor_nodes": 16,
+  "anchor_training_hours": 22.6,
+  "work_units": 100000,
+  "efficiency_reference_nodes": 4,
+  "efficiency_target_nodes": 32,
+  "scenarios": {
+    "e025": 0.25,
+    "e050": 0.5,
+    "e075": 0.75,
+    "e100": 1.0
+  },
+  "seeds": [
+    11,
+    23,
+    37
+  ],
+  "primary_power_rho": "1.0",
+  "setup_seconds": 300,
+  "checkpoint_seconds": 300,
+  "provenance": "Author-designed synthetic sensitivity grid, specified after inspecting the legacy Medium development run on 2026-09-24. The user chose a 16-node pure-training anchor of 22.6h. No profile is measured or digitized from a paper; no simulated scheduling outcomes are used to fit this grid."
+}

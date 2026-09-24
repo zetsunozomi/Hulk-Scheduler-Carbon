@@ -4,7 +4,7 @@ from collections import Counter
 import csv
 from statistics import fmean
 
-from carbon.common import require
+from carbon.common import load_json, require
 from carbon.runner import write_manifest
 from weighted_policy import cost
 
@@ -19,7 +19,13 @@ def summarize(rows, alpha, rho, normalizers):
 
 
 def write_readout(output, source, settings, normalizers):
+    plan = load_json(output/'run-plan.json')
+    profile = plan.get('source_binding', {}).get('profile_inputs', {})
+    if profile.get('kind') == 'analytic_scaling_profile_v2':
+        from scaling_report import write_readout as write_scaling_readout
+        return write_scaling_readout(output, source, settings, normalizers)
     from old_gpt_trial import records
+    policy = load_json(source/'references.json')['fixed_request_policy']
     fixed = records(source/'fixed-validation/episodes.jsonl')
     points = []
     for alpha in settings['alphas']:
@@ -51,9 +57,10 @@ def write_readout(output, source, settings, normalizers):
                                 'action_counts': dict(sorted(frequencies.items())),
                                 'initial_mean_probabilities': [fmean(r['initial_probabilities'][i] for r in group) for i in range(4)],
                                 'initial_argmax_counts': dict(Counter((4,8,16,32)[max(range(4), key=lambda i: r['initial_probabilities'][i])] for r in group))})
-    summary = {'kind': 'old_gpt_summary_v1', 'status': 'complete', 'settings': settings,
+    summary = {'kind': 'old_gpt_summary_maxwalltime_v2', 'status': 'complete', 'settings': settings,
+               'fixed_request_policy': policy,
                'reward_normalizers': normalizers, 'fixed': points, 'checkpoints': checkpoints,
-               'comparison': 'same validation arrivals; best fixed chosen on validation, no significance claim',
+               'comparison': 'all four fixed points on the same validation arrivals; fixed always requests the walltime cap, dynamic requests rounded planned duration; gains combine node choice and request-duration rules',
                'fixed_mix': 'For a fixed linear scalar cost, a mixture expectation cannot beat the cheapest fixed constituent.'}
     write_manifest(output/'old-gpt-summary.json', summary)
     fields = ['iteration', 'alpha', 'method', 'mean_tat_hours', 'mean_carbon_g_per_kappa', 'mean_weighted_cost', 'mean_nodehours']
@@ -61,7 +68,8 @@ def write_readout(output, source, settings, normalizers):
         writer = csv.DictWriter(stream, fieldnames=fields, extrasaction='ignore'); writer.writeheader()
         writer.writerows({**p, 'mean_carbon_g_per_kappa': p['mean_carbon_g_per_kappa'][settings['rho']]} for p in [*points, *checkpoints])
     lines = ['# Old GPT-2 C84 weighted PPO', '',
-             'Fixed and dynamic use the same configuration walltime cap (48h in development).', '',
+             f'Fixed requests {policy["requested_seconds"]/3600:g}h for every chunk, including the final chunk; exits when work finishes. '
+             'Dynamic requests rounded planned duration under the same cap. Gains combine node choice and request-duration rules.', '',
              f'Observation-only rounds: {settings["observation_iterations"]}; update rounds: '
              f'{settings["iterations"]-settings["observation_iterations"]}; alpha: {settings["alphas"]}.', '',
              f'Frozen training means ({normalizers["episodes"]} complete episodes): '
@@ -80,10 +88,10 @@ def write_readout(output, source, settings, normalizers):
               'All declared checkpoints are reported; no test-set claim or statistical significance claim.',
               'For this linear objective, optimal episode-level Fixed-Mix has the same expected cost as Best-Fixed.', '']
     (output/'old-gpt-summary.md').write_text('\n'.join(lines))
-    plot(output, points, checkpoints, settings, normalizers)
+    plot(output, points, checkpoints, settings, normalizers, policy)
 
 
-def plot(output, fixed, checkpoints, settings, normalizers):
+def plot(output, fixed, checkpoints, settings, normalizers, policy):
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
@@ -96,7 +104,7 @@ def plot(output, fixed, checkpoints, settings, normalizers):
         def xy(points):
             return ([p['mean_carbon_g_per_kappa'][settings['rho']]/1000 for p in points],
                     [p['mean_tat_hours'] for p in points])
-        ax.plot(*xy(baseline), 'o-', color='black', label='Fixed 4/8/16/32 nodes')
+        ax.plot(*xy(baseline), 'o-', color='black', label=f'Fixed 4/8/16/32, request {policy["requested_seconds"]/3600:g}h')
         ax.plot(*xy(dynamic), 'o-', color='#e3ad00', label='Dynamic, alpha order')
         labels = {}
         for p in [*baseline, *dynamic]:

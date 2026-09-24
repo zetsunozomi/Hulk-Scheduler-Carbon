@@ -3,6 +3,17 @@
 2026-09-22状态：[总实验进度与两个核心目标](../docs/PROJECT_STATUS_2026-09-22.md)。Frontera7B三版PPO与全部预定validation已完成；独立actor部分恢复多动作行为，尚未建立稳定fixed优势或有效反馈。正式论文结果槽仍留空；AMSP数值是引用输入。下方执行记录保留2026-09-21交接时状态，不用它判断是否需要重跑。
 取消 Qwen3/Vista profiling、实机恢复正确性和整节点功耗测量。详见 reproducibility/research_review.md。
 
+## 2026-09-24 新增：广范围扩展效率敏感性分析（待运行）
+
+活动遗留模型仅保留 Medium/XL；16 节点训练锚点分别为 22.6h/110h，XL 已由旧代码和旧表交叉确认。
+作者报告两者均为 16×4 A100 40GB、BF16、100000 optimizer steps、global batch 512、seq 1024。
+固定 4/8/16/32 节点，通过 `T_n=T16*16*eta16/(n*eta_n)` 生成其他规模的模拟运行时间。
+每模型 14 条效率曲线：11 档 eta32 从 10% 到 120%，另加三个中间形状不同的情景；
+28 profiles × 3 seeds = 84 次 PPO。核心仍是完整动态碳–TAT曲线相对完整fixed曲线的位置。
+有限扫描不保证覆盖所有真实机器；必须报告收益保持、失效和反转区域。
+完整方案及锚点核查见 [scaling_sensitivity.md](reproducibility/scaling_sensitivity.md)。
+E4 预留此敏感性篇幅；目前仍为 development weighted-PPO 路径，不冒充已完成的 AMSP budget-policy 结果。
+
 ## 历史执行记录（2026-09-21交接）
 
 作者回传完整 `E1 queue stage complete: results/amsp-e1-frontera` 日志，末尾为 368 个 validation 快照、4,416 条探针，无删失。详情记录在 reproducibility/cluster_progress.md。证据目前为作者终端输出；尚未读取远端结果文件、拟合误差或完整 artifact。论文正式结果槽仍留空。

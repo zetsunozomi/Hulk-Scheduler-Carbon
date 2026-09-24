@@ -1,0 +1,193 @@
+{
+  "schema_version": 2,
+  "kind": "analytic_scaling_design_v2",
+  "status": "declared_inputs_not_experiment_results",
+  "family": "explicit_efficiency_vectors",
+  "template": "configs/old-gpt-frontera-medium-c84.development.json",
+  "template_sha256": "ba7955d290825d827bfdbc286603df9a3bbcac5981a2df2f4b7a4c03fdd4a2fb",
+  "nodes": [
+    4,
+    8,
+    16,
+    32
+  ],
+  "anchor_nodes": 16,
+  "work_units": 100000,
+  "efficiency_reference_nodes": 4,
+  "models": {
+    "medium": {
+      "label": "GPT-2 Medium (345M legacy label)",
+      "anchor_training_hours": 22.6
+    },
+    "xl": {
+      "label": "GPT-2 XL (1.5B)",
+      "anchor_training_hours": 110.0
+    }
+  },
+  "anchor_source": {
+    "code": "src/sim/application.py",
+    "code_sha256": "b70b988b2bbe7229908905cb19d48fbacbfc1d9261beba1f368fb684570d2e5c",
+    "table": "data/old_gpt/source-table.tex",
+    "table_sha256": "e9afb9c32fbb26e561a8f5599e72ed712138851e2fd1165b47bde3b7fadf12a0",
+    "hardware": "Author-reported on 2026-09-24: 16 nodes, four NVIDIA A100 40GB GPUs per node. Local legacy code confirms the runtime numbers, not the measurement hardware.",
+    "work_metadata": "Author confirmed 100000 optimizer steps, global batch 512 sequences, sequence length 1024, BF16. Original run logs, microbatch/parallelism, interconnect and timing boundaries remain unavailable."
+  },
+  "scenarios": {
+    "e010": {
+      "shape": "power_law",
+      "construction_gamma": -0.10730936496245413,
+      "efficiency_vs4": {
+        "4": 1.0,
+        "8": 0.46415888336127786,
+        "16": 0.21544346900318836,
+        "32": 0.09999999999999999
+      }
+    },
+    "e0125": {
+      "shape": "power_law",
+      "construction_gamma": 0.0,
+      "efficiency_vs4": {
+        "4": 1.0,
+        "8": 0.5,
+        "16": 0.25,
+        "32": 0.125
+      }
+    },
+    "e015": {
+      "shape": "power_law",
+      "construction_gamma": 0.08767813527793122,
+      "efficiency_vs4": {
+        "4": 1.0,
+        "8": 0.5313292845913055,
+        "16": 0.2823108086643085,
+        "32": 0.15
+      }
+    },
+    "e020": {
+      "shape": "power_law",
+      "construction_gamma": 0.22602396837087924,
+      "efficiency_vs4": {
+        "4": 1.0,
+        "8": 0.5848035476425733,
+        "16": 0.3419951893353394,
+        "32": 0.2
+      }
+    },
+    "e025": {
+      "shape": "power_law",
+      "construction_gamma": 0.33333333333333326,
+      "efficiency_vs4": {
+        "4": 1.0,
+        "8": 0.6299605249474366,
+        "16": 0.39685026299204984,
+        "32": 0.24999999999999997
+      }
+    },
+    "e035": {
+      "shape": "power_law",
+      "construction_gamma": 0.49514227572341385,
+      "efficiency_vs4": {
+        "4": 1.0,
+        "8": 0.7047298732064892,
+        "16": 0.4966441941896343,
+        "32": 0.3499999999999999
+      }
+    },
+    "e050": {
+      "shape": "power_law",
+      "construction_gamma": 0.6666666666666666,
+      "efficiency_vs4": {
+        "4": 1.0,
+        "8": 0.7937005259840997,
+        "16": 0.6299605249474366,
+        "32": 0.49999999999999994
+      }
+    },
+    "e065": {
+      "shape": "power_law",
+      "construction_gamma": 0.7928372077512433,
+      "efficiency_vs4": {
+        "4": 1.0,
+        "8": 0.8662391053409028,
+        "16": 0.7503701876218077,
+        "32": 0.6500000000000001
+      }
+    },
+    "e080": {
+      "shape": "power_law",
+      "construction_gamma": 0.8926906350375459,
+      "efficiency_vs4": {
+        "4": 1.0,
+        "8": 0.9283177667225557,
+        "16": 0.8617738760127535,
+        "32": 0.7999999999999999
+      }
+    },
+    "e100": {
+      "shape": "power_law",
+      "construction_gamma": 1.0,
+      "efficiency_vs4": {
+        "4": 1.0,
+        "8": 1.0,
+        "16": 1.0,
+        "32": 1.0
+      }
+    },
+    "e120": {
+      "shape": "power_law",
+      "construction_gamma": 1.0876781352779312,
+      "efficiency_vs4": {
+        "4": 1.0,
+        "8": 1.062658569182611,
+        "16": 1.129243234657234,
+        "32": 1.2
+      }
+    },
+    "early_knee": {
+      "shape": "early_knee",
+      "efficiency_vs4": {
+        "4": 1,
+        "8": 0.55,
+        "16": 0.5,
+        "32": 0.5
+      }
+    },
+    "late_knee": {
+      "shape": "late_knee",
+      "efficiency_vs4": {
+        "4": 1,
+        "8": 0.95,
+        "16": 0.9,
+        "32": 0.5
+      }
+    },
+    "dip_recovery": {
+      "shape": "dip_recovery",
+      "efficiency_vs4": {
+        "4": 1,
+        "8": 0.9,
+        "16": 0.45,
+        "32": 0.5
+      }
+    }
+  },
+  "seeds": [
+    11,
+    23,
+    37
+  ],
+  "primary_power_rho": "1.0",
+  "setup_seconds": 300,
+  "checkpoint_seconds": 300,
+  "provenance": "Author-designed broad sensitivity set after inspection of legacy development results on 2026-09-24. Medium/XL anchor timings are retained from legacy code; efficiency vectors are declared assumptions, including regression, saturation, linear, mild superlinear, early/late knees and recovery. Range coverage does not prove coverage of every real scaling curve.",
+  "anchor_measurement": {
+    "provenance": "Author-reported settings, confirmed 2026-09-24; not independently recovered from run logs",
+    "optimizer_steps": 100000,
+    "nodes": 16,
+    "gpus_per_node": 4,
+    "gpu": "NVIDIA A100 40GB",
+    "global_batch": 512,
+    "sequence_length": 1024,
+    "precision": "BF16"
+  }
+}

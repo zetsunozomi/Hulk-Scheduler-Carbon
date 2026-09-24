@@ -12,6 +12,7 @@ import uuid
 from carbon.baselines import check_references, fixed_records
 from carbon.common import digest, load_json, require
 from old_gpt_profiles import validate_bundle
+from fixed_max_walltime import check_request_contract
 from weighted84_trial import collect, records, seal, read_checkpoint, sync_normalizers
 from carbon.learning import torch
 from carbon.policy_runner import ReplayCache, configure_torch, nested_tuple
@@ -25,7 +26,7 @@ DEFAULTS = dict(alphas=[0., .2, .5, .8, 1.], iterations=64, observation_iteratio
                 seed=11, threads=1, width=128, learning_rate=3e-4, ppo_epochs=4,
                 minibatch_episodes=16, clip=.2, value_coefficient=.5, entropy=.01, gradient_norm=.5)
 SCRIPTS = ('weighted_policy.py', 'weighted84_trial.py', 'old_gpt_profiles.py',
-           'old_gpt_trial.py', 'old_gpt_report.py', 'frontera_old_gpt.py')
+           'old_gpt_trial.py', 'old_gpt_report.py', 'frontera_old_gpt.py', 'fixed_max_walltime.py')
 NODES = [4, 8, 16, 32]
 
 
@@ -35,6 +36,7 @@ def source_inputs(bundle, source):
             'Expected C84 old-GPT actions 4/8/16/32')
     profile_binding = validate_bundle(bundle)
     refs = load_json(source/'references.json')
+    check_request_contract(refs, bundle)
     check_references(refs, bundle.manifest)
     require(refs['source_episodes_sha256'] == digest(source/'fixed-train/episodes.jsonl'),
             'Reference source changed')
@@ -45,6 +47,7 @@ def source_inputs(bundle, source):
         sealed = seal(directory)
         require(set(sealed) == {'manifest.json', 'chunks.jsonl', 'episodes.jsonl'}, 'Unexpected fixed seal')
         meta = load_json(directory/'manifest.json')
+        check_request_contract(meta, bundle)
         require(meta['status'] == 'complete' and meta['config_sha256'] == bundle.manifest['config_sha256'],
                 'Fixed configuration/completion differs')
         require(meta['asset_sha256'] == bundle.manifest['asset_sha256'], 'Fixed assets differ')
@@ -101,13 +104,14 @@ def run(bundle, output, source, resume=False, stage='all', settings=None):
     require(output != source and source not in output.parents and output not in source.parents, 'Use separate weighted output')
     if output.exists():
         require(resume, 'Output exists; use --resume')
-        require((output/'run-plan.json').is_file() and load_json(output/'run-plan.json').get('kind') == 'old_gpt_weighted_v1',
+        require((output/'run-plan.json').is_file() and load_json(output/'run-plan.json').get('kind') == 'old_gpt_weighted_maxwalltime_v2',
                 'Unknown existing weighted output')
     refs, source_binding = source_inputs(bundle, source)
     encoder = WeightedInputs(bundle, refs)
     scripts = Path(__file__).parent
-    contract = {'kind': 'old_gpt_weighted_v1', 'config_sha256': bundle.manifest['config_sha256'],
+    contract = {'kind': 'old_gpt_weighted_maxwalltime_v2', 'config_sha256': bundle.manifest['config_sha256'],
                 'asset_sha256': bundle.manifest['asset_sha256'], 'settings': settings,
+                'fixed_request_policy': refs['fixed_request_policy'],
                 'source': str(source), 'source_binding': source_binding, 'feature_schema': encoder.schema(),
                 'software': {'torch': str(torch.__version__),
                              'core': {p.name: digest(p) for p in (bundle.root/'src/carbon').glob('*.py')},
@@ -141,7 +145,7 @@ def run_locked(bundle, output, source, encoder, settings, stage):
         warmup, normalizers = meta['warmup'], meta['normalizers']
     sync_normalizers(output, normalizers)
     require(stage != 'validate' or completed == settings['iterations'], 'Training is not complete')
-    status = {'kind': 'old_gpt_weighted_v1', 'status': 'running', 'completed_iteration': completed,
+    status = {'kind': 'old_gpt_weighted_maxwalltime_v2', 'status': 'running', 'completed_iteration': completed,
               'total_episodes': total_episodes, 'total_chunks': total_chunks}
     write_manifest(output/'manifest.json', status)
     cache = ReplayCache(bundle)

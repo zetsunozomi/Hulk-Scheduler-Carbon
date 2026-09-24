@@ -1,30 +1,22 @@
 \section{Limitations and Conclusion}
 
 \paragraph{Limitations.}
-Results apply to the declared demand scenarios and A800 profiles, not
-production admissions on other hardware. Historical arrivals may encode
-user responses to their original systems; holding them fixed does not model
-reactions to changed waits. Scheduler settings, placement interference, and
-full-state checkpoint costs are unmeasured. An overhead sweep does not
-validate restart correctness. The policy still depends on learned queue
-relationships and fallible CI forecasts; hidden priorities or changed demand
-can invalidate them. A completion budget and empirical miss rate are not a
-production SLA.
+Evidence is limited to declared demand and throughput scenarios, including
+synthetic GPT-2 efficiency curves. Fixed historical arrivals omit user responses
+to changed waits. Unmeasured scheduler details, placement interference,
+checkpoint correctness and costs limit hardware transfer; overhead sweeps do
+not resolve them. Changed queues or CI forecasts can invalidate learned
+decisions. Completion budgets and empirical misses are not production SLAs.
 
-Complete-node power is unmeasured. The sensitivity certificate assumes
-time-invariant scale coefficients in the declared model, excluding power
-changes from unmodeled phases or system behavior. Common factors cancel
-within panels, not across workloads. Job attribution does not establish what
-other users do with released capacity. We make no facility-wide,
-embodied-carbon, or adoption-impact claim. Training and profiling overhead
-lies outside per-run accounting and must be reported before claiming
-amortized benefit.
+Complete-node power is unmeasured. Certificates require the declared,
+time-invariant scale coefficients; common factors cancel only within panels.
+Job attribution does not establish facility-wide, embodied-carbon or adoption
+impacts. Include training and profiling costs before claiming amortized benefit.
 
 \paragraph{Conclusion.}
-\name{} uses a completion-budget slider to control checkpoint-boundary resource
-requests without modifying the scheduler. It learns from complete outcomes,
-while an exposure decomposition makes unknown node power explicit.
+\name{} learns checkpoint-boundary resource requests from complete outcomes;
+an exposure decomposition makes unknown node power explicit.
 \pending{E2--E4: baseline-relative results, feasibility, and supported power interval}.
-A fixed-scale win establishes an opportunity; improvement over the learned
-precommitted sequence is needed to attribute gains to feedback. Claims about
-RL also require comparison with explicit planning.
+Gains over fixed scales establish an opportunity. Feedback attribution also
+requires gains over a learned precommitted sequence; RL claims require
+comparison with explicit planning.

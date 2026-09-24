@@ -1,0 +1,8 @@
+Log: /Users/shuyuanfan/carbon-latest/out/frontera-scaling.check.20260924T071525Z.XXXXXX.log
+Slurm job: none
+Host: shuyuans-MacBook-Pro.local
+ASSUMED scaling profile: xl/e050; efficiency32/4=50%; T16=110h; seed=11; rho=1.0
+Fixed source: /Users/shuyuanfan/carbon-latest/results/scaling-v2-xl-e050-frontera-c84-fixed-max48
+PPO output: /Users/shuyuanfan/carbon-latest/results/scaling-v2-xl-e050-frontera-c84-max48-weighted-seed11
+Fixed requests 48h; dynamic requests rounded planned duration. All returned curves must disclose both rules.
+Config, design and asset checks passed. No replay/training; runtime dependencies checked on compute.

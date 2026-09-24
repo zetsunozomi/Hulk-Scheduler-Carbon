@@ -1,6 +1,6 @@
 # Frontera: old GPT-2 scaling experiment
 
-This adds the old draft's Medium / Large / XL speed tables alongside AMSP.
+This adds the old draft's Medium / XL speed tables alongside AMSP.
 AMSP remains available through `scripts/frontera_weighted84.sh`, unchanged.
 Profile source and units: [data/old_gpt/README.md](../data/old_gpt/README.md).
 
@@ -8,12 +8,12 @@ Profile source and units: [data/old_gpt/README.md](../data/old_gpt/README.md).
 
 | Setting | Old GPT experiment |
 | --- | --- |
-| Default model | Medium (345M); choose `--model large` or `--model xl` separately |
+| Default model | Medium (345M); choose `--model xl` separately |
 | Available scales | **4, 8, 16, 32 nodes**, not GPU counts |
 | Work | 100,000 legacy training iterations per episode |
 | Queue / capacity | Existing Frontera RTX demand-template replay, 84 nodes |
 | Carbon | Existing ERCOT series and normalized modeled node power; no energy measurement |
-| Request cap | **48h for both fixed and dynamic**, unchanged from AMSP |
+| Requested walltime | **Fixed: always 48h, including final chunk. Dynamic: rounded planned duration, at most 48h.** |
 | Assumed overhead | Initialization/restart/checkpoint: 300s each |
 | Fixed baseline | Rebuild Fixed-4/8/16/32 on 73 train + 24 validation arrivals: **388 outcomes per model** |
 | PPO | Same five observation rounds, then 59 update rounds; 16 arrivals per alpha per round |
@@ -24,14 +24,20 @@ Fixed references are computed from the new **training** baselines. Reward
 normalizers are separately fitted from the new model's first five observation
 rounds. No AMSP reference, fixed result or policy checkpoint is reused.
 All queue delays, repeated admission and checkpoint/restart overheads count.
+A fixed request of 48h does **not** allocate or charge 48h if the task finishes
+earlier. It changes the scheduler reservation; actual runtime, completed work,
+node-hours and carbon use the unchanged work plan and actual allocation.
+The fixed and dynamic request-duration rules now differ, and reports record
+that fact: improvements combine node selection and request sizing.
 The PPO actions still select the node count for each checkpoint/resubmit chunk;
 this adds no Slurm scheduler modification and no wait-time prediction input.
 
 Medium completes at all four scales within one 48h request. It cannot demonstrate
-within-job dynamic scale changes under this setting. Large and XL have longer
-workloads and can have multiple allocations. Keeping the 48h cap is intentional:
-this run changes the speed profile/action scales while preserving the training
-recipe. A new profile does not guarantee that alpha points will separate or beat
+within-job dynamic scale changes under this setting. XL has a longer
+workload and can have multiple allocations. Keeping the 48h cap is intentional:
+the work-segmentation and PPO recipe stay unchanged; the fixed submission
+rule now always reserves the full cap. All four fixed points remain on the
+black comparison curve; we do not replace that curve with one train-selected scale. A new profile does not guarantee that alpha points will separate or beat
 the fixed curve.
 
 ## Site settings (same installed environment)
@@ -63,11 +69,19 @@ Do not use `CARBON_SOURCE` pointing to an AMSP directory. Defaults are isolated:
 
 ```text
 configs/old-gpt-frontera-medium-c84.development.json
-results/old-gpt-frontera-medium-c84-fixed/
-results/old-gpt-frontera-medium-c84-weighted-seed11/
+results/old-gpt-frontera-medium-c84-fixed-max48/
+results/old-gpt-frontera-medium-c84-max48-weighted-seed11/
 ```
 
-`--model large` / `--model xl` selects separate configs and both output directories.
+The `max48` directories are new. Old GPT results from the previous precise-final-
+request rule remain intact in their old directories and cannot be reused as the
+new baseline. Both fixed splits and training references must be rebuilt. PPO's
+feature scaling uses those references, so the new default PPO run starts from
+scratch too. Do not point `CARBON_SOURCE` or `CARBON_OUTPUT` at the old directories.
+Baseline manifests, references and PPO run plans record `fixed_request_policy`;
+missing or different policies fail validation rather than silently mixing runs.
+
+`--model xl` selects separate configs and both output directories.
 No command runs all three models automatically.
 
 If you want to inspect the rebuilt baseline first:
@@ -124,3 +138,16 @@ only training iterations 10/32/64; all validation text is retained. **Checkpoint
 and binary files stay on the cluster. Do not use `git add -f`, archives or a
 checkpoint download.** Coordinate pushes so local code changes and cluster result
 commits do not diverge. Cluster code edits are still not part of this workflow.
+
+## Pending-job scale-down: future deterministic candidate
+
+Not implemented or enabled by this change. A future rule may check only the
+target's observed pending time at fixed intervals and reduce the request by one
+scale after a fixed threshold, stopping at 4 nodes. Thresholds would be frozen
+from training inputs, not selected using validation outcomes. This would not
+require an RL action or a wait-time predictor. Any cancel/resubmit version must
+retain elapsed waiting in turnaround time and reset priority age as submission
+semantics require; no free reservation or priority retention is assumed.
+
+Large is retired from this active entry. Its historical table/config is retained for provenance.
+The broader assumed-profile experiment is documented in [SCALING_SENSITIVITY.md](SCALING_SENSITIVITY.md).

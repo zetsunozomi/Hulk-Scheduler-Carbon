@@ -13,7 +13,7 @@ def require_allocation(check=False):
 
 
 def prepare_fixed(bundle, source, check=False):
-    from carbon.baselines import make_references
+    from fixed_max_walltime import make_references, fixed_bundle, request_contract
     from carbon.common import digest, load_json, require
     from carbon.main_pilot import fixed_stage
     from carbon.probe_resume import probe_lock
@@ -25,8 +25,9 @@ def prepare_fixed(bundle, source, check=False):
             'Expected C84 old-GPT actions 4/8/16/32')
     from old_gpt_profiles import validate_bundle
     profile_binding = validate_bundle(bundle)
+    fixed_view = fixed_bundle(bundle)
     marker = source/'old-gpt-fixed-plan.json'
-    contract = {'kind': 'old_gpt_fixed84_v1', 'profile_inputs': profile_binding, 'config_sha256': bundle.manifest['config_sha256'],
+    contract = {'kind': 'old_gpt_fixed84_maxwalltime_v2', 'fixed_request_policy': request_contract(bundle), 'profile_inputs': profile_binding, 'config_sha256': bundle.manifest['config_sha256'],
                 'asset_sha256': bundle.manifest['asset_sha256'],
                 'core': {p.name: digest(p) for p in (bundle.root/'src/carbon').glob('*.py')}}
     required = ['references.json'] + [f'fixed-{split}/{name}' for split in ('train', 'validation')
@@ -47,7 +48,7 @@ def prepare_fixed(bundle, source, check=False):
         else:
             write_manifest(marker, contract)
         for split in ('train', 'validation'):
-            fixed_stage(bundle, source/f'fixed-{split}', split)
+            fixed_stage(fixed_view, source/f'fixed-{split}', split)
         refs = source/'references.json'
         if not refs.exists():
             temporary = source/'references.pending.json'
@@ -62,7 +63,7 @@ def prepare_fixed(bundle, source, check=False):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--model', choices=('medium', 'large', 'xl'), default='medium')
+    parser.add_argument('--model', choices=('medium', 'xl'), default='medium')
     parser.add_argument('--source', default=os.environ.get('CARBON_SOURCE'))
     parser.add_argument('--output', default=os.environ.get('CARBON_OUTPUT'))
     parser.add_argument('--stage', choices=('all', 'fixed', 'train', 'validate'), default='all')
@@ -80,8 +81,8 @@ def main():
     print(f'Python: {sys.executable}\nPyTorch: {torch.__version__}\n'
           f'sklearn: {sklearn.__version__}; scipy: {scipy.__version__}; matplotlib: {matplotlib.__version__}', flush=True)
     prefix = f'old-gpt-frontera-{args.model}-c84'
-    source = Path(args.source or f'results/{prefix}-fixed').resolve()
-    output = Path(args.output or f'results/{prefix}-weighted-seed11').resolve()
+    source = Path(args.source or f'results/{prefix}-fixed-max48').resolve()
+    output = Path(args.output or f'results/{prefix}-max48-weighted-seed11').resolve()
     require(output != source and source not in output.parents and output not in source.parents,
             'Fixed source and weighted output must be separate directories')
     require(args.stage == 'fixed' or args.check or not output.exists() or args.resume,
@@ -89,7 +90,7 @@ def main():
     if args.stage == 'validate':
         require(args.resume and (output/'run-plan.json').is_file(), 'Validation requires existing PPO and --resume')
     bundle = Bundle(f'configs/old-gpt-frontera-{args.model}-c84.development.json')
-    print(f'Profile: {args.model}; actions: 4/8/16/32 nodes; fixed and dynamic request cap: 48h', flush=True)
+    print(f'Profile: {args.model}; actions: 4/8/16/32 nodes; fixed requests: 48h including final chunk; dynamic: rounded planned duration, cap 48h', flush=True)
     print(f'Fixed source: {source}\nPPO output: {output}', flush=True)
     require(bundle.raw['purpose'] in {'synthetic', 'development'}, 'This entry is development only')
     prepare_fixed(bundle, source, check=args.check)

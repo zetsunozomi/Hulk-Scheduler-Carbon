@@ -22,6 +22,17 @@ The draft table is authoritative; the older `baseline.csv` rounds XL/8 to
 1219.99 instead of 1220.00. Neither that CSV's outcome columns nor
 `src/sim/application.py`'s different 345M/1.5B/2.0B profiles are imported.
 
+## Active models and author clarification (2026-09-24)
+
+Only Medium and XL remain in the active launch entry. Large is retained above and
+in hash-bound historical files solely for provenance. The author now reports
+Medium/XL anchor measurements at 16 nodes, four A100 40GB GPUs per node, 100000
+optimizer steps, global batch 512, sequence length 1024, BF16. The original files
+do not independently establish these settings; see the [anchor audit](../scaling_sensitivity/ANCHOR_AUDIT.md).
+The historical imported configs below retain their original abstract mapping.
+New v2 analytic configs record the clarified batch/GPU settings while marking
+all extrapolated efficiency profiles as assumed.
+
 ## Metadata and accounting
 
 The available source does not recover physical GPUs per node, machine per
@@ -55,10 +66,15 @@ normalizers and PPO results. The arrival cohort file under `data/amsp/cohorts/`
 is reused deliberately for the same arrival dates; it contains no speed or
 baseline outcomes. No wait-time predictor or queue probes are needed.
 
-Both fixed and dynamic requests retain the **48-hour cap**, as requested.
+Work segmentation retains the **48-hour cap**. Fixed baselines now request
+the full 48 hours on **every** submission, including the final chunk, and release
+resources as soon as the unchanged work plan completes. Dynamic requests still
+round the planned allocation duration to the scheduler resolution. Results bind
+this difference in `fixed_request_policy`; gains do not isolate node switching
+from request-duration optimization. New outputs use separate `max48` directories.
 All Medium scales finish in one allocation, including assumed overheads;
 Medium therefore compares initial node choice, not within-job switching.
-Large can span allocations at 4/8 nodes; XL spans allocations at every scale.
+XL spans allocations at every scale. Large is no longer an active experiment.
 This is a scaling-profile comparison, not a new PPO recipe or promised Pareto gain.
 
 Launch instructions: [docs/OLD_GPT_RUN.md](../../docs/OLD_GPT_RUN.md).

@@ -16,8 +16,9 @@ Login check (no replay): bash scripts/frontera_old_gpt.sh --check
 Login submission:       mkdir -p out; sbatch scripts/frontera_old_gpt.sh
 Batch resume:           sbatch scripts/frontera_old_gpt.sh --resume
 Interactive compute:    bash scripts/frontera_old_gpt.sh [--resume]
-Profiles: --model medium (default) | large | xl.
-Fixed and dynamic request cap: 48 hours, same as AMSP.
+Active profiles: --model medium (default) | xl. Large is retired; historical inputs remain archived.
+Fixed requests 48h on every chunk, including final; dynamic requests planned duration up to 48h.
+Default outputs contain max48; old precise-request baselines cannot be resumed here.
 Stages: --stage fixed | train | validate | all (default all).
 Each profile has a separate fixed source, rebuilt on the compute node; no wait probes or old PPO.
 Site settings: SBATCH header; Python defaults to $HOME/.conda/envs/carbon/bin/python.

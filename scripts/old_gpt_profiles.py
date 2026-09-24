@@ -44,6 +44,9 @@ def workload_config(asset, model):
 
 def validate_bundle(bundle):
     """Bind the table and source snapshot as well as the resolved simulator config."""
+    if bundle.raw['workload']['name'].startswith('analytic-scaling-'):
+        from scaling_profiles import validate_bundle as validate_scaling
+        return validate_scaling(bundle)
     if bundle.raw['purpose'] == 'synthetic':
         return {'kind': 'synthetic_fixture'}
     require(bundle.raw['purpose'] == 'development', 'Legacy profiles are development inputs')

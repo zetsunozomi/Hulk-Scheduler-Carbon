@@ -1,0 +1,149 @@
+{
+  "schema_version": 1,
+  "purpose": "development",
+  "panel": "analytic-scaling-v2-medium-late_knee-frontera-C84",
+  "root": "..",
+  "cluster": {
+    "name": "Frontera-demand-C84-analytic-scaling-scenario",
+    "partition": "frontera-rtx-demand-homogeneous-nodes",
+    "nodes": 84,
+    "allowed_nodes": [
+      4,
+      8,
+      16,
+      32
+    ],
+    "max_request_seconds": 172800,
+    "walltime_resolution_seconds": 60,
+    "provenance": "Declared 84-node demand replay with analytically assumed target throughput; no hardware performance measurement.",
+    "scheduler": {
+      "model": "conservative_backfill_v1",
+      "dispatch_interval_seconds": 60,
+      "max_job_test": 3000,
+      "age_weight": 7000,
+      "age_max_seconds": 604800,
+      "size_weight": 100
+    }
+  },
+  "trace": {
+    "path": "data/filtered/filtered-frontera-rtx.log",
+    "sha256": "ed555938a7532b05db3ec722fcaf7fa2cbe92ee254cea18c86cf66c0527bd67f",
+    "timezone": "UTC",
+    "dst_fold": null,
+    "coverage_start_utc": "2019-12-05T00:00:00Z",
+    "coverage_end_utc": "2021-08-19T00:00:00Z",
+    "coverage_attestation": "Constructed finite arrival stream from retained records in this interval; collection completeness of the original cluster is not asserted.",
+    "provenance": "Historical frontera resource-demand template. Naive timestamps assigned UTC scenario coordinates, paired with ERCOT UTC calendar. Original timezone and deployment association not asserted.",
+    "zero_duration_policy": "drop",
+    "overrun_policy": "clip",
+    "role": "workload_template",
+    "node_multiplier": 1,
+    "oversize_policy": "error"
+  },
+  "workload": {
+    "name": "analytic-scaling-v2-medium-late_knee",
+    "optimizer_updates": 100000,
+    "global_batch": 512,
+    "gpus_per_node": 4,
+    "sequence_length": 1024,
+    "profile_status": "assumed",
+    "precision": "BF16",
+    "software": "analytical throughput input, not an executed neural-network training stack",
+    "correctness_artifact": "tests/test_scaling_sensitivity.py; work-accounting checks only",
+    "provenance": "Explicit efficiency-vector sensitivity, data/scaling_sensitivity/design.json; workload=medium. T(n)=22.6*16*eta16/(n*eta_n) hours for 100000 abstract work units; eta={'4': 1, '8': 0.95, '16': 0.9, '32': 0.5}. 16-node timing comes from legacy source; other-scale efficiencies are assumed. Batch, sequence length, precision and GPU count are author-reported anchor metadata. Microbatch=1 and accumulation values only satisfy simulated batch accounting; the measured microbatch/parallelism configuration is not recovered. Initialization/restart/checkpoint costs are separate assumptions. No task outcomes were used to fit these throughput values.",
+    "profiles": {
+      "4": {
+        "updates_per_hour": 1229.105211406096,
+        "initialization_seconds": 300,
+        "restart_seconds": 300,
+        "checkpoint_seconds": 300,
+        "microbatch": 1,
+        "accumulation": 32
+      },
+      "8": {
+        "updates_per_hour": 2335.2999016715826,
+        "initialization_seconds": 300,
+        "restart_seconds": 300,
+        "checkpoint_seconds": 300,
+        "microbatch": 1,
+        "accumulation": 16
+      },
+      "16": {
+        "updates_per_hour": 4424.778761061946,
+        "initialization_seconds": 300,
+        "restart_seconds": 300,
+        "checkpoint_seconds": 300,
+        "microbatch": 1,
+        "accumulation": 8
+      },
+      "32": {
+        "updates_per_hour": 4916.420845624384,
+        "initialization_seconds": 300,
+        "restart_seconds": 300,
+        "checkpoint_seconds": 300,
+        "microbatch": 1,
+        "accumulation": 4
+      }
+    }
+  },
+  "ci": {
+    "path": "data/texas_eia/ci.csv",
+    "sha256": "4c6030d3a1ab2920842bc8e8db8884e794523a1bbc7da52588b89347e4da84db",
+    "source": "EIA ERCOT Published Hourly Data; see data/texas_eia/source.json",
+    "region": "Texas ERCOT scenario",
+    "unit": "gCO2/kWh",
+    "type": "average_operational",
+    "availability_rule": "Revised archive made available 24h after interval end as a declared scenario; not vintage data.",
+    "queue_to_ci_offset_seconds": 0,
+    "alignment_description": "UTC scenario coordinates from naive source timestamps overlaid on ERCOT calendar; no claim of actual source timezone or GPT-2 measurement site."
+  },
+  "power": {
+    "reference_kw": 1.0,
+    "workload_coefficient": null,
+    "rho_interval": [
+      0.25,
+      1.0
+    ],
+    "provenance": "1 kW is a normalization unit, not a server specification or measured power; unknown kappa absorbs absolute node power. Report ratios and node-hours.",
+    "phase_assumption": "same_mean_power_at_given_scale"
+  },
+  "splits": {
+    "train": [
+      "2020-01-05T00:00:00Z",
+      "2020-09-01T00:00:00Z"
+    ],
+    "validation": [
+      "2020-10-01T00:00:00Z",
+      "2021-01-01T00:00:00Z"
+    ],
+    "test": [
+      "2021-02-01T00:00:00Z",
+      "2021-08-01T00:00:00Z"
+    ]
+  },
+  "cohort": {
+    "path": "data/amsp/cohorts/frontera.csv",
+    "sha256": "d9e7b3729d76317536d292a5b56af8084b77892d6309a4f172e6cdd95647c5c9",
+    "provenance": "Predeclared every-third-day arrivals with seeded hour, seed 20260917; 21-day end guard. Same arrivals across profiles/methods; 192h field is replaced by trained budget grid during policy evaluation."
+  },
+  "execution": {
+    "warmup_seconds": 2419200,
+    "history_sample_seconds": 600,
+    "history_lags_seconds": [
+      0,
+      1800,
+      7200,
+      28800,
+      86400,
+      172800
+    ],
+    "max_episode_seconds": null,
+    "target_failure_model": "no_failures",
+    "initial_state_mode": "empty_warmup"
+  },
+  "holdout_audit": {
+    "test_is_untouched": false,
+    "notes": "Author reports prior train/validation use. New chronological splits fixed before this revision runs; old data are reused and no previously unseen test claim is made. Development until protocol/software are frozen.",
+    "evaluation_design": "retrospective_temporal"
+  }
+}

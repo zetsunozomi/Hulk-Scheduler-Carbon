@@ -13,10 +13,22 @@ Edit code and [paper/](paper/README.md) locally; the cluster only pulls and runs
 
 ### Additional profile: old GPT-2
 
-[OLD_GPT_RUN.md](docs/OLD_GPT_RUN.md) adds Medium / Large / XL at **4/8/16/32 nodes**.
-Use `sbatch scripts/frontera_old_gpt.sh --model medium` (or `large` / `xl`).
+[OLD_GPT_RUN.md](docs/OLD_GPT_RUN.md) adds Medium / XL at **4/8/16/32 nodes**.
+Use `sbatch scripts/frontera_old_gpt.sh --model medium` (or `xl`).
 Each model builds its own fixed baselines and trains from scratch; both fixed
-and dynamic retain the 48h request cap. AMSP's existing entry remains unchanged.
+and dynamic retain the 48h execution cap. Fixed now requests 48h even for the
+final chunk; dynamic requests rounded planned duration. New outputs use `max48`
+directories. AMSP's existing entry and historical results remain unchanged.
+
+### Analytic scaling sensitivity
+
+Medium (T16=22.6h) and XL (T16=110h) each use 14 explicitly assumed
+4/8/16/32-node efficiency vectors, spanning 10%–120% endpoint efficiency and
+several intermediate curve shapes. The full matrix has 28 profiles and 84 PPO
+runs across three seeds. Large is retired from the active legacy entry; its
+source data remain archived. Design, anchor audit and commands are in
+[docs/SCALING_SENSITIVITY.md](docs/SCALING_SENSITIVITY.md). Inputs are prepared;
+no results or universal hardware-coverage claim are made.
 
 ## Start here
 

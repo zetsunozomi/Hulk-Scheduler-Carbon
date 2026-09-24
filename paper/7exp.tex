@@ -1,13 +1,12 @@
 \section{Evaluation}
 \label{sec:evaluation}
 
-\noindent\textbf{Evidence status.} The following four packages are reserved
-experiment designs and result slots. They specify the minimum evidence needed
-for the paper's claims; they do not report completed experiments. The historical data were previously used in a train/validation split. We
-therefore use a retrospective chronological benchmark, disclosing prior use
-and fixing this revision's train/validation/test intervals before execution.
-Fit on training and select on validation; do not revise methods using the
-new test outcomes. This protocol does not create a previously unseen holdout.
+\noindent\textbf{Evidence status.} E1--E4 reserve experiment designs and result
+slots, not completed experiments. Runtime anchors are author-reported measurements.
+Because these data previously supported train/validation experiments, use a
+disclosed retrospective chronological benchmark. Freeze this revision's splits
+before execution; fit on training, select on validation, and do not revise methods
+using test outcomes. This does not create an untouched holdout.
 
 \subsection{E1: Are the Work and Contention Scenarios Sound?}
 \slot{E1: inputs and scenario contract}{
@@ -132,13 +131,11 @@ under the same actual miss tolerance as every other method.
 All fixed scales; Fixed-Mix; Plan-once; Rollout-MPC; \name{}.\\
 Mean TAT versus modeled carbon at a declared $\rho$; mark observed miss violations and label slider ticks.\\
 Companion labels: worst-endpoint carbon ratio and deadline-miss rate.}
-\caption{Primary results placeholder. Every point completes the same prescribed
-work from paired initial arrivals. Report hours, modeled carbon normalized
-within each contention--profile panel, 95\% paired block intervals, the power
-scenario, and the frozen budget grid. Mark observed miss-target violations
-explicitly. Fixed-Mix is an executable per-run randomized policy; connecting
-other points does not imply an evaluated intermediate policy. Report every
-slider tick; do not smooth reversals or select settings after test.}
+\caption{Primary results placeholder. Use identical work and paired arrivals;
+report hours, panel-normalized modeled carbon, 95\% paired block intervals,
+and the frozen power/budget settings. Mark observed miss-target violations.
+Fixed-Mix is executable per-run randomization; other connecting segments are
+not evaluated policies. Preserve every slider tick and reversal.}
 \label{fig:main}
 \end{figure*}
 
@@ -201,66 +198,79 @@ but commits its choices before seeing subsequent outcomes.}
 \label{tab:ablation}
 \end{table}
 
-The learned-sequence comparison removes feedback while retaining the capacity
-to mix scales and optimize from completed episodes. Its remaining-time input
-is planned allocation time only, not a zero-wait assumption in the execution
-environment: all actual waits and costs enter training returns and evaluation.
-Archive each full plan before executing it. Neither policy needs an admission
-predictor. Matching interaction budgets prevents extra replay from explaining
-a feedback gain, although it cannot guarantee equal optimization quality.
-Plan-once versus MPC separately tests replanning within an explicit planner.
-Report single-chunk frequency: those runs offer no later decision. A fixed-scale
-win without a learned-sequence win supports mixing, not a feedback advantage;
-a win only over MPC could reflect its modeling error. Action frequencies alone
-do not establish either claim. Results: \pending{E3: feedback increment}.
+The learned-sequence comparison preserves scale mixing and episode learning
+while removing feedback. Its time input is planned allocation time; all actual
+waits and costs enter returns. Archive plans before execution. Neither learned
+policy needs an admission predictor. Equal interaction budgets control replay
+exposure, not optimization quality. Plan-once versus MPC tests planner feedback.
+Report single-chunk frequency. Gains over fixed scale alone support mixing;
+feedback requires gains over the learned sequence, and gains only over MPC
+may reflect modeling error. Action frequencies establish neither claim.
+Results: \pending{E3: feedback increment}.
 
-\subsection{E4: Does the Conclusion Depend on the Power Model?}
-\slot{E4: robustness from existing logs}{
-Freeze policies and recompute every E2 execution over the declared $\rho$
-interval, including both endpoints. Report pairwise break-even points,
-componentwise exposure differences, and the independent scale-error radius
-supported by Equation~\ref{eq:box}. Compare the robust policy with a
-single-endpoint-trained counterpart at one prespecified budget per panel.
-Reuse existing logs for parameter sensitivity; queue and forecast perturbations
-require fresh replay. Outcomes: \pending{E4}.}
+\subsection{E4: Sensitivity to Throughput, Power, and Contention}
+\slot{E4: robustness}{
+Use frozen E2 logs for power rescoring; throughput changes require retraining,
+and queue/overhead changes require fresh replay. Report gains and reversals.
+Outcomes: \pending{E4}.}
+
+\paragraph{Does the throughput curve determine the gain?}
+Add a separate GPT-2 Medium/XL panel at 4/8/16/32 nodes. The authors report
+16-node training times $T_{16}$ of 22.6h/110h for 100,000 optimizer steps:
+four A100 40GB GPUs per node (64 GPUs total), BF16, global batch 512,
+sequence length 1024. Legacy code and tables agree on these times; original
+timing logs and implementation details remain to be archived. Only these
+anchors are reported measurements. Given $\eta_n=(q_n/q_4)/(n/4)$, construct
+\begin{equation}
+ T_n=T_{16}\frac{16\eta_{16}}{n\eta_n},\qquad q_n=100{,}000/T_n.
+ \label{eq:scaling_sensitivity}
+\end{equation}
+Per model, use 11 power-law profiles spanning $\eta_{32}=10\%$--$120\%$
+(regression, saturation, linear and superlinear cases), plus three different
+intermediate shapes at the same 50\% endpoint. These are synthetic scenarios,
+not a measured hardware distribution or guaranteed coverage of real machines.
+Report where gains persist, disappear, or reverse.
+
+Retrain the development weighted-PPO policy per profile with three seeds;
+its reward-weight sweep differs from E2's completion-budget interface, so
+these results qualify this policy variant. Hold demand, CI, 48h cap and
+overheads fixed; use $\rho=1$ to isolate throughput from scale-dependent
+power. Compare the complete dynamic carbon--TAT curve with all four fixed
+points, reporting chunk counts and switching. Fixed reserves 48h; dynamic
+requests rounded planned duration, so gains include request sizing.
+Results: \pending{E4: scaling-curve sensitivity}.
 
 \begin{figure}[t]
 \centering
-\figslot{1.05in}{E4: carbon advantage versus $\rho$.\\
-Endpoint intervals; zero-gain line; break-even $\rho$.\\
-Fixed policies and comparator throughout.\\
-Small inset: endpoint-trained versus robust policy.}
-\caption{Power-sensitivity results placeholder. The parameter range is an
-assumed scenario, not a measured power range. Endpoint comparisons characterize
-the interval only under Equation~\ref{eq:power}. Plot uncertainty from paired
-execution samples separately from power-scenario variation.}
+\figslot{0.95in}{E4 sensitivity: throughput and power.\\
+Medium/XL: full carbon--TAT curves across 14 profiles.\\
+E2: carbon advantage versus $\rho$; zero and break-even.\\
+Show intervals, failures and reversals.}
+\caption{Sensitivity results placeholder. Throughput panels use measured
+anchors and assumed efficiency vectors; power panels rescore frozen E2 logs.
+Show paired-sample uncertainty separately from scenario variation. Neither
+finite scenario coverage nor two endpoint estimates establishes universal validity.}
 \label{fig:power}
 \end{figure}
 
-Figure~\ref{fig:power} reserves the sensitivity result.
-\pending{E4: interval-wide advantage or the exact region of reversal}.
-For $\Delta A=A_\pi-A_b$ and $\Delta B=B_\pi-B_b$, a possible break-even point
-is $\rho^\star=-\Delta B/(\Delta A-\Delta B)$ when the denominator is nonzero.
-A point outside the declared interval is not an in-range reversal.
-Simultaneous one-sided endpoint intervals, obtained from the paired block
-resamples, support an interval-wide statistical statement; two point estimates
-alone do not. A nominal gain that reverses near the selected power assumption
-must be reported as model-sensitive.
+\paragraph{Does the power assumption determine the gain?}
+Rescore every E2 execution over the declared $\rho$ interval, report exposure
+differences and the scale-error radius from Equation~\ref{eq:box}, and compare
+robust versus endpoint-trained policies at one prespecified budget per panel.
+For $\Delta A=A_\pi-A_b$ and $\Delta B=B_\pi-B_b$, the break-even point is
+$\rho^\star=-\Delta B/(\Delta A-\Delta B)$ when the denominator is nonzero.
+An interval-wide statistical claim requires simultaneous one-sided endpoint
+intervals from paired block resamples, not merely favorable point estimates.
+Report any in-range reversal (Figure~\ref{fig:power}).
 
 \paragraph{Does the simulated environment determine the gain?}
-At one prespecified budget and the 7B profile, reuse frozen full-policy and
-Rollout-MPC models in each source workload. Independently change (i) background
-widths to $\min(2n,128)$, reporting the capped fraction, (ii) scheduling to
-strict FCFS, and (iii) total chunk overhead to 60 or 1800 seconds. Preserve
-physical budgets, workload, CI calendars, and all fitted parameters. These
-four additional settings require new replay, not new training or hardware
-measurements. Width and scheduler changes test learned queue relationships;
-E1 prediction accuracy alone cannot establish this robustness. Report carbon and misses together: a gain that disappears or
-violates the budget limits the claim. They test the selected contention and
-overhead scenarios, not every possible cluster. Results: \pending{E4: environment sensitivity}.
+For the 7B profile and one budget per source, freeze full-policy and Rollout-MPC
+models. Independently double background widths, capped at 128 (report the
+capped fraction), use strict FCFS, or set total chunk overhead to 60 or 1800
+seconds. Fresh replay retains budgets, work, CI and fitted parameters. Report
+carbon and misses jointly; lost gains or budget violations limit the claim.
+These test selected queue/overhead scenarios, not arbitrary clusters.
+Results: \pending{E4: environment sensitivity}.
 
-A compact reuse analysis reports E2 outcomes by held-out calendar block and
-CI variability. A constant-CI rescore of the same logs removes timing-related
-carbon differences for those executions; it does not simulate policies reacting
-to constant CI. No cross-region, multi-user-adoption, or facility-wide
-experiment is needed for the scoped claim.
+Report E2 by calendar block and CI variability. Constant-CI rescoring changes
+accounting on frozen logs, not policy behavior.
