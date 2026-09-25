@@ -8,8 +8,25 @@ on CPU (`requirements-p3.txt`) and has synthetic functional coverage.
 
 ## Current entry: Frontera Slurm
 
-Edit code and [paper/](paper/README.md) locally; the cluster only pulls and runs. Follow [FRONTERA_RUN.md](docs/FRONTERA_RUN.md) for the HOME Conda environment, one-script sbatch/interactive launch, logs and resume. The current candidate is [C84 weighted PPO](docs/WEIGHTED84_RUN.md). Missing C84 fixed inputs are rebuilt in the same compute job, without wait probes. Git returns selected output text; checkpoints and binary results stay on the cluster. [RESEARCH_HANDOFF.md](docs/RESEARCH_HANDOFF.md) retains the research history and limitations.
+Edit code and [paper/](paper/README.md) locally; the cluster only pulls and runs. Follow [FRONTERA_RUN.md](docs/FRONTERA_RUN.md) for the HOME Conda environment, one-script sbatch/interactive launch, logs and resume. The current mechanism experiment is [RL-free dynamic scaling on synthetic demand](docs/OPPORTUNITY_RUN.md): one fixed controller, five generated trace scenarios, and a complete fixed/dynamic curve per scenario. Earlier [C84 weighted PPO](docs/WEIGHTED84_RUN.md) remains available. Git returns selected output text; checkpoints and binary results stay on the cluster. [RESEARCH_HANDOFF.md](docs/RESEARCH_HANDOFF.md) retains the research history and limitations.
 
+
+### Current experiment: training-free opportunity curves
+
+```bash
+mkdir -p out
+sbatch scripts/frontera_opportunity.sh
+```
+
+One job runs all five constructed trace scenarios, three seeds and 36 arrivals
+per scenario. Each arrival evaluates Fixed-4/8/16/32 plus 11 dynamic slider
+settings. XL/e050 stays fixed; **every method requests 48h including its final
+segment**. No RL training, wait predictor, model weights or old result inputs
+are needed. The controller uses public request information and target scaling.
+Append `--resume` after interruption; `--trace wide-long` runs one scenario.
+Black fixed / yellow dynamic plots are produced for constant CI and the ERCOT
+overlay, with all points and frontier gaps retained. Return JSON/CSV/MD/logs only;
+`--report-only` recreates figures locally. See [OPPORTUNITY_RUN.md](docs/OPPORTUNITY_RUN.md).
 
 ### Additional profile: old GPT-2
 
@@ -51,7 +68,7 @@ with the same output path fails instead of overwriting results.
 
 ## Earlier pipeline reference
 
-The following describes earlier C128/budget experiments. Use the Frontera entry above for the current C84/weighted run.
+The following describes earlier C128/budget experiments. Use the Frontera entry above for the current training-free mechanism experiment.
 
 Read [the short Chinese runbook](docs/CLUSTER_RUNBOOK.md) for the current story,
 portable site settings and first CPU submission. Published AMSP March 2024
