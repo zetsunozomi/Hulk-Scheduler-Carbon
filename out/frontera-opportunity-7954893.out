@@ -1,0 +1,560 @@
+Log: /scratch2/09796/shuyuanfan4814/carbon/out/frontera-opportunity.7954893.20260925T141923Z.ofwGUb.log
+Slurm job: 7954893
+Host: c210-032.frontera.tacc.utexas.edu
+Python: /home1/09796/shuyuanfan4814/.conda/envs/carbon/bin/python
+Synthetic mechanism experiment, NO training/checkpoints/wait probes.
+Traces=['short-control']; seeds=[11, 23, 37]; arrivals/seed=12; methods=15
+XL/e050, C84, actions4/8/16/32, all target requests48h; output=/scratch2/09796/shuyuanfan4814/carbon/results/opportunity-v1-xl-e050
+short-control/seed11: {'jobs': 16, 'offered_nodehours': 5356.16, 'offered_requested_nodehours': 12288.0, 'offered_load_over_full_horizon': 0.04428042328042328, 'requested_to_actual_nodehour_ratio': 2.2941809057235036, 'note': 'Offered service demand, not achieved utilization. Arrivals are generated through the full horizon; their end may exceed it.'}
+short-control/seed23: {'jobs': 16, 'offered_nodehours': 5224.782222222222, 'offered_requested_nodehours': 12288.0, 'offered_load_over_full_horizon': 0.043194297472075247, 'requested_to_actual_nodehour_ratio': 2.3518683607014776, 'note': 'Offered service demand, not achieved utilization. Arrivals are generated through the full horizon; their end may exceed it.'}
+short-control/seed37: {'jobs': 17, 'offered_nodehours': 5927.786666666668, 'offered_requested_nodehours': 13056.0, 'offered_load_over_full_horizon': 0.04900617283950618, 'requested_to_actual_nodehour_ratio': 2.202508412358519, 'note': 'Offered service demand, not achieved utilization. Arrivals are generated through the full horizon; their end may exceed it.'}
+short-control/seed11/01 Fixed-4: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.19640141472223, nodeh=1112.730523908889, replay=0.05s
+short-control/seed23/01 Fixed-4: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.1966791925, nodeh=1112.730523908889, replay=0.05s
+short-control/seed37/01 Fixed-4: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2089014147222, nodeh=1112.730523908889, replay=0.05s
+short-control/seed37/01 Fixed-8: completed, nodes=[8, 8, 8, 8], TAT=175.2974260063889, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed23/01 Fixed-8: completed, nodes=[8, 8, 8, 8], TAT=175.28520378416667, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed11/01 Fixed-8: completed, nodes=[8, 8, 8, 8], TAT=175.2849260063889, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed11/01 Fixed-16: completed, nodes=[16, 16, 16], TAT=110.50214444444444, nodeh=1768.0, replay=0.02s
+short-control/seed23/01 Fixed-16: completed, nodes=[16, 16, 16], TAT=110.50242222222222, nodeh=1768.0, replay=0.02s
+short-control/seed37/01 Fixed-16: completed, nodes=[16, 16, 16], TAT=110.51464444444444, nodeh=1768.0, replay=0.02s
+short-control/seed11/01 Fixed-32: completed, nodes=[32, 32], TAT=69.62988851777777, nodeh=2228.127714488889, replay=0.01s
+short-control/seed37/01 Fixed-32: completed, nodes=[32, 32], TAT=76.69238851777777, nodeh=2228.127714488889, replay=0.03s
+short-control/seed23/01 Fixed-32: completed, nodes=[32, 32], TAT=73.36349962888889, nodeh=2228.127714488889, replay=0.03s
+short-control/seed11/01 Dynamic-0.00: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.19640141472223, nodeh=1112.730523908889, replay=0.05s
+short-control/seed37/01 Dynamic-0.00: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2089014147222, nodeh=1112.730523908889, replay=0.05s
+short-control/seed23/01 Dynamic-0.00: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.1966791925, nodeh=1112.730523908889, replay=0.05s
+short-control/seed11/01 Dynamic-0.10: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.19640141472223, nodeh=1112.730523908889, replay=0.04s
+short-control/seed23/01 Dynamic-0.10: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.1966791925, nodeh=1112.730523908889, replay=0.05s
+short-control/seed37/01 Dynamic-0.10: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2089014147222, nodeh=1112.730523908889, replay=0.05s
+short-control/seed11/01 Dynamic-0.20: completed, nodes=[8, 8, 8, 8], TAT=175.2849260063889, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed23/01 Dynamic-0.20: completed, nodes=[8, 8, 8, 8], TAT=175.28520378416667, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed37/01 Dynamic-0.20: completed, nodes=[8, 8, 8, 8], TAT=175.2974260063889, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed11/01 Dynamic-0.30: completed, nodes=[16, 16, 16], TAT=110.50214444444444, nodeh=1768.0, replay=0.02s
+short-control/seed23/01 Dynamic-0.30: completed, nodes=[16, 16, 16], TAT=110.50242222222222, nodeh=1768.0, replay=0.02s
+short-control/seed37/01 Dynamic-0.30: completed, nodes=[16, 16, 16], TAT=110.51464444444444, nodeh=1768.0, replay=0.02s
+short-control/seed11/01 Dynamic-0.40: completed, nodes=[16, 16, 16], TAT=110.50214444444444, nodeh=1768.0, replay=0.02s
+short-control/seed37/01 Dynamic-0.40: completed, nodes=[16, 16, 16], TAT=110.51464444444444, nodeh=1768.0, replay=0.02s
+short-control/seed23/01 Dynamic-0.40: completed, nodes=[16, 16, 16], TAT=110.50242222222222, nodeh=1768.0, replay=0.02s
+short-control/seed11/01 Dynamic-0.50: completed, nodes=[32, 32], TAT=69.62988851777777, nodeh=2228.127714488889, replay=0.01s
+short-control/seed11/01 Dynamic-0.60: completed, nodes=[32, 32], TAT=69.62988851777777, nodeh=2228.127714488889, replay=0.01s
+short-control/seed37/01 Dynamic-0.50: completed, nodes=[32, 16], TAT=82.24974444444445, nodeh=2083.7716374755555, replay=0.03s
+short-control/seed23/01 Dynamic-0.50: completed, nodes=[32, 16], TAT=82.23752222222222, nodeh=2083.7716374755555, replay=0.03s
+short-control/seed11/01 Dynamic-0.70: completed, nodes=[32, 32], TAT=69.62988851777777, nodeh=2228.127714488889, replay=0.01s
+short-control/seed11/01 Dynamic-0.80: completed, nodes=[32, 32], TAT=69.62988851777777, nodeh=2228.127714488889, replay=0.01s
+short-control/seed37/01 Dynamic-0.60: completed, nodes=[32, 16], TAT=82.24974444444445, nodeh=2083.7716374755555, replay=0.03s
+short-control/seed11/01 Dynamic-0.90: completed, nodes=[32, 32], TAT=69.62988851777777, nodeh=2228.127714488889, replay=0.01s
+short-control/seed37/01 Dynamic-0.70: completed, nodes=[32, 16], TAT=82.24974444444445, nodeh=2083.7716374755555, replay=0.03s
+short-control/seed23/01 Dynamic-0.60: completed, nodes=[32, 16], TAT=82.23752222222222, nodeh=2083.7716374755555, replay=0.03s
+short-control/seed11/01 Dynamic-1.00: completed, nodes=[32, 32], TAT=69.62988851777777, nodeh=2228.127714488889, replay=0.01s
+short-control/seed37/01 Dynamic-0.80: completed, nodes=[32, 16], TAT=82.24974444444445, nodeh=2083.7716374755555, replay=0.03s
+short-control/seed23/01 Dynamic-0.70: completed, nodes=[32, 16], TAT=82.23752222222222, nodeh=2083.7716374755555, replay=0.03s
+short-control/seed11/02 Fixed-4: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2014014147222, nodeh=1112.730523908889, replay=0.04s
+short-control/seed37/01 Dynamic-0.90: completed, nodes=[32, 16], TAT=82.24974444444445, nodeh=2083.7716374755555, replay=0.03s
+short-control/seed23/01 Dynamic-0.80: completed, nodes=[32, 16], TAT=82.23752222222222, nodeh=2083.7716374755555, replay=0.03s
+short-control/seed11/02 Fixed-8: completed, nodes=[8, 8, 8, 8], TAT=175.2899260063889, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed11/02 Fixed-16: completed, nodes=[16, 16, 16], TAT=110.50714444444445, nodeh=1768.0, replay=0.02s
+short-control/seed37/01 Dynamic-1.00: completed, nodes=[32, 32], TAT=76.69238851777777, nodeh=2228.127714488889, replay=0.03s
+short-control/seed23/01 Dynamic-0.90: completed, nodes=[32, 16], TAT=82.23752222222222, nodeh=2083.7716374755555, replay=0.03s
+short-control/seed11/02 Fixed-32: completed, nodes=[32, 32], TAT=69.63488851777778, nodeh=2228.127714488889, replay=0.01s
+short-control/seed37/02 Fixed-4: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2027903036111, nodeh=1112.730523908889, replay=0.05s
+short-control/seed23/01 Dynamic-1.00: completed, nodes=[32, 32], TAT=73.36349962888889, nodeh=2228.127714488889, replay=0.03s
+short-control/seed11/02 Dynamic-0.00: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2014014147222, nodeh=1112.730523908889, replay=0.05s
+short-control/seed37/02 Fixed-8: completed, nodes=[8, 8, 8, 8], TAT=175.29131489527776, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed23/02 Fixed-4: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2033458591667, nodeh=1112.730523908889, replay=0.05s
+short-control/seed37/02 Fixed-16: completed, nodes=[16, 16, 16], TAT=110.50853333333333, nodeh=1768.0, replay=0.02s
+short-control/seed37/02 Fixed-32: completed, nodes=[32, 32], TAT=76.40294407333333, nodeh=2228.127714488889, replay=0.02s
+short-control/seed11/02 Dynamic-0.10: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2014014147222, nodeh=1112.730523908889, replay=0.05s
+short-control/seed23/02 Fixed-8: completed, nodes=[8, 8, 8, 8], TAT=175.29187045083333, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed23/02 Fixed-16: completed, nodes=[16, 16, 16], TAT=110.50908888888888, nodeh=1768.0, replay=0.02s
+short-control/seed11/02 Dynamic-0.20: completed, nodes=[8, 8, 8, 8], TAT=175.2899260063889, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed23/02 Fixed-32: completed, nodes=[32, 32], TAT=69.63683296222223, nodeh=2228.127714488889, replay=0.02s
+short-control/seed37/02 Dynamic-0.00: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2027903036111, nodeh=1112.730523908889, replay=0.05s
+short-control/seed11/02 Dynamic-0.30: completed, nodes=[16, 16, 16], TAT=110.50714444444445, nodeh=1768.0, replay=0.02s
+short-control/seed23/02 Dynamic-0.00: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2033458591667, nodeh=1112.730523908889, replay=0.05s
+short-control/seed37/02 Dynamic-0.10: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2027903036111, nodeh=1112.730523908889, replay=0.05s
+short-control/seed11/02 Dynamic-0.40: completed, nodes=[16, 16, 16], TAT=110.50714444444445, nodeh=1768.0, replay=0.02s
+short-control/seed37/02 Dynamic-0.20: completed, nodes=[8, 8, 8, 8], TAT=175.29131489527776, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed11/02 Dynamic-0.50: completed, nodes=[32, 32], TAT=69.63488851777778, nodeh=2228.127714488889, replay=0.01s
+short-control/seed23/02 Dynamic-0.10: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2033458591667, nodeh=1112.730523908889, replay=0.05s
+short-control/seed37/02 Dynamic-0.30: completed, nodes=[16, 16, 16], TAT=110.50853333333333, nodeh=1768.0, replay=0.02s
+short-control/seed11/02 Dynamic-0.60: completed, nodes=[32, 32], TAT=69.63488851777778, nodeh=2228.127714488889, replay=0.01s
+short-control/seed23/02 Dynamic-0.20: completed, nodes=[8, 8, 8, 8], TAT=175.29187045083333, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed11/02 Dynamic-0.70: completed, nodes=[32, 32], TAT=69.63488851777778, nodeh=2228.127714488889, replay=0.01s
+short-control/seed37/02 Dynamic-0.40: completed, nodes=[16, 16, 16], TAT=110.50853333333333, nodeh=1768.0, replay=0.02s
+short-control/seed23/02 Dynamic-0.30: completed, nodes=[16, 16, 16], TAT=110.50908888888888, nodeh=1768.0, replay=0.02s
+short-control/seed11/02 Dynamic-0.80: completed, nodes=[32, 32], TAT=69.63488851777778, nodeh=2228.127714488889, replay=0.01s
+short-control/seed37/02 Dynamic-0.50: completed, nodes=[32, 16], TAT=82.24363333333334, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed23/02 Dynamic-0.40: completed, nodes=[16, 16, 16], TAT=110.50908888888888, nodeh=1768.0, replay=0.02s
+short-control/seed11/02 Dynamic-0.90: completed, nodes=[32, 32], TAT=69.63488851777778, nodeh=2228.127714488889, replay=0.01s
+short-control/seed37/02 Dynamic-0.60: completed, nodes=[32, 16], TAT=82.24363333333334, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed23/02 Dynamic-0.50: completed, nodes=[32, 32], TAT=69.63683296222223, nodeh=2228.127714488889, replay=0.02s
+short-control/seed11/02 Dynamic-1.00: completed, nodes=[32, 32], TAT=69.63488851777778, nodeh=2228.127714488889, replay=0.01s
+short-control/seed37/02 Dynamic-0.70: completed, nodes=[32, 16], TAT=82.24363333333334, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed23/02 Dynamic-0.60: completed, nodes=[32, 32], TAT=69.63683296222223, nodeh=2228.127714488889, replay=0.02s
+short-control/seed37/02 Dynamic-0.80: completed, nodes=[32, 16], TAT=82.24363333333334, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed23/02 Dynamic-0.70: completed, nodes=[32, 32], TAT=69.63683296222223, nodeh=2228.127714488889, replay=0.02s
+short-control/seed11/03 Fixed-4: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.20112363694443, nodeh=1112.730523908889, replay=0.05s
+short-control/seed37/02 Dynamic-0.90: completed, nodes=[32, 16], TAT=82.24363333333334, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed23/02 Dynamic-0.80: completed, nodes=[32, 32], TAT=69.63683296222223, nodeh=2228.127714488889, replay=0.02s
+short-control/seed11/03 Fixed-8: completed, nodes=[8, 8, 8, 8], TAT=175.2896482286111, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed37/02 Dynamic-1.00: completed, nodes=[32, 32], TAT=76.40294407333333, nodeh=2228.127714488889, replay=0.02s
+short-control/seed23/02 Dynamic-0.90: completed, nodes=[32, 32], TAT=69.63683296222223, nodeh=2228.127714488889, replay=0.02s
+short-control/seed11/03 Fixed-16: completed, nodes=[16, 16, 16], TAT=110.50686666666667, nodeh=1768.0, replay=0.02s
+short-control/seed23/02 Dynamic-1.00: completed, nodes=[32, 32], TAT=69.63683296222223, nodeh=2228.127714488889, replay=0.02s
+short-control/seed37/03 Fixed-4: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2114014147222, nodeh=1112.730523908889, replay=0.05s
+short-control/seed11/03 Fixed-32: completed, nodes=[32, 32], TAT=69.63461074, nodeh=2228.127714488889, replay=0.02s
+short-control/seed37/03 Fixed-8: completed, nodes=[8, 8, 8, 8], TAT=175.2999260063889, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed23/03 Fixed-4: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2058458591667, nodeh=1112.730523908889, replay=0.05s
+short-control/seed11/03 Dynamic-0.00: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.20112363694443, nodeh=1112.730523908889, replay=0.05s
+short-control/seed37/03 Fixed-16: completed, nodes=[16, 16, 16], TAT=110.51714444444444, nodeh=1768.0, replay=0.02s
+short-control/seed23/03 Fixed-8: completed, nodes=[8, 8, 8, 8], TAT=175.29437045083333, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed37/03 Fixed-32: completed, nodes=[32, 32], TAT=76.41155518444444, nodeh=2228.127714488889, replay=0.03s
+short-control/seed23/03 Fixed-16: completed, nodes=[16, 16, 16], TAT=110.5115888888889, nodeh=1768.0, replay=0.02s
+short-control/seed11/03 Dynamic-0.10: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.20112363694443, nodeh=1112.730523908889, replay=0.05s
+short-control/seed23/03 Fixed-32: completed, nodes=[32, 32], TAT=69.63933296222223, nodeh=2228.127714488889, replay=0.01s
+short-control/seed37/03 Dynamic-0.00: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2114014147222, nodeh=1112.730523908889, replay=0.05s
+short-control/seed11/03 Dynamic-0.20: completed, nodes=[8, 8, 8, 8], TAT=175.2896482286111, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed11/03 Dynamic-0.30: completed, nodes=[16, 16, 16], TAT=110.50686666666667, nodeh=1768.0, replay=0.02s
+short-control/seed23/03 Dynamic-0.00: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2058458591667, nodeh=1112.730523908889, replay=0.05s
+short-control/seed37/03 Dynamic-0.10: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2114014147222, nodeh=1112.730523908889, replay=0.05s
+short-control/seed11/03 Dynamic-0.40: completed, nodes=[16, 16, 16], TAT=110.50686666666667, nodeh=1768.0, replay=0.02s
+short-control/seed23/03 Dynamic-0.10: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2058458591667, nodeh=1112.730523908889, replay=0.05s
+short-control/seed11/03 Dynamic-0.50: completed, nodes=[32, 32], TAT=69.63461074, nodeh=2228.127714488889, replay=0.02s
+short-control/seed37/03 Dynamic-0.20: completed, nodes=[8, 8, 8, 8], TAT=175.2999260063889, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed37/03 Dynamic-0.30: completed, nodes=[16, 16, 16], TAT=110.51714444444444, nodeh=1768.0, replay=0.02s
+short-control/seed23/03 Dynamic-0.20: completed, nodes=[8, 8, 8, 8], TAT=175.29437045083333, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed11/03 Dynamic-0.60: completed, nodes=[32, 32], TAT=69.63461074, nodeh=2228.127714488889, replay=0.02s
+short-control/seed37/03 Dynamic-0.40: completed, nodes=[16, 16, 16], TAT=110.51714444444444, nodeh=1768.0, replay=0.02s
+short-control/seed23/03 Dynamic-0.30: completed, nodes=[16, 16, 16], TAT=110.5115888888889, nodeh=1768.0, replay=0.02s
+short-control/seed11/03 Dynamic-0.70: completed, nodes=[32, 32], TAT=69.63461074, nodeh=2228.127714488889, replay=0.02s
+short-control/seed23/03 Dynamic-0.40: completed, nodes=[16, 16, 16], TAT=110.5115888888889, nodeh=1768.0, replay=0.02s
+short-control/seed37/03 Dynamic-0.50: completed, nodes=[32, 16], TAT=82.25224444444444, nodeh=2083.7716374755555, replay=0.03s
+short-control/seed11/03 Dynamic-0.80: completed, nodes=[32, 32], TAT=69.63461074, nodeh=2228.127714488889, replay=0.02s
+short-control/seed23/03 Dynamic-0.50: completed, nodes=[32, 32], TAT=69.63933296222223, nodeh=2228.127714488889, replay=0.01s
+short-control/seed37/03 Dynamic-0.60: completed, nodes=[32, 16], TAT=82.25224444444444, nodeh=2083.7716374755555, replay=0.03s
+short-control/seed11/03 Dynamic-0.90: completed, nodes=[32, 32], TAT=69.63461074, nodeh=2228.127714488889, replay=0.02s
+short-control/seed23/03 Dynamic-0.60: completed, nodes=[32, 32], TAT=69.63933296222223, nodeh=2228.127714488889, replay=0.01s
+short-control/seed23/03 Dynamic-0.70: completed, nodes=[32, 32], TAT=69.63933296222223, nodeh=2228.127714488889, replay=0.01s
+short-control/seed11/03 Dynamic-1.00: completed, nodes=[32, 32], TAT=69.63461074, nodeh=2228.127714488889, replay=0.02s
+short-control/seed37/03 Dynamic-0.70: completed, nodes=[32, 16], TAT=82.25224444444444, nodeh=2083.7716374755555, replay=0.03s
+short-control/seed23/03 Dynamic-0.80: completed, nodes=[32, 32], TAT=69.63933296222223, nodeh=2228.127714488889, replay=0.01s
+short-control/seed23/03 Dynamic-0.90: completed, nodes=[32, 32], TAT=69.63933296222223, nodeh=2228.127714488889, replay=0.01s
+short-control/seed37/03 Dynamic-0.80: completed, nodes=[32, 16], TAT=82.25224444444444, nodeh=2083.7716374755555, replay=0.03s
+short-control/seed11/04 Fixed-4: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2064014147222, nodeh=1112.730523908889, replay=0.05s
+short-control/seed23/03 Dynamic-1.00: completed, nodes=[32, 32], TAT=69.63933296222223, nodeh=2228.127714488889, replay=0.01s
+short-control/seed37/03 Dynamic-0.90: completed, nodes=[32, 16], TAT=82.25224444444444, nodeh=2083.7716374755555, replay=0.03s
+short-control/seed11/04 Fixed-8: completed, nodes=[8, 8, 8, 8], TAT=175.2949260063889, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed23/04 Fixed-4: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2014014147222, nodeh=1112.730523908889, replay=0.05s
+short-control/seed37/03 Dynamic-1.00: completed, nodes=[32, 32], TAT=76.41155518444444, nodeh=2228.127714488889, replay=0.03s
+short-control/seed11/04 Fixed-16: completed, nodes=[16, 16, 16], TAT=110.51214444444444, nodeh=1768.0, replay=0.02s
+short-control/seed11/04 Fixed-32: completed, nodes=[32, 32], TAT=69.63988851777778, nodeh=2228.127714488889, replay=0.01s
+short-control/seed23/04 Fixed-8: completed, nodes=[8, 8, 8, 8], TAT=175.2899260063889, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed37/04 Fixed-4: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2016791925, nodeh=1112.730523908889, replay=0.05s
+short-control/seed23/04 Fixed-16: completed, nodes=[16, 16, 16], TAT=110.50714444444445, nodeh=1768.0, replay=0.02s
+short-control/seed11/04 Dynamic-0.00: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2064014147222, nodeh=1112.730523908889, replay=0.05s
+short-control/seed23/04 Fixed-32: completed, nodes=[32, 32], TAT=69.63488851777778, nodeh=2228.127714488889, replay=0.01s
+short-control/seed37/04 Fixed-8: completed, nodes=[8, 8, 8, 8], TAT=175.29020378416666, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed37/04 Fixed-16: completed, nodes=[16, 16, 16], TAT=110.50742222222222, nodeh=1768.0, replay=0.02s
+short-control/seed11/04 Dynamic-0.10: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2064014147222, nodeh=1112.730523908889, replay=0.05s
+short-control/seed23/04 Dynamic-0.00: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2014014147222, nodeh=1112.730523908889, replay=0.05s
+short-control/seed37/04 Fixed-32: completed, nodes=[32, 32], TAT=69.63516629555555, nodeh=2228.127714488889, replay=0.01s
+short-control/seed11/04 Dynamic-0.20: completed, nodes=[8, 8, 8, 8], TAT=175.2949260063889, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed23/04 Dynamic-0.10: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2014014147222, nodeh=1112.730523908889, replay=0.05s
+short-control/seed37/04 Dynamic-0.00: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2016791925, nodeh=1112.730523908889, replay=0.05s
+short-control/seed11/04 Dynamic-0.30: completed, nodes=[16, 16, 16], TAT=110.51214444444444, nodeh=1768.0, replay=0.02s
+short-control/seed23/04 Dynamic-0.20: completed, nodes=[8, 8, 8, 8], TAT=175.2899260063889, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed11/04 Dynamic-0.40: completed, nodes=[16, 16, 16], TAT=110.51214444444444, nodeh=1768.0, replay=0.02s
+short-control/seed11/04 Dynamic-0.50: completed, nodes=[32, 32], TAT=69.63988851777778, nodeh=2228.127714488889, replay=0.01s
+short-control/seed37/04 Dynamic-0.10: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2016791925, nodeh=1112.730523908889, replay=0.05s
+short-control/seed23/04 Dynamic-0.30: completed, nodes=[16, 16, 16], TAT=110.50714444444445, nodeh=1768.0, replay=0.02s
+short-control/seed11/04 Dynamic-0.60: completed, nodes=[32, 32], TAT=69.63988851777778, nodeh=2228.127714488889, replay=0.01s
+short-control/seed23/04 Dynamic-0.40: completed, nodes=[16, 16, 16], TAT=110.50714444444445, nodeh=1768.0, replay=0.02s
+short-control/seed37/04 Dynamic-0.20: completed, nodes=[8, 8, 8, 8], TAT=175.29020378416666, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed11/04 Dynamic-0.70: completed, nodes=[32, 32], TAT=69.63988851777778, nodeh=2228.127714488889, replay=0.01s
+short-control/seed23/04 Dynamic-0.50: completed, nodes=[32, 32], TAT=69.63488851777778, nodeh=2228.127714488889, replay=0.01s
+short-control/seed37/04 Dynamic-0.30: completed, nodes=[16, 16, 16], TAT=110.50742222222222, nodeh=1768.0, replay=0.02s
+short-control/seed11/04 Dynamic-0.80: completed, nodes=[32, 32], TAT=69.63988851777778, nodeh=2228.127714488889, replay=0.01s
+short-control/seed23/04 Dynamic-0.60: completed, nodes=[32, 32], TAT=69.63488851777778, nodeh=2228.127714488889, replay=0.01s
+short-control/seed11/04 Dynamic-0.90: completed, nodes=[32, 32], TAT=69.63988851777778, nodeh=2228.127714488889, replay=0.01s
+short-control/seed37/04 Dynamic-0.40: completed, nodes=[16, 16, 16], TAT=110.50742222222222, nodeh=1768.0, replay=0.02s
+short-control/seed23/04 Dynamic-0.70: completed, nodes=[32, 32], TAT=69.63488851777778, nodeh=2228.127714488889, replay=0.01s
+short-control/seed11/04 Dynamic-1.00: completed, nodes=[32, 32], TAT=69.63988851777778, nodeh=2228.127714488889, replay=0.01s
+short-control/seed37/04 Dynamic-0.50: completed, nodes=[32, 32], TAT=69.63516629555555, nodeh=2228.127714488889, replay=0.01s
+short-control/seed23/04 Dynamic-0.80: completed, nodes=[32, 32], TAT=69.63488851777778, nodeh=2228.127714488889, replay=0.01s
+short-control/seed37/04 Dynamic-0.60: completed, nodes=[32, 32], TAT=69.63516629555555, nodeh=2228.127714488889, replay=0.01s
+short-control/seed23/04 Dynamic-0.90: completed, nodes=[32, 32], TAT=69.63488851777778, nodeh=2228.127714488889, replay=0.01s
+short-control/seed37/04 Dynamic-0.70: completed, nodes=[32, 32], TAT=69.63516629555555, nodeh=2228.127714488889, replay=0.01s
+short-control/seed11/05 Fixed-4: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.21251252583335, nodeh=1112.730523908889, replay=0.05s
+short-control/seed23/04 Dynamic-1.00: completed, nodes=[32, 32], TAT=69.63488851777778, nodeh=2228.127714488889, replay=0.01s
+short-control/seed37/04 Dynamic-0.80: completed, nodes=[32, 32], TAT=69.63516629555555, nodeh=2228.127714488889, replay=0.01s
+short-control/seed11/05 Fixed-8: completed, nodes=[8, 8, 8, 8], TAT=175.3010371175, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed37/04 Dynamic-0.90: completed, nodes=[32, 32], TAT=69.63516629555555, nodeh=2228.127714488889, replay=0.01s
+short-control/seed11/05 Fixed-16: completed, nodes=[16, 16, 16], TAT=110.51825555555556, nodeh=1768.0, replay=0.02s
+short-control/seed37/04 Dynamic-1.00: completed, nodes=[32, 32], TAT=69.63516629555555, nodeh=2228.127714488889, replay=0.01s
+short-control/seed23/05 Fixed-4: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2089014147222, nodeh=1112.730523908889, replay=0.04s
+short-control/seed11/05 Fixed-32: completed, nodes=[32, 32], TAT=77.07933296222222, nodeh=2228.127714488889, replay=0.02s
+short-control/seed23/05 Fixed-8: completed, nodes=[8, 8, 8, 8], TAT=175.2974260063889, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed37/05 Fixed-4: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2058458591667, nodeh=1112.730523908889, replay=0.05s
+short-control/seed23/05 Fixed-16: completed, nodes=[16, 16, 16], TAT=110.51464444444444, nodeh=1768.0, replay=0.02s
+short-control/seed11/05 Dynamic-0.00: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.21251252583335, nodeh=1112.730523908889, replay=0.04s
+short-control/seed23/05 Fixed-32: completed, nodes=[32, 32], TAT=76.59238851777778, nodeh=2228.127714488889, replay=0.02s
+short-control/seed37/05 Fixed-8: completed, nodes=[8, 8, 8, 8], TAT=175.29437045083333, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed37/05 Fixed-16: completed, nodes=[16, 16, 16], TAT=110.5115888888889, nodeh=1768.0, replay=0.02s
+short-control/seed11/05 Dynamic-0.10: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.21251252583335, nodeh=1112.730523908889, replay=0.04s
+short-control/seed37/05 Fixed-32: completed, nodes=[32, 32], TAT=74.1059996288889, nodeh=2228.127714488889, replay=0.02s
+short-control/seed11/05 Dynamic-0.20: completed, nodes=[8, 8, 8, 8], TAT=175.3010371175, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed23/05 Dynamic-0.00: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2089014147222, nodeh=1112.730523908889, replay=0.04s
+short-control/seed11/05 Dynamic-0.30: completed, nodes=[16, 16, 16], TAT=110.51825555555556, nodeh=1768.0, replay=0.02s
+short-control/seed37/05 Dynamic-0.00: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2058458591667, nodeh=1112.730523908889, replay=0.05s
+short-control/seed11/05 Dynamic-0.40: completed, nodes=[16, 16, 16], TAT=110.51825555555556, nodeh=1768.0, replay=0.02s
+short-control/seed23/05 Dynamic-0.10: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2089014147222, nodeh=1112.730523908889, replay=0.05s
+short-control/seed11/05 Dynamic-0.50: completed, nodes=[32, 16], TAT=82.25335555555556, nodeh=2083.7716374755555, replay=0.01s
+short-control/seed37/05 Dynamic-0.10: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2058458591667, nodeh=1112.730523908889, replay=0.05s
+short-control/seed23/05 Dynamic-0.20: completed, nodes=[8, 8, 8, 8], TAT=175.2974260063889, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed11/05 Dynamic-0.60: completed, nodes=[32, 16], TAT=82.25335555555556, nodeh=2083.7716374755555, replay=0.01s
+short-control/seed37/05 Dynamic-0.20: completed, nodes=[8, 8, 8, 8], TAT=175.29437045083333, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed11/05 Dynamic-0.70: completed, nodes=[32, 16], TAT=82.25335555555556, nodeh=2083.7716374755555, replay=0.01s
+short-control/seed23/05 Dynamic-0.30: completed, nodes=[16, 16, 16], TAT=110.51464444444444, nodeh=1768.0, replay=0.02s
+short-control/seed11/05 Dynamic-0.80: completed, nodes=[32, 16], TAT=82.25335555555556, nodeh=2083.7716374755555, replay=0.01s
+short-control/seed37/05 Dynamic-0.30: completed, nodes=[16, 16, 16], TAT=110.5115888888889, nodeh=1768.0, replay=0.02s
+short-control/seed23/05 Dynamic-0.40: completed, nodes=[16, 16, 16], TAT=110.51464444444444, nodeh=1768.0, replay=0.02s
+short-control/seed11/05 Dynamic-0.90: completed, nodes=[32, 16], TAT=82.25335555555556, nodeh=2083.7716374755555, replay=0.01s
+short-control/seed23/05 Dynamic-0.50: completed, nodes=[32, 32], TAT=76.59238851777778, nodeh=2228.127714488889, replay=0.02s
+short-control/seed37/05 Dynamic-0.40: completed, nodes=[16, 16, 16], TAT=110.5115888888889, nodeh=1768.0, replay=0.02s
+short-control/seed23/05 Dynamic-0.60: completed, nodes=[32, 32], TAT=76.59238851777778, nodeh=2228.127714488889, replay=0.02s
+short-control/seed11/05 Dynamic-1.00: completed, nodes=[32, 32], TAT=77.07933296222222, nodeh=2228.127714488889, replay=0.02s
+short-control/seed37/05 Dynamic-0.50: completed, nodes=[32, 16], TAT=82.24668888888888, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed23/05 Dynamic-0.70: completed, nodes=[32, 32], TAT=76.59238851777778, nodeh=2228.127714488889, replay=0.02s
+short-control/seed37/05 Dynamic-0.60: completed, nodes=[32, 16], TAT=82.24668888888888, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed11/06 Fixed-4: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2091791925, nodeh=1112.730523908889, replay=0.05s
+short-control/seed23/05 Dynamic-0.80: completed, nodes=[32, 32], TAT=76.59238851777778, nodeh=2228.127714488889, replay=0.02s
+short-control/seed37/05 Dynamic-0.70: completed, nodes=[32, 16], TAT=82.24668888888888, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed23/05 Dynamic-0.90: completed, nodes=[32, 32], TAT=76.59238851777778, nodeh=2228.127714488889, replay=0.02s
+short-control/seed11/06 Fixed-8: completed, nodes=[8, 8, 8, 8], TAT=175.29770378416666, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed11/06 Fixed-16: completed, nodes=[16, 16, 16], TAT=110.51492222222222, nodeh=1768.0, replay=0.02s
+short-control/seed23/05 Dynamic-1.00: completed, nodes=[32, 32], TAT=76.59238851777778, nodeh=2228.127714488889, replay=0.02s
+short-control/seed37/05 Dynamic-0.80: completed, nodes=[32, 16], TAT=82.24668888888888, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed11/06 Fixed-32: completed, nodes=[32, 32], TAT=77.0759996288889, nodeh=2228.127714488889, replay=0.03s
+short-control/seed37/05 Dynamic-0.90: completed, nodes=[32, 16], TAT=82.24668888888888, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed23/06 Fixed-4: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2108458591667, nodeh=1112.730523908889, replay=0.04s
+short-control/seed37/05 Dynamic-1.00: completed, nodes=[32, 32], TAT=74.1059996288889, nodeh=2228.127714488889, replay=0.02s
+short-control/seed11/06 Dynamic-0.00: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2091791925, nodeh=1112.730523908889, replay=0.05s
+short-control/seed23/06 Fixed-8: completed, nodes=[8, 8, 8, 8], TAT=175.29937045083332, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed23/06 Fixed-16: completed, nodes=[16, 16, 16], TAT=110.51658888888889, nodeh=1768.0, replay=0.02s
+short-control/seed23/06 Fixed-32: completed, nodes=[32, 32], TAT=69.64433296222222, nodeh=2228.127714488889, replay=0.01s
+short-control/seed37/06 Fixed-4: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.20112363694443, nodeh=1112.730523908889, replay=0.05s
+short-control/seed11/06 Dynamic-0.10: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2091791925, nodeh=1112.730523908889, replay=0.05s
+short-control/seed37/06 Fixed-8: completed, nodes=[8, 8, 8, 8], TAT=175.2896482286111, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed11/06 Dynamic-0.20: completed, nodes=[8, 8, 8, 8], TAT=175.29770378416666, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed23/06 Dynamic-0.00: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2108458591667, nodeh=1112.730523908889, replay=0.04s
+short-control/seed37/06 Fixed-16: completed, nodes=[16, 16, 16], TAT=110.50686666666667, nodeh=1768.0, replay=0.02s
+short-control/seed11/06 Dynamic-0.30: completed, nodes=[16, 16, 16], TAT=110.51492222222222, nodeh=1768.0, replay=0.02s
+short-control/seed37/06 Fixed-32: completed, nodes=[32, 32], TAT=69.63461074, nodeh=2228.127714488889, replay=0.02s
+short-control/seed23/06 Dynamic-0.10: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2108458591667, nodeh=1112.730523908889, replay=0.05s
+short-control/seed37/06 Dynamic-0.00: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.20112363694443, nodeh=1112.730523908889, replay=0.05s
+short-control/seed23/06 Dynamic-0.20: completed, nodes=[8, 8, 8, 8], TAT=175.29937045083332, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed23/06 Dynamic-0.30: completed, nodes=[16, 16, 16], TAT=110.51658888888889, nodeh=1768.0, replay=0.02s
+short-control/seed11/06 Dynamic-0.40: completed, nodes=[16, 16, 16], TAT=110.51492222222222, nodeh=1768.0, replay=0.02s
+short-control/seed37/06 Dynamic-0.10: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.20112363694443, nodeh=1112.730523908889, replay=0.05s
+short-control/seed23/06 Dynamic-0.40: completed, nodes=[16, 16, 16], TAT=110.51658888888889, nodeh=1768.0, replay=0.02s
+short-control/seed23/06 Dynamic-0.50: completed, nodes=[32, 32], TAT=69.64433296222222, nodeh=2228.127714488889, replay=0.01s
+short-control/seed11/06 Dynamic-0.50: completed, nodes=[32, 16], TAT=82.25002222222223, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed37/06 Dynamic-0.20: completed, nodes=[8, 8, 8, 8], TAT=175.2896482286111, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed23/06 Dynamic-0.60: completed, nodes=[32, 32], TAT=69.64433296222222, nodeh=2228.127714488889, replay=0.01s
+short-control/seed11/06 Dynamic-0.60: completed, nodes=[32, 16], TAT=82.25002222222223, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed37/06 Dynamic-0.30: completed, nodes=[16, 16, 16], TAT=110.50686666666667, nodeh=1768.0, replay=0.02s
+short-control/seed23/06 Dynamic-0.70: completed, nodes=[32, 32], TAT=69.64433296222222, nodeh=2228.127714488889, replay=0.01s
+short-control/seed23/06 Dynamic-0.80: completed, nodes=[32, 32], TAT=69.64433296222222, nodeh=2228.127714488889, replay=0.01s
+short-control/seed11/06 Dynamic-0.70: completed, nodes=[32, 16], TAT=82.25002222222223, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed37/06 Dynamic-0.40: completed, nodes=[16, 16, 16], TAT=110.50686666666667, nodeh=1768.0, replay=0.02s
+short-control/seed23/06 Dynamic-0.90: completed, nodes=[32, 32], TAT=69.64433296222222, nodeh=2228.127714488889, replay=0.01s
+short-control/seed11/06 Dynamic-0.80: completed, nodes=[32, 16], TAT=82.25002222222223, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed37/06 Dynamic-0.50: completed, nodes=[32, 32], TAT=69.63461074, nodeh=2228.127714488889, replay=0.02s
+short-control/seed23/06 Dynamic-1.00: completed, nodes=[32, 32], TAT=69.64433296222222, nodeh=2228.127714488889, replay=0.01s
+short-control/seed11/06 Dynamic-0.90: completed, nodes=[32, 16], TAT=82.25002222222223, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed37/06 Dynamic-0.60: completed, nodes=[32, 32], TAT=69.63461074, nodeh=2228.127714488889, replay=0.02s
+short-control/seed37/06 Dynamic-0.70: completed, nodes=[32, 32], TAT=69.63461074, nodeh=2228.127714488889, replay=0.02s
+short-control/seed11/06 Dynamic-1.00: completed, nodes=[32, 32], TAT=77.0759996288889, nodeh=2228.127714488889, replay=0.03s
+short-control/seed37/06 Dynamic-0.80: completed, nodes=[32, 32], TAT=69.63461074, nodeh=2228.127714488889, replay=0.02s
+short-control/seed23/07 Fixed-4: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.20445697027776, nodeh=1112.730523908889, replay=0.05s
+short-control/seed37/06 Dynamic-0.90: completed, nodes=[32, 32], TAT=69.63461074, nodeh=2228.127714488889, replay=0.02s
+short-control/seed11/07 Fixed-4: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.20751252583335, nodeh=1112.730523908889, replay=0.05s
+short-control/seed23/07 Fixed-8: completed, nodes=[8, 8, 8, 8], TAT=175.29298156194446, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed23/07 Fixed-16: completed, nodes=[16, 16, 16], TAT=110.5102, nodeh=1768.0, replay=0.02s
+short-control/seed37/06 Dynamic-1.00: completed, nodes=[32, 32], TAT=69.63461074, nodeh=2228.127714488889, replay=0.02s
+short-control/seed11/07 Fixed-8: completed, nodes=[8, 8, 8, 8], TAT=175.2960371175, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed23/07 Fixed-32: completed, nodes=[32, 32], TAT=73.32127740666667, nodeh=2228.127714488889, replay=0.02s
+short-control/seed11/07 Fixed-16: completed, nodes=[16, 16, 16], TAT=110.51325555555556, nodeh=1768.0, replay=0.02s
+short-control/seed11/07 Fixed-32: completed, nodes=[32, 32], TAT=75.00766629555555, nodeh=2228.127714488889, replay=0.02s
+short-control/seed37/07 Fixed-4: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.21001252583335, nodeh=1112.730523908889, replay=0.05s
+short-control/seed23/07 Dynamic-0.00: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.20445697027776, nodeh=1112.730523908889, replay=0.04s
+short-control/seed37/07 Fixed-8: completed, nodes=[8, 8, 8, 8], TAT=175.2985371175, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed11/07 Dynamic-0.00: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.20751252583335, nodeh=1112.730523908889, replay=0.04s
+short-control/seed37/07 Fixed-16: completed, nodes=[16, 16, 16], TAT=110.51575555555556, nodeh=1768.0, replay=0.02s
+short-control/seed23/07 Dynamic-0.10: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.20445697027776, nodeh=1112.730523908889, replay=0.05s
+short-control/seed37/07 Fixed-32: completed, nodes=[32, 32], TAT=77.24349962888888, nodeh=2228.127714488889, replay=0.03s
+short-control/seed11/07 Dynamic-0.10: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.20751252583335, nodeh=1112.730523908889, replay=0.04s
+short-control/seed23/07 Dynamic-0.20: completed, nodes=[8, 8, 8, 8], TAT=175.29298156194446, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed23/07 Dynamic-0.30: completed, nodes=[16, 16, 16], TAT=110.5102, nodeh=1768.0, replay=0.02s
+short-control/seed11/07 Dynamic-0.20: completed, nodes=[8, 8, 8, 8], TAT=175.2960371175, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed37/07 Dynamic-0.00: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.21001252583335, nodeh=1112.730523908889, replay=0.05s
+short-control/seed23/07 Dynamic-0.40: completed, nodes=[16, 16, 16], TAT=110.5102, nodeh=1768.0, replay=0.02s
+short-control/seed11/07 Dynamic-0.30: completed, nodes=[16, 16, 16], TAT=110.51325555555556, nodeh=1768.0, replay=0.02s
+short-control/seed23/07 Dynamic-0.50: completed, nodes=[32, 16], TAT=82.2453, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed11/07 Dynamic-0.40: completed, nodes=[16, 16, 16], TAT=110.51325555555556, nodeh=1768.0, replay=0.02s
+short-control/seed37/07 Dynamic-0.10: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.21001252583335, nodeh=1112.730523908889, replay=0.05s
+short-control/seed23/07 Dynamic-0.60: completed, nodes=[32, 16], TAT=82.2453, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed11/07 Dynamic-0.50: completed, nodes=[32, 16], TAT=82.24835555555556, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed23/07 Dynamic-0.70: completed, nodes=[32, 16], TAT=82.2453, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed37/07 Dynamic-0.20: completed, nodes=[8, 8, 8, 8], TAT=175.2985371175, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed11/07 Dynamic-0.60: completed, nodes=[32, 16], TAT=82.24835555555556, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed23/07 Dynamic-0.80: completed, nodes=[32, 16], TAT=82.2453, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed37/07 Dynamic-0.30: completed, nodes=[16, 16, 16], TAT=110.51575555555556, nodeh=1768.0, replay=0.02s
+short-control/seed11/07 Dynamic-0.70: completed, nodes=[32, 16], TAT=82.24835555555556, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed23/07 Dynamic-0.90: completed, nodes=[32, 16], TAT=82.2453, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed37/07 Dynamic-0.40: completed, nodes=[16, 16, 16], TAT=110.51575555555556, nodeh=1768.0, replay=0.02s
+short-control/seed11/07 Dynamic-0.80: completed, nodes=[32, 16], TAT=82.24835555555556, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed23/07 Dynamic-1.00: completed, nodes=[32, 32], TAT=73.32127740666667, nodeh=2228.127714488889, replay=0.02s
+short-control/seed11/07 Dynamic-0.90: completed, nodes=[32, 16], TAT=82.24835555555556, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed37/07 Dynamic-0.50: completed, nodes=[32, 16], TAT=82.25085555555556, nodeh=2083.7716374755555, replay=0.03s
+short-control/seed11/07 Dynamic-1.00: completed, nodes=[32, 32], TAT=75.00766629555555, nodeh=2228.127714488889, replay=0.02s
+short-control/seed23/08 Fixed-4: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.19862363694443, nodeh=1112.730523908889, replay=0.04s
+short-control/seed37/07 Dynamic-0.60: completed, nodes=[32, 16], TAT=82.25085555555556, nodeh=2083.7716374755555, replay=0.03s
+short-control/seed23/08 Fixed-8: completed, nodes=[8, 8, 8, 8], TAT=175.2871482286111, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed37/07 Dynamic-0.70: completed, nodes=[32, 16], TAT=82.25085555555556, nodeh=2083.7716374755555, replay=0.03s
+short-control/seed11/08 Fixed-4: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2114014147222, nodeh=1112.730523908889, replay=0.05s
+short-control/seed23/08 Fixed-16: completed, nodes=[16, 16, 16], TAT=110.50436666666667, nodeh=1768.0, replay=0.02s
+short-control/seed11/08 Fixed-8: completed, nodes=[8, 8, 8, 8], TAT=175.2999260063889, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed37/07 Dynamic-0.80: completed, nodes=[32, 16], TAT=82.25085555555556, nodeh=2083.7716374755555, replay=0.03s
+short-control/seed23/08 Fixed-32: completed, nodes=[32, 32], TAT=73.31544407333334, nodeh=2228.127714488889, replay=0.03s
+short-control/seed11/08 Fixed-16: completed, nodes=[16, 16, 16], TAT=110.51714444444444, nodeh=1768.0, replay=0.02s
+short-control/seed11/08 Fixed-32: completed, nodes=[32, 32], TAT=69.64488851777777, nodeh=2228.127714488889, replay=0.01s
+short-control/seed37/07 Dynamic-0.90: completed, nodes=[32, 16], TAT=82.25085555555556, nodeh=2083.7716374755555, replay=0.03s
+short-control/seed23/08 Dynamic-0.00: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.19862363694443, nodeh=1112.730523908889, replay=0.05s
+short-control/seed11/08 Dynamic-0.00: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2114014147222, nodeh=1112.730523908889, replay=0.04s
+short-control/seed23/08 Dynamic-0.10: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.19862363694443, nodeh=1112.730523908889, replay=0.04s
+short-control/seed37/07 Dynamic-1.00: completed, nodes=[32, 32], TAT=77.24349962888888, nodeh=2228.127714488889, replay=0.03s
+short-control/seed11/08 Dynamic-0.10: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2114014147222, nodeh=1112.730523908889, replay=0.05s
+short-control/seed23/08 Dynamic-0.20: completed, nodes=[8, 8, 8, 8], TAT=175.2871482286111, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed37/08 Fixed-4: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.19945697027777, nodeh=1112.730523908889, replay=0.05s
+short-control/seed23/08 Dynamic-0.30: completed, nodes=[16, 16, 16], TAT=110.50436666666667, nodeh=1768.0, replay=0.02s
+short-control/seed11/08 Dynamic-0.20: completed, nodes=[8, 8, 8, 8], TAT=175.2999260063889, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed23/08 Dynamic-0.40: completed, nodes=[16, 16, 16], TAT=110.50436666666667, nodeh=1768.0, replay=0.02s
+short-control/seed37/08 Fixed-8: completed, nodes=[8, 8, 8, 8], TAT=175.28798156194443, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed11/08 Dynamic-0.30: completed, nodes=[16, 16, 16], TAT=110.51714444444444, nodeh=1768.0, replay=0.02s
+short-control/seed37/08 Fixed-16: completed, nodes=[16, 16, 16], TAT=110.5052, nodeh=1768.0, replay=0.02s
+short-control/seed11/08 Dynamic-0.40: completed, nodes=[16, 16, 16], TAT=110.51714444444444, nodeh=1768.0, replay=0.02s
+short-control/seed23/08 Dynamic-0.50: completed, nodes=[32, 16], TAT=82.23946666666667, nodeh=2083.7716374755555, replay=0.03s
+short-control/seed11/08 Dynamic-0.50: completed, nodes=[32, 32], TAT=69.64488851777777, nodeh=2228.127714488889, replay=0.01s
+short-control/seed23/08 Dynamic-0.60: completed, nodes=[32, 16], TAT=82.23946666666667, nodeh=2083.7716374755555, replay=0.03s
+short-control/seed11/08 Dynamic-0.60: completed, nodes=[32, 32], TAT=69.64488851777777, nodeh=2228.127714488889, replay=0.01s
+short-control/seed11/08 Dynamic-0.70: completed, nodes=[32, 32], TAT=69.64488851777777, nodeh=2228.127714488889, replay=0.01s
+short-control/seed23/08 Dynamic-0.70: completed, nodes=[32, 16], TAT=82.23946666666667, nodeh=2083.7716374755555, replay=0.03s
+short-control/seed11/08 Dynamic-0.80: completed, nodes=[32, 32], TAT=69.64488851777777, nodeh=2228.127714488889, replay=0.01s
+short-control/seed11/08 Dynamic-0.90: completed, nodes=[32, 32], TAT=69.64488851777777, nodeh=2228.127714488889, replay=0.01s
+short-control/seed23/08 Dynamic-0.80: completed, nodes=[32, 16], TAT=82.23946666666667, nodeh=2083.7716374755555, replay=0.03s
+short-control/seed37/08 Fixed-32: completed, nodes=[32, 32], TAT=69.63294407333333, nodeh=2228.127714488889, replay=0.02s
+short-control/seed11/08 Dynamic-1.00: completed, nodes=[32, 32], TAT=69.64488851777777, nodeh=2228.127714488889, replay=0.01s
+short-control/seed23/08 Dynamic-0.90: completed, nodes=[32, 16], TAT=82.23946666666667, nodeh=2083.7716374755555, replay=0.03s
+short-control/seed37/08 Dynamic-0.00: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.19945697027777, nodeh=1112.730523908889, replay=0.05s
+short-control/seed11/09 Fixed-4: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.20695697027776, nodeh=1112.730523908889, replay=0.04s
+short-control/seed23/08 Dynamic-1.00: completed, nodes=[32, 32], TAT=73.31544407333334, nodeh=2228.127714488889, replay=0.03s
+short-control/seed11/09 Fixed-8: completed, nodes=[8, 8, 8, 8], TAT=175.29548156194446, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed37/08 Dynamic-0.10: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.19945697027777, nodeh=1112.730523908889, replay=0.05s
+short-control/seed11/09 Fixed-16: completed, nodes=[16, 16, 16], TAT=110.5127, nodeh=1768.0, replay=0.02s
+short-control/seed23/09 Fixed-4: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2055680813889, nodeh=1112.730523908889, replay=0.05s
+short-control/seed11/09 Fixed-32: completed, nodes=[32, 32], TAT=69.64044407333333, nodeh=2228.127714488889, replay=0.01s
+short-control/seed37/08 Dynamic-0.20: completed, nodes=[8, 8, 8, 8], TAT=175.28798156194443, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed23/09 Fixed-8: completed, nodes=[8, 8, 8, 8], TAT=175.29409267305556, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed37/08 Dynamic-0.30: completed, nodes=[16, 16, 16], TAT=110.5052, nodeh=1768.0, replay=0.02s
+short-control/seed23/09 Fixed-16: completed, nodes=[16, 16, 16], TAT=110.51131111111111, nodeh=1768.0, replay=0.02s
+short-control/seed11/09 Dynamic-0.00: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.20695697027776, nodeh=1112.730523908889, replay=0.05s
+short-control/seed23/09 Fixed-32: completed, nodes=[32, 32], TAT=73.02238851777778, nodeh=2228.127714488889, replay=0.02s
+short-control/seed37/08 Dynamic-0.40: completed, nodes=[16, 16, 16], TAT=110.5052, nodeh=1768.0, replay=0.02s
+short-control/seed37/08 Dynamic-0.50: completed, nodes=[32, 32], TAT=69.63294407333333, nodeh=2228.127714488889, replay=0.02s
+short-control/seed11/09 Dynamic-0.10: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.20695697027776, nodeh=1112.730523908889, replay=0.05s
+short-control/seed23/09 Dynamic-0.00: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2055680813889, nodeh=1112.730523908889, replay=0.05s
+short-control/seed37/08 Dynamic-0.60: completed, nodes=[32, 32], TAT=69.63294407333333, nodeh=2228.127714488889, replay=0.02s
+short-control/seed11/09 Dynamic-0.20: completed, nodes=[8, 8, 8, 8], TAT=175.29548156194446, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed37/08 Dynamic-0.70: completed, nodes=[32, 32], TAT=69.63294407333333, nodeh=2228.127714488889, replay=0.02s
+short-control/seed11/09 Dynamic-0.30: completed, nodes=[16, 16, 16], TAT=110.5127, nodeh=1768.0, replay=0.02s
+short-control/seed23/09 Dynamic-0.10: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2055680813889, nodeh=1112.730523908889, replay=0.05s
+short-control/seed37/08 Dynamic-0.80: completed, nodes=[32, 32], TAT=69.63294407333333, nodeh=2228.127714488889, replay=0.02s
+short-control/seed11/09 Dynamic-0.40: completed, nodes=[16, 16, 16], TAT=110.5127, nodeh=1768.0, replay=0.02s
+short-control/seed23/09 Dynamic-0.20: completed, nodes=[8, 8, 8, 8], TAT=175.29409267305556, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed37/08 Dynamic-0.90: completed, nodes=[32, 32], TAT=69.63294407333333, nodeh=2228.127714488889, replay=0.02s
+short-control/seed11/09 Dynamic-0.50: completed, nodes=[32, 32], TAT=69.64044407333333, nodeh=2228.127714488889, replay=0.01s
+short-control/seed23/09 Dynamic-0.30: completed, nodes=[16, 16, 16], TAT=110.51131111111111, nodeh=1768.0, replay=0.02s
+short-control/seed11/09 Dynamic-0.60: completed, nodes=[32, 32], TAT=69.64044407333333, nodeh=2228.127714488889, replay=0.01s
+short-control/seed37/08 Dynamic-1.00: completed, nodes=[32, 32], TAT=69.63294407333333, nodeh=2228.127714488889, replay=0.02s
+short-control/seed11/09 Dynamic-0.70: completed, nodes=[32, 32], TAT=69.64044407333333, nodeh=2228.127714488889, replay=0.01s
+short-control/seed23/09 Dynamic-0.40: completed, nodes=[16, 16, 16], TAT=110.51131111111111, nodeh=1768.0, replay=0.02s
+short-control/seed11/09 Dynamic-0.80: completed, nodes=[32, 32], TAT=69.64044407333333, nodeh=2228.127714488889, replay=0.01s
+short-control/seed23/09 Dynamic-0.50: completed, nodes=[32, 16], TAT=82.24641111111112, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed37/09 Fixed-4: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2014014147222, nodeh=1112.730523908889, replay=0.05s
+short-control/seed11/09 Dynamic-0.90: completed, nodes=[32, 32], TAT=69.64044407333333, nodeh=2228.127714488889, replay=0.01s
+short-control/seed23/09 Dynamic-0.60: completed, nodes=[32, 16], TAT=82.24641111111112, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed11/09 Dynamic-1.00: completed, nodes=[32, 32], TAT=69.64044407333333, nodeh=2228.127714488889, replay=0.01s
+short-control/seed37/09 Fixed-8: completed, nodes=[8, 8, 8, 8], TAT=175.2899260063889, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed23/09 Dynamic-0.70: completed, nodes=[32, 16], TAT=82.24641111111112, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed37/09 Fixed-16: completed, nodes=[16, 16, 16], TAT=110.50714444444445, nodeh=1768.0, replay=0.02s
+short-control/seed23/09 Dynamic-0.80: completed, nodes=[32, 16], TAT=82.24641111111112, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed11/10 Fixed-4: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2091791925, nodeh=1112.730523908889, replay=0.04s
+short-control/seed37/09 Fixed-32: completed, nodes=[32, 32], TAT=72.15155518444445, nodeh=2228.127714488889, replay=0.03s
+short-control/seed23/09 Dynamic-0.90: completed, nodes=[32, 16], TAT=82.24641111111112, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed11/10 Fixed-8: completed, nodes=[8, 8, 8, 8], TAT=175.29770378416666, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed23/09 Dynamic-1.00: completed, nodes=[32, 32], TAT=73.02238851777778, nodeh=2228.127714488889, replay=0.02s
+short-control/seed11/10 Fixed-16: completed, nodes=[16, 16, 16], TAT=110.51492222222222, nodeh=1768.0, replay=0.02s
+short-control/seed37/09 Dynamic-0.00: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2014014147222, nodeh=1112.730523908889, replay=0.05s
+short-control/seed23/10 Fixed-4: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.1983458591667, nodeh=1112.730523908889, replay=0.05s
+short-control/seed11/10 Fixed-32: completed, nodes=[32, 32], TAT=75.65933296222222, nodeh=2228.127714488889, replay=0.03s
+short-control/seed37/09 Dynamic-0.10: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2014014147222, nodeh=1112.730523908889, replay=0.05s
+short-control/seed23/10 Fixed-8: completed, nodes=[8, 8, 8, 8], TAT=175.28687045083333, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed11/10 Dynamic-0.00: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2091791925, nodeh=1112.730523908889, replay=0.04s
+short-control/seed23/10 Fixed-16: completed, nodes=[16, 16, 16], TAT=110.50408888888889, nodeh=1768.0, replay=0.02s
+short-control/seed37/09 Dynamic-0.20: completed, nodes=[8, 8, 8, 8], TAT=175.2899260063889, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed23/10 Fixed-32: completed, nodes=[32, 32], TAT=73.01516629555556, nodeh=2228.127714488889, replay=0.02s
+short-control/seed37/09 Dynamic-0.30: completed, nodes=[16, 16, 16], TAT=110.50714444444445, nodeh=1768.0, replay=0.02s
+short-control/seed11/10 Dynamic-0.10: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2091791925, nodeh=1112.730523908889, replay=0.05s
+short-control/seed37/09 Dynamic-0.40: completed, nodes=[16, 16, 16], TAT=110.50714444444445, nodeh=1768.0, replay=0.02s
+short-control/seed23/10 Dynamic-0.00: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.1983458591667, nodeh=1112.730523908889, replay=0.05s
+short-control/seed11/10 Dynamic-0.20: completed, nodes=[8, 8, 8, 8], TAT=175.29770378416666, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed37/09 Dynamic-0.50: completed, nodes=[32, 16], TAT=82.24224444444444, nodeh=2083.7716374755555, replay=0.03s
+short-control/seed11/10 Dynamic-0.30: completed, nodes=[16, 16, 16], TAT=110.51492222222222, nodeh=1768.0, replay=0.02s
+short-control/seed23/10 Dynamic-0.10: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.1983458591667, nodeh=1112.730523908889, replay=0.05s
+short-control/seed37/09 Dynamic-0.60: completed, nodes=[32, 16], TAT=82.24224444444444, nodeh=2083.7716374755555, replay=0.03s
+short-control/seed11/10 Dynamic-0.40: completed, nodes=[16, 16, 16], TAT=110.51492222222222, nodeh=1768.0, replay=0.02s
+short-control/seed23/10 Dynamic-0.20: completed, nodes=[8, 8, 8, 8], TAT=175.28687045083333, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed11/10 Dynamic-0.50: completed, nodes=[32, 16], TAT=82.25002222222223, nodeh=2083.7716374755555, replay=0.03s
+short-control/seed37/09 Dynamic-0.70: completed, nodes=[32, 16], TAT=82.24224444444444, nodeh=2083.7716374755555, replay=0.03s
+short-control/seed23/10 Dynamic-0.30: completed, nodes=[16, 16, 16], TAT=110.50408888888889, nodeh=1768.0, replay=0.02s
+short-control/seed23/10 Dynamic-0.40: completed, nodes=[16, 16, 16], TAT=110.50408888888889, nodeh=1768.0, replay=0.02s
+short-control/seed11/10 Dynamic-0.60: completed, nodes=[32, 16], TAT=82.25002222222223, nodeh=2083.7716374755555, replay=0.03s
+short-control/seed37/09 Dynamic-0.80: completed, nodes=[32, 16], TAT=82.24224444444444, nodeh=2083.7716374755555, replay=0.03s
+short-control/seed23/10 Dynamic-0.50: completed, nodes=[32, 16], TAT=82.23918888888889, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed11/10 Dynamic-0.70: completed, nodes=[32, 16], TAT=82.25002222222223, nodeh=2083.7716374755555, replay=0.03s
+short-control/seed37/09 Dynamic-0.90: completed, nodes=[32, 16], TAT=82.24224444444444, nodeh=2083.7716374755555, replay=0.03s
+short-control/seed23/10 Dynamic-0.60: completed, nodes=[32, 16], TAT=82.23918888888889, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed11/10 Dynamic-0.80: completed, nodes=[32, 16], TAT=82.25002222222223, nodeh=2083.7716374755555, replay=0.03s
+short-control/seed37/09 Dynamic-1.00: completed, nodes=[32, 32], TAT=72.15155518444445, nodeh=2228.127714488889, replay=0.03s
+short-control/seed23/10 Dynamic-0.70: completed, nodes=[32, 16], TAT=82.23918888888889, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed23/10 Dynamic-0.80: completed, nodes=[32, 16], TAT=82.23918888888889, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed11/10 Dynamic-0.90: completed, nodes=[32, 16], TAT=82.25002222222223, nodeh=2083.7716374755555, replay=0.03s
+short-control/seed37/10 Fixed-4: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.21195697027775, nodeh=1112.730523908889, replay=0.05s
+short-control/seed23/10 Dynamic-0.90: completed, nodes=[32, 16], TAT=82.23918888888889, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed37/10 Fixed-8: completed, nodes=[8, 8, 8, 8], TAT=175.30048156194445, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed11/10 Dynamic-1.00: completed, nodes=[32, 32], TAT=75.65933296222222, nodeh=2228.127714488889, replay=0.03s
+short-control/seed23/10 Dynamic-1.00: completed, nodes=[32, 32], TAT=73.01516629555556, nodeh=2228.127714488889, replay=0.02s
+short-control/seed37/10 Fixed-16: completed, nodes=[16, 16, 16], TAT=110.5177, nodeh=1768.0, replay=0.02s
+short-control/seed37/10 Fixed-32: completed, nodes=[32, 32], TAT=69.64544407333334, nodeh=2228.127714488889, replay=0.02s
+short-control/seed11/11 Fixed-4: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2105680813889, nodeh=1112.730523908889, replay=0.05s
+short-control/seed23/11 Fixed-4: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.20001252583336, nodeh=1112.730523908889, replay=0.05s
+short-control/seed11/11 Fixed-8: completed, nodes=[8, 8, 8, 8], TAT=175.29909267305555, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed37/10 Dynamic-0.00: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.21195697027775, nodeh=1112.730523908889, replay=0.05s
+short-control/seed23/11 Fixed-8: completed, nodes=[8, 8, 8, 8], TAT=175.2885371175, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed11/11 Fixed-16: completed, nodes=[16, 16, 16], TAT=110.51631111111111, nodeh=1768.0, replay=0.02s
+short-control/seed11/11 Fixed-32: completed, nodes=[32, 32], TAT=69.64405518444444, nodeh=2228.127714488889, replay=0.01s
+short-control/seed23/11 Fixed-16: completed, nodes=[16, 16, 16], TAT=110.50575555555555, nodeh=1768.0, replay=0.02s
+short-control/seed23/11 Fixed-32: completed, nodes=[32, 32], TAT=69.63349962888888, nodeh=2228.127714488889, replay=0.01s
+short-control/seed37/10 Dynamic-0.10: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.21195697027775, nodeh=1112.730523908889, replay=0.05s
+short-control/seed11/11 Dynamic-0.00: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2105680813889, nodeh=1112.730523908889, replay=0.04s
+short-control/seed37/10 Dynamic-0.20: completed, nodes=[8, 8, 8, 8], TAT=175.30048156194445, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed23/11 Dynamic-0.00: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.20001252583336, nodeh=1112.730523908889, replay=0.05s
+short-control/seed37/10 Dynamic-0.30: completed, nodes=[16, 16, 16], TAT=110.5177, nodeh=1768.0, replay=0.02s
+short-control/seed11/11 Dynamic-0.10: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2105680813889, nodeh=1112.730523908889, replay=0.05s
+short-control/seed37/10 Dynamic-0.40: completed, nodes=[16, 16, 16], TAT=110.5177, nodeh=1768.0, replay=0.02s
+short-control/seed23/11 Dynamic-0.10: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.20001252583336, nodeh=1112.730523908889, replay=0.05s
+short-control/seed37/10 Dynamic-0.50: completed, nodes=[32, 32], TAT=69.64544407333334, nodeh=2228.127714488889, replay=0.02s
+short-control/seed11/11 Dynamic-0.20: completed, nodes=[8, 8, 8, 8], TAT=175.29909267305555, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed23/11 Dynamic-0.20: completed, nodes=[8, 8, 8, 8], TAT=175.2885371175, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed37/10 Dynamic-0.60: completed, nodes=[32, 32], TAT=69.64544407333334, nodeh=2228.127714488889, replay=0.02s
+short-control/seed11/11 Dynamic-0.30: completed, nodes=[16, 16, 16], TAT=110.51631111111111, nodeh=1768.0, replay=0.02s
+short-control/seed23/11 Dynamic-0.30: completed, nodes=[16, 16, 16], TAT=110.50575555555555, nodeh=1768.0, replay=0.02s
+short-control/seed37/10 Dynamic-0.70: completed, nodes=[32, 32], TAT=69.64544407333334, nodeh=2228.127714488889, replay=0.02s
+short-control/seed11/11 Dynamic-0.40: completed, nodes=[16, 16, 16], TAT=110.51631111111111, nodeh=1768.0, replay=0.02s
+short-control/seed23/11 Dynamic-0.40: completed, nodes=[16, 16, 16], TAT=110.50575555555555, nodeh=1768.0, replay=0.02s
+short-control/seed11/11 Dynamic-0.50: completed, nodes=[32, 32], TAT=69.64405518444444, nodeh=2228.127714488889, replay=0.01s
+short-control/seed37/10 Dynamic-0.80: completed, nodes=[32, 32], TAT=69.64544407333334, nodeh=2228.127714488889, replay=0.02s
+short-control/seed23/11 Dynamic-0.50: completed, nodes=[32, 32], TAT=69.63349962888888, nodeh=2228.127714488889, replay=0.01s
+short-control/seed37/10 Dynamic-0.90: completed, nodes=[32, 32], TAT=69.64544407333334, nodeh=2228.127714488889, replay=0.02s
+short-control/seed23/11 Dynamic-0.60: completed, nodes=[32, 32], TAT=69.63349962888888, nodeh=2228.127714488889, replay=0.01s
+short-control/seed11/11 Dynamic-0.60: completed, nodes=[32, 32], TAT=69.64405518444444, nodeh=2228.127714488889, replay=0.01s
+short-control/seed37/10 Dynamic-1.00: completed, nodes=[32, 32], TAT=69.64544407333334, nodeh=2228.127714488889, replay=0.02s
+short-control/seed23/11 Dynamic-0.70: completed, nodes=[32, 32], TAT=69.63349962888888, nodeh=2228.127714488889, replay=0.01s
+short-control/seed11/11 Dynamic-0.70: completed, nodes=[32, 32], TAT=69.64405518444444, nodeh=2228.127714488889, replay=0.01s
+short-control/seed23/11 Dynamic-0.80: completed, nodes=[32, 32], TAT=69.63349962888888, nodeh=2228.127714488889, replay=0.01s
+short-control/seed11/11 Dynamic-0.80: completed, nodes=[32, 32], TAT=69.64405518444444, nodeh=2228.127714488889, replay=0.01s
+short-control/seed23/11 Dynamic-0.90: completed, nodes=[32, 32], TAT=69.63349962888888, nodeh=2228.127714488889, replay=0.01s
+short-control/seed37/11 Fixed-4: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2083458591667, nodeh=1112.730523908889, replay=0.05s
+short-control/seed11/11 Dynamic-0.90: completed, nodes=[32, 32], TAT=69.64405518444444, nodeh=2228.127714488889, replay=0.01s
+short-control/seed23/11 Dynamic-1.00: completed, nodes=[32, 32], TAT=69.63349962888888, nodeh=2228.127714488889, replay=0.01s
+short-control/seed11/11 Dynamic-1.00: completed, nodes=[32, 32], TAT=69.64405518444444, nodeh=2228.127714488889, replay=0.01s
+short-control/seed37/11 Fixed-8: completed, nodes=[8, 8, 8, 8], TAT=175.29687045083332, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed37/11 Fixed-16: completed, nodes=[16, 16, 16], TAT=110.51408888888889, nodeh=1768.0, replay=0.02s
+short-control/seed23/12 Fixed-4: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2116791925, nodeh=1112.730523908889, replay=0.05s
+short-control/seed37/11 Fixed-32: completed, nodes=[32, 32], TAT=74.52516629555555, nodeh=2228.127714488889, replay=0.03s
+short-control/seed11/12 Fixed-4: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.19890141472223, nodeh=1112.730523908889, replay=0.04s
+short-control/seed23/12 Fixed-8: completed, nodes=[8, 8, 8, 8], TAT=175.30020378416665, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed11/12 Fixed-8: completed, nodes=[8, 8, 8, 8], TAT=175.2874260063889, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed23/12 Fixed-16: completed, nodes=[16, 16, 16], TAT=110.51742222222222, nodeh=1768.0, replay=0.02s
+short-control/seed37/11 Dynamic-0.00: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2083458591667, nodeh=1112.730523908889, replay=0.05s
+short-control/seed11/12 Fixed-16: completed, nodes=[16, 16, 16], TAT=110.50464444444444, nodeh=1768.0, replay=0.02s
+short-control/seed23/12 Fixed-32: completed, nodes=[32, 32], TAT=75.74516629555555, nodeh=2228.127714488889, replay=0.02s
+short-control/seed11/12 Fixed-32: completed, nodes=[32, 32], TAT=75.68238851777778, nodeh=2228.127714488889, replay=0.02s
+short-control/seed37/11 Dynamic-0.10: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2083458591667, nodeh=1112.730523908889, replay=0.05s
+short-control/seed23/12 Dynamic-0.00: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2116791925, nodeh=1112.730523908889, replay=0.05s
+short-control/seed11/12 Dynamic-0.00: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.19890141472223, nodeh=1112.730523908889, replay=0.05s
+short-control/seed37/11 Dynamic-0.20: completed, nodes=[8, 8, 8, 8], TAT=175.29687045083332, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed37/11 Dynamic-0.30: completed, nodes=[16, 16, 16], TAT=110.51408888888889, nodeh=1768.0, replay=0.02s
+short-control/seed23/12 Dynamic-0.10: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.2116791925, nodeh=1112.730523908889, replay=0.05s
+short-control/seed11/12 Dynamic-0.10: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.19890141472223, nodeh=1112.730523908889, replay=0.05s
+short-control/seed37/11 Dynamic-0.40: completed, nodes=[16, 16, 16], TAT=110.51408888888889, nodeh=1768.0, replay=0.02s
+short-control/seed23/12 Dynamic-0.20: completed, nodes=[8, 8, 8, 8], TAT=175.30020378416665, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed11/12 Dynamic-0.20: completed, nodes=[8, 8, 8, 8], TAT=175.2874260063889, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed37/11 Dynamic-0.50: completed, nodes=[32, 16], TAT=82.2491888888889, nodeh=2083.7716374755555, replay=0.03s
+short-control/seed23/12 Dynamic-0.30: completed, nodes=[16, 16, 16], TAT=110.51742222222222, nodeh=1768.0, replay=0.02s
+short-control/seed11/12 Dynamic-0.30: completed, nodes=[16, 16, 16], TAT=110.50464444444444, nodeh=1768.0, replay=0.02s
+short-control/seed23/12 Dynamic-0.40: completed, nodes=[16, 16, 16], TAT=110.51742222222222, nodeh=1768.0, replay=0.02s
+short-control/seed37/11 Dynamic-0.60: completed, nodes=[32, 16], TAT=82.2491888888889, nodeh=2083.7716374755555, replay=0.03s
+short-control/seed11/12 Dynamic-0.40: completed, nodes=[16, 16, 16], TAT=110.50464444444444, nodeh=1768.0, replay=0.02s
+short-control/seed23/12 Dynamic-0.50: completed, nodes=[32, 16], TAT=82.25252222222223, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed37/11 Dynamic-0.70: completed, nodes=[32, 16], TAT=82.2491888888889, nodeh=2083.7716374755555, replay=0.03s
+short-control/seed11/12 Dynamic-0.50: completed, nodes=[32, 16], TAT=82.23974444444444, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed23/12 Dynamic-0.60: completed, nodes=[32, 16], TAT=82.25252222222223, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed11/12 Dynamic-0.60: completed, nodes=[32, 16], TAT=82.23974444444444, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed23/12 Dynamic-0.70: completed, nodes=[32, 16], TAT=82.25252222222223, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed37/11 Dynamic-0.80: completed, nodes=[32, 16], TAT=82.2491888888889, nodeh=2083.7716374755555, replay=0.03s
+short-control/seed11/12 Dynamic-0.70: completed, nodes=[32, 16], TAT=82.23974444444444, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed23/12 Dynamic-0.80: completed, nodes=[32, 16], TAT=82.25252222222223, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed37/11 Dynamic-0.90: completed, nodes=[32, 16], TAT=82.2491888888889, nodeh=2083.7716374755555, replay=0.03s
+short-control/seed11/12 Dynamic-0.80: completed, nodes=[32, 16], TAT=82.23974444444444, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed23/12 Dynamic-0.90: completed, nodes=[32, 16], TAT=82.25252222222223, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed37/11 Dynamic-1.00: completed, nodes=[32, 32], TAT=74.52516629555555, nodeh=2228.127714488889, replay=0.03s
+short-control/seed11/12 Dynamic-0.90: completed, nodes=[32, 16], TAT=82.23974444444444, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed23/12 Dynamic-1.00: completed, nodes=[32, 32], TAT=75.74516629555555, nodeh=2228.127714488889, replay=0.02s
+Completed short-control/seed-23
+short-control/seed11/12 Dynamic-1.00: completed, nodes=[32, 32], TAT=75.68238851777778, nodeh=2228.127714488889, replay=0.02s
+short-control/seed37/12 Fixed-4: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.1977903036111, nodeh=1112.730523908889, replay=0.05s
+Completed short-control/seed-11
+short-control/seed37/12 Fixed-8: completed, nodes=[8, 8, 8, 8], TAT=175.28631489527777, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed37/12 Fixed-16: completed, nodes=[16, 16, 16], TAT=110.50353333333334, nodeh=1768.0, replay=0.02s
+short-control/seed37/12 Fixed-32: completed, nodes=[32, 32], TAT=76.63127740666667, nodeh=2228.127714488889, replay=0.02s
+short-control/seed37/12 Dynamic-0.00: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.1977903036111, nodeh=1112.730523908889, replay=0.05s
+short-control/seed37/12 Dynamic-0.10: completed, nodes=[4, 4, 4, 4, 4, 4], TAT=278.1977903036111, nodeh=1112.730523908889, replay=0.05s
+short-control/seed37/12 Dynamic-0.20: completed, nodes=[8, 8, 8, 8], TAT=175.28631489527777, nodeh=1402.2462590688888, replay=0.03s
+short-control/seed37/12 Dynamic-0.30: completed, nodes=[16, 16, 16], TAT=110.50353333333334, nodeh=1768.0, replay=0.02s
+short-control/seed37/12 Dynamic-0.40: completed, nodes=[16, 16, 16], TAT=110.50353333333334, nodeh=1768.0, replay=0.02s
+short-control/seed37/12 Dynamic-0.50: completed, nodes=[32, 16], TAT=82.23863333333334, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed37/12 Dynamic-0.60: completed, nodes=[32, 16], TAT=82.23863333333334, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed37/12 Dynamic-0.70: completed, nodes=[32, 16], TAT=82.23863333333334, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed37/12 Dynamic-0.80: completed, nodes=[32, 16], TAT=82.23863333333334, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed37/12 Dynamic-0.90: completed, nodes=[32, 16], TAT=82.23863333333334, nodeh=2083.7716374755555, replay=0.02s
+short-control/seed37/12 Dynamic-1.00: completed, nodes=[32, 32], TAT=76.63127740666667, nodeh=2228.127714488889, replay=0.02s
+Completed short-control/seed-37
+Curve ready: /scratch2/09796/shuyuanfan4814/carbon/results/opportunity-v1-xl-e050/short-control; constant={'fixed_lower_convex_frontier': [(445.09220956355557, 278.2049430813889), (560.8985036275556, 175.29346767305555), (707.2, 110.51068611111111), (891.2510857955556, 72.7013931474074)], 'dynamic_points_below_fixed_hull': 5, 'dynamic_points_above_fixed_hull': 0, 'dynamic_points_on_fixed_hull': 6, 'dynamic_points_outside_fixed_carbon_range': 0, 'distinct_dynamic_points': 5, 'best_gap_hours': -2.4764864094410655, 'note': 'Negative gap means below the fixed lower convex frontier at equal carbon; outside-range points are retained without extrapolation.'}; ERCOT={'fixed_lower_convex_frontier': [(432.65781647987154, 278.2049430813889), (543.007119464732, 175.29346767305555), (684.3365346858994, 110.51068611111111), (857.3700328665185, 72.7013931474074)], 'dynamic_points_below_fixed_hull': 5, 'dynamic_points_above_fixed_hull': 0, 'dynamic_points_on_fixed_hull': 6, 'dynamic_points_outside_fixed_carbon_range': 0, 'distinct_dynamic_points': 5, 'best_gap_hours': -2.5608086301280935, 'note': 'Negative gap means below the fixed lower convex frontier at equal carbon; outside-range points are retained without extrapolation.'}
+Curve ready: /scratch2/09796/shuyuanfan4814/carbon/results/opportunity-v1-xl-e050/burst-mix; constant={'fixed_lower_convex_frontier': [(445.09220956355557, 278.2049430813889), (560.8985036275556, 176.89161582120371), (707.2, 111.7671675925926), (891.2510857955556, 75.1013931474074)], 'dynamic_points_below_fixed_hull': 9, 'dynamic_points_above_fixed_hull': 0, 'dynamic_points_on_fixed_hull': 2, 'dynamic_points_outside_fixed_carbon_range': 0, 'distinct_dynamic_points': 9, 'best_gap_hours': -4.17805774933646, 'note': 'Negative gap means below the fixed lower convex frontier at equal carbon; outside-range points are retained without extrapolation.'}; ERCOT={'fixed_lower_convex_frontier': [(432.65781647987154, 278.2049430813889), (543.6865221011641, 176.89161582120371), (685.2245855304392, 111.7671675925926), (856.9046914055443, 75.1013931474074)], 'dynamic_points_below_fixed_hull': 9, 'dynamic_points_above_fixed_hull': 0, 'dynamic_points_on_fixed_hull': 2, 'dynamic_points_outside_fixed_carbon_range': 0, 'distinct_dynamic_points': 9, 'best_gap_hours': -4.088819056708886, 'note': 'Negative gap means below the fixed lower convex frontier at equal carbon; outside-range points are retained without extrapolation.'}
+Curve ready: /scratch2/09796/shuyuanfan4814/carbon/results/opportunity-v1-xl-e050/layered-long; constant={'fixed_lower_convex_frontier': [(445.09220956355557, 278.2049430813889), (560.8985036275556, 175.29346767305555), (707.2, 110.51068611111111), (891.2510857955556, 80.4027820362963)], 'dynamic_points_below_fixed_hull': 6, 'dynamic_points_above_fixed_hull': 0, 'dynamic_points_on_fixed_hull': 5, 'dynamic_points_outside_fixed_carbon_range': 0, 'distinct_dynamic_points': 9, 'best_gap_hours': -8.541780448208812, 'note': 'Negative gap means below the fixed lower convex frontier at equal carbon; outside-range points are retained without extrapolation.'}; ERCOT={'fixed_lower_convex_frontier': [(432.65781647987154, 278.2049430813889), (543.007119464732, 175.29346767305555), (684.3365346858994, 110.51068611111111), (857.7877025702342, 80.4027820362963)], 'dynamic_points_below_fixed_hull': 6, 'dynamic_points_above_fixed_hull': 0, 'dynamic_points_on_fixed_hull': 5, 'dynamic_points_outside_fixed_carbon_range': 0, 'distinct_dynamic_points': 9, 'best_gap_hours': -8.381954770203023, 'note': 'Negative gap means below the fixed lower convex frontier at equal carbon; outside-range points are retained without extrapolation.'}
+Curve ready: /scratch2/09796/shuyuanfan4814/carbon/results/opportunity-v1-xl-e050/loose-walltime; constant={'fixed_lower_convex_frontier': [(445.09220956355557, 278.2049430813889), (560.8985036275556, 175.29346767305555), (707.2, 110.93013055555555), (891.2510857955556, 87.76713388814815)], 'dynamic_points_below_fixed_hull': 8, 'dynamic_points_above_fixed_hull': 0, 'dynamic_points_on_fixed_hull': 3, 'dynamic_points_outside_fixed_carbon_range': 0, 'distinct_dynamic_points': 8, 'best_gap_hours': -12.99613338291276, 'note': 'Negative gap means below the fixed lower convex frontier at equal carbon; outside-range points are retained without extrapolation.'}; ERCOT={'fixed_lower_convex_frontier': [(432.65781647987154, 278.2049430813889), (543.007119464732, 175.29346767305555), (683.9086495867091, 110.93013055555555), (860.026292090164, 87.76713388814815)], 'dynamic_points_below_fixed_hull': 8, 'dynamic_points_above_fixed_hull': 0, 'dynamic_points_on_fixed_hull': 3, 'dynamic_points_outside_fixed_carbon_range': 0, 'distinct_dynamic_points': 8, 'best_gap_hours': -12.786843362497478, 'note': 'Negative gap means below the fixed lower convex frontier at equal carbon; outside-range points are retained without extrapolation.'}
+Curve ready: /scratch2/09796/shuyuanfan4814/carbon/results/opportunity-v1-xl-e050/short-control; constant={'fixed_lower_convex_frontier': [(445.09220956355557, 278.2049430813889), (560.8985036275556, 175.29346767305555), (707.2, 110.51068611111111), (891.2510857955556, 72.7013931474074)], 'dynamic_points_below_fixed_hull': 5, 'dynamic_points_above_fixed_hull': 0, 'dynamic_points_on_fixed_hull': 6, 'dynamic_points_outside_fixed_carbon_range': 0, 'distinct_dynamic_points': 5, 'best_gap_hours': -2.4764864094410655, 'note': 'Negative gap means below the fixed lower convex frontier at equal carbon; outside-range points are retained without extrapolation.'}; ERCOT={'fixed_lower_convex_frontier': [(432.65781647987154, 278.2049430813889), (543.007119464732, 175.29346767305555), (684.3365346858994, 110.51068611111111), (857.3700328665185, 72.7013931474074)], 'dynamic_points_below_fixed_hull': 5, 'dynamic_points_above_fixed_hull': 0, 'dynamic_points_on_fixed_hull': 6, 'dynamic_points_outside_fixed_carbon_range': 0, 'distinct_dynamic_points': 5, 'best_gap_hours': -2.5608086301280935, 'note': 'Negative gap means below the fixed lower convex frontier at equal carbon; outside-range points are retained without extrapolation.'}
+Curve ready: /scratch2/09796/shuyuanfan4814/carbon/results/opportunity-v1-xl-e050/wide-long; constant={'fixed_lower_convex_frontier': [(445.09220956355557, 278.2049430813889), (560.8985036275556, 175.29346767305555), (707.2, 110.51068611111111), (891.2510857955556, 100.83843018444445)], 'dynamic_points_below_fixed_hull': 6, 'dynamic_points_above_fixed_hull': 0, 'dynamic_points_on_fixed_hull': 5, 'dynamic_points_outside_fixed_carbon_range': 0, 'distinct_dynamic_points': 8, 'best_gap_hours': -21.559420094171372, 'note': 'Negative gap means below the fixed lower convex frontier at equal carbon; outside-range points are retained without extrapolation.'}; ERCOT={'fixed_lower_convex_frontier': [(432.65781647987154, 278.2049430813889), (543.007119464732, 175.29346767305555), (684.3365346858994, 110.51068611111111), (872.7439727183048, 100.83843018444445)], 'dynamic_points_below_fixed_hull': 6, 'dynamic_points_above_fixed_hull': 0, 'dynamic_points_on_fixed_hull': 5, 'dynamic_points_outside_fixed_carbon_range': 0, 'distinct_dynamic_points': 8, 'best_gap_hours': -21.90319930288456, 'note': 'Negative gap means below the fixed lower convex frontier at equal carbon; outside-range points are retained without extrapolation.'}
+Complete. Inspect /scratch2/09796/shuyuanfan4814/carbon/results/opportunity-v1-xl-e050/summary.md and each scenario/curves-constant.png or curves-ercot.png

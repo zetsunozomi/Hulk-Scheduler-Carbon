@@ -1,0 +1,1215 @@
+{
+  "contract_sha256": "b9dec447b841ada2f4927d17b52b9ccbcbdf606f42be323550e15977866db396",
+  "diagnostics": {
+    "all_methods_complete": true,
+    "arrival_count": 36,
+    "constant": {
+      "best_gap_hours": -2.4764864094410655,
+      "distinct_dynamic_points": 5,
+      "dynamic_points_above_fixed_hull": 0,
+      "dynamic_points_below_fixed_hull": 5,
+      "dynamic_points_on_fixed_hull": 6,
+      "dynamic_points_outside_fixed_carbon_range": 0,
+      "fixed_lower_convex_frontier": [
+        [
+          445.09220956355557,
+          278.2049430813889
+        ],
+        [
+          560.8985036275556,
+          175.29346767305555
+        ],
+        [
+          707.2,
+          110.51068611111111
+        ],
+        [
+          891.2510857955556,
+          72.7013931474074
+        ]
+      ],
+      "note": "Negative gap means below the fixed lower convex frontier at equal carbon; outside-range points are retained without extrapolation."
+    },
+    "ercot": {
+      "best_gap_hours": -2.5608086301280935,
+      "distinct_dynamic_points": 5,
+      "dynamic_points_above_fixed_hull": 0,
+      "dynamic_points_below_fixed_hull": 5,
+      "dynamic_points_on_fixed_hull": 6,
+      "dynamic_points_outside_fixed_carbon_range": 0,
+      "fixed_lower_convex_frontier": [
+        [
+          432.65781647987154,
+          278.2049430813889
+        ],
+        [
+          543.007119464732,
+          175.29346767305555
+        ],
+        [
+          684.3365346858994,
+          110.51068611111111
+        ],
+        [
+          857.3700328665185,
+          72.7013931474074
+        ]
+      ],
+      "note": "Negative gap means below the fixed lower convex frontier at equal carbon; outside-range points are retained without extrapolation."
+    }
+  },
+  "kind": "constructed_mechanism_development",
+  "per_seed": {
+    "11": {
+      "diagnostics": {
+        "all_methods_complete": true,
+        "arrival_count": 12,
+        "constant": {
+          "best_gap_hours": -2.4296073735423533,
+          "distinct_dynamic_points": 5,
+          "dynamic_points_above_fixed_hull": 0,
+          "dynamic_points_below_fixed_hull": 5,
+          "dynamic_points_on_fixed_hull": 6,
+          "dynamic_points_outside_fixed_carbon_range": 0,
+          "fixed_lower_convex_frontier": [
+            [
+              445.09220956355557,
+              278.2059615999074
+            ],
+            [
+              560.8985036275556,
+              175.29448619157407
+            ],
+            [
+              707.2,
+              110.51170462962963
+            ],
+            [
+              891.2510857955556,
+              72.33111536962963
+            ]
+          ],
+          "note": "Negative gap means below the fixed lower convex frontier at equal carbon; outside-range points are retained without extrapolation."
+        },
+        "ercot": {
+          "best_gap_hours": -2.9127022808692544,
+          "distinct_dynamic_points": 5,
+          "dynamic_points_above_fixed_hull": 0,
+          "dynamic_points_below_fixed_hull": 5,
+          "dynamic_points_on_fixed_hull": 6,
+          "dynamic_points_outside_fixed_carbon_range": 0,
+          "fixed_lower_convex_frontier": [
+            [
+              431.4898089559215,
+              278.2059615999074
+            ],
+            [
+              540.9488201230155,
+              175.29448619157407
+            ],
+            [
+              677.5103851803416,
+              110.51170462962963
+            ],
+            [
+              854.6346142204018,
+              72.33111536962963
+            ]
+          ],
+          "note": "Negative gap means below the fixed lower convex frontier at equal carbon; outside-range points are retained without extrapolation."
+        }
+      },
+      "rows": [
+        {
+          "alpha": null,
+          "completed": 12,
+          "constant_gap_vs_fixed_hull_hours": 0.0,
+          "downscaled_fraction": 0,
+          "ercot_gap_vs_fixed_hull_hours": 0.0,
+          "mean_chunks": 6,
+          "mean_constant_carbon_kg_per_kappa": 445.09220956355557,
+          "mean_ercot_carbon_kg_per_kappa": 431.4898089559215,
+          "mean_nodehours": 1112.730523908889,
+          "mean_tat_hours": 278.2059615999074,
+          "method": "Fixed-4",
+          "outcomes": 12,
+          "switched_fraction": 0
+        },
+        {
+          "alpha": null,
+          "completed": 12,
+          "constant_gap_vs_fixed_hull_hours": 0.0,
+          "downscaled_fraction": 0,
+          "ercot_gap_vs_fixed_hull_hours": 0.0,
+          "mean_chunks": 4,
+          "mean_constant_carbon_kg_per_kappa": 560.8985036275556,
+          "mean_ercot_carbon_kg_per_kappa": 540.9488201230155,
+          "mean_nodehours": 1402.2462590688888,
+          "mean_tat_hours": 175.29448619157407,
+          "method": "Fixed-8",
+          "outcomes": 12,
+          "switched_fraction": 0
+        },
+        {
+          "alpha": null,
+          "completed": 12,
+          "constant_gap_vs_fixed_hull_hours": 0.0,
+          "downscaled_fraction": 0,
+          "ercot_gap_vs_fixed_hull_hours": 0.0,
+          "mean_chunks": 3,
+          "mean_constant_carbon_kg_per_kappa": 707.2,
+          "mean_ercot_carbon_kg_per_kappa": 677.5103851803416,
+          "mean_nodehours": 1768.0,
+          "mean_tat_hours": 110.51170462962963,
+          "method": "Fixed-16",
+          "outcomes": 12,
+          "switched_fraction": 0
+        },
+        {
+          "alpha": null,
+          "completed": 12,
+          "constant_gap_vs_fixed_hull_hours": 0.0,
+          "downscaled_fraction": 0,
+          "ercot_gap_vs_fixed_hull_hours": 0.0,
+          "mean_chunks": 2,
+          "mean_constant_carbon_kg_per_kappa": 891.2510857955556,
+          "mean_ercot_carbon_kg_per_kappa": 854.6346142204018,
+          "mean_nodehours": 2228.127714488889,
+          "mean_tat_hours": 72.33111536962963,
+          "method": "Fixed-32",
+          "outcomes": 12,
+          "switched_fraction": 0
+        },
+        {
+          "alpha": 0.0,
+          "completed": 12,
+          "constant_gap_vs_fixed_hull_hours": 0.0,
+          "downscaled_fraction": 0,
+          "ercot_gap_vs_fixed_hull_hours": 0.0,
+          "mean_chunks": 6,
+          "mean_constant_carbon_kg_per_kappa": 445.09220956355557,
+          "mean_ercot_carbon_kg_per_kappa": 431.4898089559215,
+          "mean_nodehours": 1112.730523908889,
+          "mean_tat_hours": 278.2059615999074,
+          "method": "Dynamic-0.00",
+          "outcomes": 12,
+          "switched_fraction": 0
+        },
+        {
+          "alpha": 0.1,
+          "completed": 12,
+          "constant_gap_vs_fixed_hull_hours": 0.0,
+          "downscaled_fraction": 0,
+          "ercot_gap_vs_fixed_hull_hours": 0.0,
+          "mean_chunks": 6,
+          "mean_constant_carbon_kg_per_kappa": 445.09220956355557,
+          "mean_ercot_carbon_kg_per_kappa": 431.4898089559215,
+          "mean_nodehours": 1112.730523908889,
+          "mean_tat_hours": 278.2059615999074,
+          "method": "Dynamic-0.10",
+          "outcomes": 12,
+          "switched_fraction": 0
+        },
+        {
+          "alpha": 0.2,
+          "completed": 12,
+          "constant_gap_vs_fixed_hull_hours": 0.0,
+          "downscaled_fraction": 0,
+          "ercot_gap_vs_fixed_hull_hours": 0.0,
+          "mean_chunks": 4,
+          "mean_constant_carbon_kg_per_kappa": 560.8985036275556,
+          "mean_ercot_carbon_kg_per_kappa": 540.9488201230155,
+          "mean_nodehours": 1402.2462590688888,
+          "mean_tat_hours": 175.29448619157407,
+          "method": "Dynamic-0.20",
+          "outcomes": 12,
+          "switched_fraction": 0
+        },
+        {
+          "alpha": 0.3,
+          "completed": 12,
+          "constant_gap_vs_fixed_hull_hours": 0.0,
+          "downscaled_fraction": 0,
+          "ercot_gap_vs_fixed_hull_hours": 0.0,
+          "mean_chunks": 3,
+          "mean_constant_carbon_kg_per_kappa": 707.2,
+          "mean_ercot_carbon_kg_per_kappa": 677.5103851803416,
+          "mean_nodehours": 1768.0,
+          "mean_tat_hours": 110.51170462962963,
+          "method": "Dynamic-0.30",
+          "outcomes": 12,
+          "switched_fraction": 0
+        },
+        {
+          "alpha": 0.4,
+          "completed": 12,
+          "constant_gap_vs_fixed_hull_hours": 0.0,
+          "downscaled_fraction": 0,
+          "ercot_gap_vs_fixed_hull_hours": 0.0,
+          "mean_chunks": 3,
+          "mean_constant_carbon_kg_per_kappa": 707.2,
+          "mean_ercot_carbon_kg_per_kappa": 677.5103851803416,
+          "mean_nodehours": 1768.0,
+          "mean_tat_hours": 110.51170462962963,
+          "method": "Dynamic-0.40",
+          "outcomes": 12,
+          "switched_fraction": 0
+        },
+        {
+          "alpha": 0.5,
+          "completed": 12,
+          "constant_gap_vs_fixed_hull_hours": -2.4296073735423533,
+          "downscaled_fraction": 0.4166666666666667,
+          "ercot_gap_vs_fixed_hull_hours": -2.9127022808692544,
+          "mean_chunks": 2,
+          "mean_constant_carbon_kg_per_kappa": 867.1917396266667,
+          "mean_ercot_carbon_kg_per_kappa": 829.23961994822,
+          "mean_nodehours": 2167.9793490666666,
+          "mean_tat_hours": 74.8925136724074,
+          "method": "Dynamic-0.50",
+          "outcomes": 12,
+          "switched_fraction": 0.4166666666666667
+        },
+        {
+          "alpha": 0.6,
+          "completed": 12,
+          "constant_gap_vs_fixed_hull_hours": -2.4296073735423533,
+          "downscaled_fraction": 0.4166666666666667,
+          "ercot_gap_vs_fixed_hull_hours": -2.9127022808692544,
+          "mean_chunks": 2,
+          "mean_constant_carbon_kg_per_kappa": 867.1917396266667,
+          "mean_ercot_carbon_kg_per_kappa": 829.23961994822,
+          "mean_nodehours": 2167.9793490666666,
+          "mean_tat_hours": 74.8925136724074,
+          "method": "Dynamic-0.60",
+          "outcomes": 12,
+          "switched_fraction": 0.4166666666666667
+        },
+        {
+          "alpha": 0.7,
+          "completed": 12,
+          "constant_gap_vs_fixed_hull_hours": -2.4296073735423533,
+          "downscaled_fraction": 0.4166666666666667,
+          "ercot_gap_vs_fixed_hull_hours": -2.9127022808692544,
+          "mean_chunks": 2,
+          "mean_constant_carbon_kg_per_kappa": 867.1917396266667,
+          "mean_ercot_carbon_kg_per_kappa": 829.23961994822,
+          "mean_nodehours": 2167.9793490666666,
+          "mean_tat_hours": 74.8925136724074,
+          "method": "Dynamic-0.70",
+          "outcomes": 12,
+          "switched_fraction": 0.4166666666666667
+        },
+        {
+          "alpha": 0.8,
+          "completed": 12,
+          "constant_gap_vs_fixed_hull_hours": -2.4296073735423533,
+          "downscaled_fraction": 0.4166666666666667,
+          "ercot_gap_vs_fixed_hull_hours": -2.9127022808692544,
+          "mean_chunks": 2,
+          "mean_constant_carbon_kg_per_kappa": 867.1917396266667,
+          "mean_ercot_carbon_kg_per_kappa": 829.23961994822,
+          "mean_nodehours": 2167.9793490666666,
+          "mean_tat_hours": 74.8925136724074,
+          "method": "Dynamic-0.80",
+          "outcomes": 12,
+          "switched_fraction": 0.4166666666666667
+        },
+        {
+          "alpha": 0.9,
+          "completed": 12,
+          "constant_gap_vs_fixed_hull_hours": -2.4296073735423533,
+          "downscaled_fraction": 0.4166666666666667,
+          "ercot_gap_vs_fixed_hull_hours": -2.9127022808692544,
+          "mean_chunks": 2,
+          "mean_constant_carbon_kg_per_kappa": 867.1917396266667,
+          "mean_ercot_carbon_kg_per_kappa": 829.23961994822,
+          "mean_nodehours": 2167.9793490666666,
+          "mean_tat_hours": 74.8925136724074,
+          "method": "Dynamic-0.90",
+          "outcomes": 12,
+          "switched_fraction": 0.4166666666666667
+        },
+        {
+          "alpha": 1.0,
+          "completed": 12,
+          "constant_gap_vs_fixed_hull_hours": 0.0,
+          "downscaled_fraction": 0,
+          "ercot_gap_vs_fixed_hull_hours": 0.0,
+          "mean_chunks": 2,
+          "mean_constant_carbon_kg_per_kappa": 891.2510857955556,
+          "mean_ercot_carbon_kg_per_kappa": 854.6346142204018,
+          "mean_nodehours": 2228.127714488889,
+          "mean_tat_hours": 72.33111536962963,
+          "method": "Dynamic-1.00",
+          "outcomes": 12,
+          "switched_fraction": 0
+        }
+      ],
+      "trace_summary": {
+        "jobs": 16,
+        "note": "Offered service demand, not achieved utilization. Arrivals are generated through the full horizon; their end may exceed it.",
+        "offered_load_over_full_horizon": 0.04428042328042328,
+        "offered_nodehours": 5356.16,
+        "offered_requested_nodehours": 12288.0,
+        "requested_to_actual_nodehour_ratio": 2.2941809057235036
+      }
+    },
+    "23": {
+      "diagnostics": {
+        "all_methods_complete": true,
+        "arrival_count": 12,
+        "constant": {
+          "best_gap_hours": -1.700834145283352,
+          "distinct_dynamic_points": 5,
+          "dynamic_points_above_fixed_hull": 0,
+          "dynamic_points_below_fixed_hull": 5,
+          "dynamic_points_on_fixed_hull": 6,
+          "dynamic_points_outside_fixed_carbon_range": 0,
+          "fixed_lower_convex_frontier": [
+            [
+              445.09220956355557,
+              278.20380882212964
+            ],
+            [
+              560.8985036275556,
+              175.29233341379629
+            ],
+            [
+              707.2,
+              110.50955185185185
+            ],
+            [
+              891.2510857955556,
+              72.21368481407407
+            ]
+          ],
+          "note": "Negative gap means below the fixed lower convex frontier at equal carbon; outside-range points are retained without extrapolation."
+        },
+        "ercot": {
+          "best_gap_hours": -1.799585574599618,
+          "distinct_dynamic_points": 5,
+          "dynamic_points_above_fixed_hull": 0,
+          "dynamic_points_below_fixed_hull": 5,
+          "dynamic_points_on_fixed_hull": 6,
+          "dynamic_points_outside_fixed_carbon_range": 0,
+          "fixed_lower_convex_frontier": [
+            [
+              435.0617392530423,
+              278.20380882212964
+            ],
+            [
+              545.5717937461205,
+              175.29233341379629
+            ],
+            [
+              689.0692102415047,
+              110.50955185185185
+            ],
+            [
+              864.2630860351176,
+              72.21368481407407
+            ]
+          ],
+          "note": "Negative gap means below the fixed lower convex frontier at equal carbon; outside-range points are retained without extrapolation."
+        }
+      },
+      "rows": [
+        {
+          "alpha": null,
+          "completed": 12,
+          "constant_gap_vs_fixed_hull_hours": 0.0,
+          "downscaled_fraction": 0,
+          "ercot_gap_vs_fixed_hull_hours": 0.0,
+          "mean_chunks": 6,
+          "mean_constant_carbon_kg_per_kappa": 445.09220956355557,
+          "mean_ercot_carbon_kg_per_kappa": 435.0617392530423,
+          "mean_nodehours": 1112.730523908889,
+          "mean_tat_hours": 278.20380882212964,
+          "method": "Fixed-4",
+          "outcomes": 12,
+          "switched_fraction": 0
+        },
+        {
+          "alpha": null,
+          "completed": 12,
+          "constant_gap_vs_fixed_hull_hours": 0.0,
+          "downscaled_fraction": 0,
+          "ercot_gap_vs_fixed_hull_hours": 0.0,
+          "mean_chunks": 4,
+          "mean_constant_carbon_kg_per_kappa": 560.8985036275556,
+          "mean_ercot_carbon_kg_per_kappa": 545.5717937461205,
+          "mean_nodehours": 1402.2462590688888,
+          "mean_tat_hours": 175.29233341379629,
+          "method": "Fixed-8",
+          "outcomes": 12,
+          "switched_fraction": 0
+        },
+        {
+          "alpha": null,
+          "completed": 12,
+          "constant_gap_vs_fixed_hull_hours": 0.0,
+          "downscaled_fraction": 0,
+          "ercot_gap_vs_fixed_hull_hours": 0.0,
+          "mean_chunks": 3,
+          "mean_constant_carbon_kg_per_kappa": 707.2,
+          "mean_ercot_carbon_kg_per_kappa": 689.0692102415047,
+          "mean_nodehours": 1768.0,
+          "mean_tat_hours": 110.50955185185185,
+          "method": "Fixed-16",
+          "outcomes": 12,
+          "switched_fraction": 0
+        },
+        {
+          "alpha": null,
+          "completed": 12,
+          "constant_gap_vs_fixed_hull_hours": 0.0,
+          "downscaled_fraction": 0,
+          "ercot_gap_vs_fixed_hull_hours": 0.0,
+          "mean_chunks": 2,
+          "mean_constant_carbon_kg_per_kappa": 891.2510857955556,
+          "mean_ercot_carbon_kg_per_kappa": 864.2630860351176,
+          "mean_nodehours": 2228.127714488889,
+          "mean_tat_hours": 72.21368481407407,
+          "method": "Fixed-32",
+          "outcomes": 12,
+          "switched_fraction": 0
+        },
+        {
+          "alpha": 0.0,
+          "completed": 12,
+          "constant_gap_vs_fixed_hull_hours": 0.0,
+          "downscaled_fraction": 0,
+          "ercot_gap_vs_fixed_hull_hours": 0.0,
+          "mean_chunks": 6,
+          "mean_constant_carbon_kg_per_kappa": 445.09220956355557,
+          "mean_ercot_carbon_kg_per_kappa": 435.0617392530423,
+          "mean_nodehours": 1112.730523908889,
+          "mean_tat_hours": 278.20380882212964,
+          "method": "Dynamic-0.00",
+          "outcomes": 12,
+          "switched_fraction": 0
+        },
+        {
+          "alpha": 0.1,
+          "completed": 12,
+          "constant_gap_vs_fixed_hull_hours": 0.0,
+          "downscaled_fraction": 0,
+          "ercot_gap_vs_fixed_hull_hours": 0.0,
+          "mean_chunks": 6,
+          "mean_constant_carbon_kg_per_kappa": 445.09220956355557,
+          "mean_ercot_carbon_kg_per_kappa": 435.0617392530423,
+          "mean_nodehours": 1112.730523908889,
+          "mean_tat_hours": 278.20380882212964,
+          "method": "Dynamic-0.10",
+          "outcomes": 12,
+          "switched_fraction": 0
+        },
+        {
+          "alpha": 0.2,
+          "completed": 12,
+          "constant_gap_vs_fixed_hull_hours": 0.0,
+          "downscaled_fraction": 0,
+          "ercot_gap_vs_fixed_hull_hours": 0.0,
+          "mean_chunks": 4,
+          "mean_constant_carbon_kg_per_kappa": 560.8985036275556,
+          "mean_ercot_carbon_kg_per_kappa": 545.5717937461205,
+          "mean_nodehours": 1402.2462590688888,
+          "mean_tat_hours": 175.29233341379629,
+          "method": "Dynamic-0.20",
+          "outcomes": 12,
+          "switched_fraction": 0
+        },
+        {
+          "alpha": 0.3,
+          "completed": 12,
+          "constant_gap_vs_fixed_hull_hours": 0.0,
+          "downscaled_fraction": 0,
+          "ercot_gap_vs_fixed_hull_hours": 0.0,
+          "mean_chunks": 3,
+          "mean_constant_carbon_kg_per_kappa": 707.2,
+          "mean_ercot_carbon_kg_per_kappa": 689.0692102415047,
+          "mean_nodehours": 1768.0,
+          "mean_tat_hours": 110.50955185185185,
+          "method": "Dynamic-0.30",
+          "outcomes": 12,
+          "switched_fraction": 0
+        },
+        {
+          "alpha": 0.4,
+          "completed": 12,
+          "constant_gap_vs_fixed_hull_hours": 0.0,
+          "downscaled_fraction": 0,
+          "ercot_gap_vs_fixed_hull_hours": 0.0,
+          "mean_chunks": 3,
+          "mean_constant_carbon_kg_per_kappa": 707.2,
+          "mean_ercot_carbon_kg_per_kappa": 689.0692102415047,
+          "mean_nodehours": 1768.0,
+          "mean_tat_hours": 110.50955185185185,
+          "method": "Dynamic-0.40",
+          "outcomes": 12,
+          "switched_fraction": 0
+        },
+        {
+          "alpha": 0.5,
+          "completed": 12,
+          "constant_gap_vs_fixed_hull_hours": -1.700834145283352,
+          "downscaled_fraction": 0.5,
+          "ercot_gap_vs_fixed_hull_hours": -1.799585574599618,
+          "mean_chunks": 2,
+          "mean_constant_carbon_kg_per_kappa": 862.379870392889,
+          "mean_ercot_carbon_kg_per_kappa": 836.3294961571282,
+          "mean_nodehours": 2155.9496759822223,
+          "mean_tat_hours": 76.5201405551852,
+          "method": "Dynamic-0.50",
+          "outcomes": 12,
+          "switched_fraction": 0.5
+        },
+        {
+          "alpha": 0.6,
+          "completed": 12,
+          "constant_gap_vs_fixed_hull_hours": -1.700834145283352,
+          "downscaled_fraction": 0.5,
+          "ercot_gap_vs_fixed_hull_hours": -1.799585574599618,
+          "mean_chunks": 2,
+          "mean_constant_carbon_kg_per_kappa": 862.379870392889,
+          "mean_ercot_carbon_kg_per_kappa": 836.3294961571282,
+          "mean_nodehours": 2155.9496759822223,
+          "mean_tat_hours": 76.5201405551852,
+          "method": "Dynamic-0.60",
+          "outcomes": 12,
+          "switched_fraction": 0.5
+        },
+        {
+          "alpha": 0.7,
+          "completed": 12,
+          "constant_gap_vs_fixed_hull_hours": -1.700834145283352,
+          "downscaled_fraction": 0.5,
+          "ercot_gap_vs_fixed_hull_hours": -1.799585574599618,
+          "mean_chunks": 2,
+          "mean_constant_carbon_kg_per_kappa": 862.379870392889,
+          "mean_ercot_carbon_kg_per_kappa": 836.3294961571282,
+          "mean_nodehours": 2155.9496759822223,
+          "mean_tat_hours": 76.5201405551852,
+          "method": "Dynamic-0.70",
+          "outcomes": 12,
+          "switched_fraction": 0.5
+        },
+        {
+          "alpha": 0.8,
+          "completed": 12,
+          "constant_gap_vs_fixed_hull_hours": -1.700834145283352,
+          "downscaled_fraction": 0.5,
+          "ercot_gap_vs_fixed_hull_hours": -1.799585574599618,
+          "mean_chunks": 2,
+          "mean_constant_carbon_kg_per_kappa": 862.379870392889,
+          "mean_ercot_carbon_kg_per_kappa": 836.3294961571282,
+          "mean_nodehours": 2155.9496759822223,
+          "mean_tat_hours": 76.5201405551852,
+          "method": "Dynamic-0.80",
+          "outcomes": 12,
+          "switched_fraction": 0.5
+        },
+        {
+          "alpha": 0.9,
+          "completed": 12,
+          "constant_gap_vs_fixed_hull_hours": -1.700834145283352,
+          "downscaled_fraction": 0.5,
+          "ercot_gap_vs_fixed_hull_hours": -1.799585574599618,
+          "mean_chunks": 2,
+          "mean_constant_carbon_kg_per_kappa": 862.379870392889,
+          "mean_ercot_carbon_kg_per_kappa": 836.3294961571282,
+          "mean_nodehours": 2155.9496759822223,
+          "mean_tat_hours": 76.5201405551852,
+          "method": "Dynamic-0.90",
+          "outcomes": 12,
+          "switched_fraction": 0.5
+        },
+        {
+          "alpha": 1.0,
+          "completed": 12,
+          "constant_gap_vs_fixed_hull_hours": 0.0,
+          "downscaled_fraction": 0,
+          "ercot_gap_vs_fixed_hull_hours": 0.0,
+          "mean_chunks": 2,
+          "mean_constant_carbon_kg_per_kappa": 891.2510857955556,
+          "mean_ercot_carbon_kg_per_kappa": 864.2630860351176,
+          "mean_nodehours": 2228.127714488889,
+          "mean_tat_hours": 72.21368481407407,
+          "method": "Dynamic-1.00",
+          "outcomes": 12,
+          "switched_fraction": 0
+        }
+      ],
+      "trace_summary": {
+        "jobs": 16,
+        "note": "Offered service demand, not achieved utilization. Arrivals are generated through the full horizon; their end may exceed it.",
+        "offered_load_over_full_horizon": 0.043194297472075247,
+        "offered_nodehours": 5224.782222222222,
+        "offered_requested_nodehours": 12288.0,
+        "requested_to_actual_nodehour_ratio": 2.3518683607014776
+      }
+    },
+    "37": {
+      "diagnostics": {
+        "all_methods_complete": true,
+        "arrival_count": 12,
+        "constant": {
+          "best_gap_hours": -3.2444537863081138,
+          "distinct_dynamic_points": 5,
+          "dynamic_points_above_fixed_hull": 0,
+          "dynamic_points_below_fixed_hull": 5,
+          "dynamic_points_on_fixed_hull": 6,
+          "dynamic_points_outside_fixed_carbon_range": 0,
+          "fixed_lower_convex_frontier": [
+            [
+              445.09220956355557,
+              278.2050588221296
+            ],
+            [
+              560.8985036275556,
+              175.29358341379628
+            ],
+            [
+              707.2,
+              110.51080185185185
+            ],
+            [
+              891.2510857955556,
+              73.55937925851852
+            ]
+          ],
+          "note": "Negative gap means below the fixed lower convex frontier at equal carbon; outside-range points are retained without extrapolation."
+        },
+        "ercot": {
+          "best_gap_hours": -3.0004356138245214,
+          "distinct_dynamic_points": 5,
+          "dynamic_points_above_fixed_hull": 0,
+          "dynamic_points_below_fixed_hull": 5,
+          "dynamic_points_on_fixed_hull": 6,
+          "dynamic_points_outside_fixed_carbon_range": 0,
+          "fixed_lower_convex_frontier": [
+            [
+              431.4219012306509,
+              278.2050588221296
+            ],
+            [
+              542.5007445250601,
+              175.29358341379628
+            ],
+            [
+              686.4300086358519,
+              110.51080185185185
+            ],
+            [
+              853.2123983440362,
+              73.55937925851852
+            ]
+          ],
+          "note": "Negative gap means below the fixed lower convex frontier at equal carbon; outside-range points are retained without extrapolation."
+        }
+      },
+      "rows": [
+        {
+          "alpha": null,
+          "completed": 12,
+          "constant_gap_vs_fixed_hull_hours": 0.0,
+          "downscaled_fraction": 0,
+          "ercot_gap_vs_fixed_hull_hours": 0.0,
+          "mean_chunks": 6,
+          "mean_constant_carbon_kg_per_kappa": 445.09220956355557,
+          "mean_ercot_carbon_kg_per_kappa": 431.4219012306509,
+          "mean_nodehours": 1112.730523908889,
+          "mean_tat_hours": 278.2050588221296,
+          "method": "Fixed-4",
+          "outcomes": 12,
+          "switched_fraction": 0
+        },
+        {
+          "alpha": null,
+          "completed": 12,
+          "constant_gap_vs_fixed_hull_hours": 0.0,
+          "downscaled_fraction": 0,
+          "ercot_gap_vs_fixed_hull_hours": 0.0,
+          "mean_chunks": 4,
+          "mean_constant_carbon_kg_per_kappa": 560.8985036275556,
+          "mean_ercot_carbon_kg_per_kappa": 542.5007445250601,
+          "mean_nodehours": 1402.2462590688888,
+          "mean_tat_hours": 175.29358341379628,
+          "method": "Fixed-8",
+          "outcomes": 12,
+          "switched_fraction": 0
+        },
+        {
+          "alpha": null,
+          "completed": 12,
+          "constant_gap_vs_fixed_hull_hours": 0.0,
+          "downscaled_fraction": 0,
+          "ercot_gap_vs_fixed_hull_hours": 0.0,
+          "mean_chunks": 3,
+          "mean_constant_carbon_kg_per_kappa": 707.2,
+          "mean_ercot_carbon_kg_per_kappa": 686.4300086358519,
+          "mean_nodehours": 1768.0,
+          "mean_tat_hours": 110.51080185185185,
+          "method": "Fixed-16",
+          "outcomes": 12,
+          "switched_fraction": 0
+        },
+        {
+          "alpha": null,
+          "completed": 12,
+          "constant_gap_vs_fixed_hull_hours": 0.0,
+          "downscaled_fraction": 0,
+          "ercot_gap_vs_fixed_hull_hours": 0.0,
+          "mean_chunks": 2,
+          "mean_constant_carbon_kg_per_kappa": 891.2510857955556,
+          "mean_ercot_carbon_kg_per_kappa": 853.2123983440362,
+          "mean_nodehours": 2228.127714488889,
+          "mean_tat_hours": 73.55937925851852,
+          "method": "Fixed-32",
+          "outcomes": 12,
+          "switched_fraction": 0
+        },
+        {
+          "alpha": 0.0,
+          "completed": 12,
+          "constant_gap_vs_fixed_hull_hours": 0.0,
+          "downscaled_fraction": 0,
+          "ercot_gap_vs_fixed_hull_hours": 0.0,
+          "mean_chunks": 6,
+          "mean_constant_carbon_kg_per_kappa": 445.09220956355557,
+          "mean_ercot_carbon_kg_per_kappa": 431.4219012306509,
+          "mean_nodehours": 1112.730523908889,
+          "mean_tat_hours": 278.2050588221296,
+          "method": "Dynamic-0.00",
+          "outcomes": 12,
+          "switched_fraction": 0
+        },
+        {
+          "alpha": 0.1,
+          "completed": 12,
+          "constant_gap_vs_fixed_hull_hours": 0.0,
+          "downscaled_fraction": 0,
+          "ercot_gap_vs_fixed_hull_hours": 0.0,
+          "mean_chunks": 6,
+          "mean_constant_carbon_kg_per_kappa": 445.09220956355557,
+          "mean_ercot_carbon_kg_per_kappa": 431.4219012306509,
+          "mean_nodehours": 1112.730523908889,
+          "mean_tat_hours": 278.2050588221296,
+          "method": "Dynamic-0.10",
+          "outcomes": 12,
+          "switched_fraction": 0
+        },
+        {
+          "alpha": 0.2,
+          "completed": 12,
+          "constant_gap_vs_fixed_hull_hours": 0.0,
+          "downscaled_fraction": 0,
+          "ercot_gap_vs_fixed_hull_hours": 0.0,
+          "mean_chunks": 4,
+          "mean_constant_carbon_kg_per_kappa": 560.8985036275556,
+          "mean_ercot_carbon_kg_per_kappa": 542.5007445250601,
+          "mean_nodehours": 1402.2462590688888,
+          "mean_tat_hours": 175.29358341379628,
+          "method": "Dynamic-0.20",
+          "outcomes": 12,
+          "switched_fraction": 0
+        },
+        {
+          "alpha": 0.3,
+          "completed": 12,
+          "constant_gap_vs_fixed_hull_hours": 0.0,
+          "downscaled_fraction": 0,
+          "ercot_gap_vs_fixed_hull_hours": 0.0,
+          "mean_chunks": 3,
+          "mean_constant_carbon_kg_per_kappa": 707.2,
+          "mean_ercot_carbon_kg_per_kappa": 686.4300086358519,
+          "mean_nodehours": 1768.0,
+          "mean_tat_hours": 110.51080185185185,
+          "method": "Dynamic-0.30",
+          "outcomes": 12,
+          "switched_fraction": 0
+        },
+        {
+          "alpha": 0.4,
+          "completed": 12,
+          "constant_gap_vs_fixed_hull_hours": 0.0,
+          "downscaled_fraction": 0,
+          "ercot_gap_vs_fixed_hull_hours": 0.0,
+          "mean_chunks": 3,
+          "mean_constant_carbon_kg_per_kappa": 707.2,
+          "mean_ercot_carbon_kg_per_kappa": 686.4300086358519,
+          "mean_nodehours": 1768.0,
+          "mean_tat_hours": 110.51080185185185,
+          "method": "Dynamic-0.40",
+          "outcomes": 12,
+          "switched_fraction": 0
+        },
+        {
+          "alpha": 0.5,
+          "completed": 12,
+          "constant_gap_vs_fixed_hull_hours": -3.2444537863081138,
+          "downscaled_fraction": 0.6666666666666666,
+          "ercot_gap_vs_fixed_hull_hours": -3.0004356138245214,
+          "mean_chunks": 2,
+          "mean_constant_carbon_kg_per_kappa": 852.7561319253333,
+          "mean_ercot_carbon_kg_per_kappa": 819.4306452345459,
+          "mean_nodehours": 2131.890329813333,
+          "mean_tat_hours": 78.0434498762963,
+          "method": "Dynamic-0.50",
+          "outcomes": 12,
+          "switched_fraction": 0.6666666666666666
+        },
+        {
+          "alpha": 0.6,
+          "completed": 12,
+          "constant_gap_vs_fixed_hull_hours": -3.2444537863081138,
+          "downscaled_fraction": 0.6666666666666666,
+          "ercot_gap_vs_fixed_hull_hours": -3.0004356138245214,
+          "mean_chunks": 2,
+          "mean_constant_carbon_kg_per_kappa": 852.7561319253333,
+          "mean_ercot_carbon_kg_per_kappa": 819.4306452345459,
+          "mean_nodehours": 2131.890329813333,
+          "mean_tat_hours": 78.0434498762963,
+          "method": "Dynamic-0.60",
+          "outcomes": 12,
+          "switched_fraction": 0.6666666666666666
+        },
+        {
+          "alpha": 0.7,
+          "completed": 12,
+          "constant_gap_vs_fixed_hull_hours": -3.2444537863081138,
+          "downscaled_fraction": 0.6666666666666666,
+          "ercot_gap_vs_fixed_hull_hours": -3.0004356138245214,
+          "mean_chunks": 2,
+          "mean_constant_carbon_kg_per_kappa": 852.7561319253333,
+          "mean_ercot_carbon_kg_per_kappa": 819.4306452345459,
+          "mean_nodehours": 2131.890329813333,
+          "mean_tat_hours": 78.0434498762963,
+          "method": "Dynamic-0.70",
+          "outcomes": 12,
+          "switched_fraction": 0.6666666666666666
+        },
+        {
+          "alpha": 0.8,
+          "completed": 12,
+          "constant_gap_vs_fixed_hull_hours": -3.2444537863081138,
+          "downscaled_fraction": 0.6666666666666666,
+          "ercot_gap_vs_fixed_hull_hours": -3.0004356138245214,
+          "mean_chunks": 2,
+          "mean_constant_carbon_kg_per_kappa": 852.7561319253333,
+          "mean_ercot_carbon_kg_per_kappa": 819.4306452345459,
+          "mean_nodehours": 2131.890329813333,
+          "mean_tat_hours": 78.0434498762963,
+          "method": "Dynamic-0.80",
+          "outcomes": 12,
+          "switched_fraction": 0.6666666666666666
+        },
+        {
+          "alpha": 0.9,
+          "completed": 12,
+          "constant_gap_vs_fixed_hull_hours": -3.2444537863081138,
+          "downscaled_fraction": 0.6666666666666666,
+          "ercot_gap_vs_fixed_hull_hours": -3.0004356138245214,
+          "mean_chunks": 2,
+          "mean_constant_carbon_kg_per_kappa": 852.7561319253333,
+          "mean_ercot_carbon_kg_per_kappa": 819.4306452345459,
+          "mean_nodehours": 2131.890329813333,
+          "mean_tat_hours": 78.0434498762963,
+          "method": "Dynamic-0.90",
+          "outcomes": 12,
+          "switched_fraction": 0.6666666666666666
+        },
+        {
+          "alpha": 1.0,
+          "completed": 12,
+          "constant_gap_vs_fixed_hull_hours": 0.0,
+          "downscaled_fraction": 0,
+          "ercot_gap_vs_fixed_hull_hours": 0.0,
+          "mean_chunks": 2,
+          "mean_constant_carbon_kg_per_kappa": 891.2510857955556,
+          "mean_ercot_carbon_kg_per_kappa": 853.2123983440362,
+          "mean_nodehours": 2228.127714488889,
+          "mean_tat_hours": 73.55937925851852,
+          "method": "Dynamic-1.00",
+          "outcomes": 12,
+          "switched_fraction": 0
+        }
+      ],
+      "trace_summary": {
+        "jobs": 17,
+        "note": "Offered service demand, not achieved utilization. Arrivals are generated through the full horizon; their end may exceed it.",
+        "offered_load_over_full_horizon": 0.04900617283950618,
+        "offered_nodehours": 5927.786666666668,
+        "offered_requested_nodehours": 13056.0,
+        "requested_to_actual_nodehour_ratio": 2.202508412358519
+      }
+    }
+  },
+  "rows": [
+    {
+      "alpha": null,
+      "completed": 36,
+      "constant_gap_vs_fixed_hull_hours": 0.0,
+      "downscaled_fraction": 0,
+      "ercot_gap_vs_fixed_hull_hours": 0.0,
+      "mean_chunks": 6,
+      "mean_constant_carbon_kg_per_kappa": 445.09220956355557,
+      "mean_ercot_carbon_kg_per_kappa": 432.65781647987154,
+      "mean_nodehours": 1112.730523908889,
+      "mean_tat_hours": 278.2049430813889,
+      "method": "Fixed-4",
+      "outcomes": 36,
+      "switched_fraction": 0
+    },
+    {
+      "alpha": null,
+      "completed": 36,
+      "constant_gap_vs_fixed_hull_hours": 0.0,
+      "downscaled_fraction": 0,
+      "ercot_gap_vs_fixed_hull_hours": 0.0,
+      "mean_chunks": 4,
+      "mean_constant_carbon_kg_per_kappa": 560.8985036275556,
+      "mean_ercot_carbon_kg_per_kappa": 543.007119464732,
+      "mean_nodehours": 1402.2462590688888,
+      "mean_tat_hours": 175.29346767305555,
+      "method": "Fixed-8",
+      "outcomes": 36,
+      "switched_fraction": 0
+    },
+    {
+      "alpha": null,
+      "completed": 36,
+      "constant_gap_vs_fixed_hull_hours": 0.0,
+      "downscaled_fraction": 0,
+      "ercot_gap_vs_fixed_hull_hours": 0.0,
+      "mean_chunks": 3,
+      "mean_constant_carbon_kg_per_kappa": 707.2,
+      "mean_ercot_carbon_kg_per_kappa": 684.3365346858994,
+      "mean_nodehours": 1768.0,
+      "mean_tat_hours": 110.51068611111111,
+      "method": "Fixed-16",
+      "outcomes": 36,
+      "switched_fraction": 0
+    },
+    {
+      "alpha": null,
+      "completed": 36,
+      "constant_gap_vs_fixed_hull_hours": 0.0,
+      "downscaled_fraction": 0,
+      "ercot_gap_vs_fixed_hull_hours": 0.0,
+      "mean_chunks": 2,
+      "mean_constant_carbon_kg_per_kappa": 891.2510857955556,
+      "mean_ercot_carbon_kg_per_kappa": 857.3700328665185,
+      "mean_nodehours": 2228.127714488889,
+      "mean_tat_hours": 72.7013931474074,
+      "method": "Fixed-32",
+      "outcomes": 36,
+      "switched_fraction": 0
+    },
+    {
+      "alpha": 0.0,
+      "completed": 36,
+      "constant_gap_vs_fixed_hull_hours": 0.0,
+      "downscaled_fraction": 0,
+      "ercot_gap_vs_fixed_hull_hours": 0.0,
+      "mean_chunks": 6,
+      "mean_constant_carbon_kg_per_kappa": 445.09220956355557,
+      "mean_ercot_carbon_kg_per_kappa": 432.65781647987154,
+      "mean_nodehours": 1112.730523908889,
+      "mean_tat_hours": 278.2049430813889,
+      "method": "Dynamic-0.00",
+      "outcomes": 36,
+      "switched_fraction": 0
+    },
+    {
+      "alpha": 0.1,
+      "completed": 36,
+      "constant_gap_vs_fixed_hull_hours": 0.0,
+      "downscaled_fraction": 0,
+      "ercot_gap_vs_fixed_hull_hours": 0.0,
+      "mean_chunks": 6,
+      "mean_constant_carbon_kg_per_kappa": 445.09220956355557,
+      "mean_ercot_carbon_kg_per_kappa": 432.65781647987154,
+      "mean_nodehours": 1112.730523908889,
+      "mean_tat_hours": 278.2049430813889,
+      "method": "Dynamic-0.10",
+      "outcomes": 36,
+      "switched_fraction": 0
+    },
+    {
+      "alpha": 0.2,
+      "completed": 36,
+      "constant_gap_vs_fixed_hull_hours": 0.0,
+      "downscaled_fraction": 0,
+      "ercot_gap_vs_fixed_hull_hours": 0.0,
+      "mean_chunks": 4,
+      "mean_constant_carbon_kg_per_kappa": 560.8985036275556,
+      "mean_ercot_carbon_kg_per_kappa": 543.007119464732,
+      "mean_nodehours": 1402.2462590688888,
+      "mean_tat_hours": 175.29346767305555,
+      "method": "Dynamic-0.20",
+      "outcomes": 36,
+      "switched_fraction": 0
+    },
+    {
+      "alpha": 0.3,
+      "completed": 36,
+      "constant_gap_vs_fixed_hull_hours": 0.0,
+      "downscaled_fraction": 0,
+      "ercot_gap_vs_fixed_hull_hours": 0.0,
+      "mean_chunks": 3,
+      "mean_constant_carbon_kg_per_kappa": 707.2,
+      "mean_ercot_carbon_kg_per_kappa": 684.3365346858994,
+      "mean_nodehours": 1768.0,
+      "mean_tat_hours": 110.51068611111111,
+      "method": "Dynamic-0.30",
+      "outcomes": 36,
+      "switched_fraction": 0
+    },
+    {
+      "alpha": 0.4,
+      "completed": 36,
+      "constant_gap_vs_fixed_hull_hours": 0.0,
+      "downscaled_fraction": 0,
+      "ercot_gap_vs_fixed_hull_hours": 0.0,
+      "mean_chunks": 3,
+      "mean_constant_carbon_kg_per_kappa": 707.2,
+      "mean_ercot_carbon_kg_per_kappa": 684.3365346858994,
+      "mean_nodehours": 1768.0,
+      "mean_tat_hours": 110.51068611111111,
+      "method": "Dynamic-0.40",
+      "outcomes": 36,
+      "switched_fraction": 0
+    },
+    {
+      "alpha": 0.5,
+      "completed": 36,
+      "constant_gap_vs_fixed_hull_hours": -2.4764864094410655,
+      "downscaled_fraction": 0.5277777777777778,
+      "ercot_gap_vs_fixed_hull_hours": -2.5608086301280935,
+      "mean_chunks": 2,
+      "mean_constant_carbon_kg_per_kappa": 860.7759139816296,
+      "mean_ercot_carbon_kg_per_kappa": 828.3332537799647,
+      "mean_nodehours": 2151.939784954074,
+      "mean_tat_hours": 76.48536803462963,
+      "method": "Dynamic-0.50",
+      "outcomes": 36,
+      "switched_fraction": 0.5277777777777778
+    },
+    {
+      "alpha": 0.6,
+      "completed": 36,
+      "constant_gap_vs_fixed_hull_hours": -2.4764864094410655,
+      "downscaled_fraction": 0.5277777777777778,
+      "ercot_gap_vs_fixed_hull_hours": -2.5608086301280935,
+      "mean_chunks": 2,
+      "mean_constant_carbon_kg_per_kappa": 860.7759139816296,
+      "mean_ercot_carbon_kg_per_kappa": 828.3332537799647,
+      "mean_nodehours": 2151.939784954074,
+      "mean_tat_hours": 76.48536803462963,
+      "method": "Dynamic-0.60",
+      "outcomes": 36,
+      "switched_fraction": 0.5277777777777778
+    },
+    {
+      "alpha": 0.7,
+      "completed": 36,
+      "constant_gap_vs_fixed_hull_hours": -2.4764864094410655,
+      "downscaled_fraction": 0.5277777777777778,
+      "ercot_gap_vs_fixed_hull_hours": -2.5608086301280935,
+      "mean_chunks": 2,
+      "mean_constant_carbon_kg_per_kappa": 860.7759139816296,
+      "mean_ercot_carbon_kg_per_kappa": 828.3332537799647,
+      "mean_nodehours": 2151.939784954074,
+      "mean_tat_hours": 76.48536803462963,
+      "method": "Dynamic-0.70",
+      "outcomes": 36,
+      "switched_fraction": 0.5277777777777778
+    },
+    {
+      "alpha": 0.8,
+      "completed": 36,
+      "constant_gap_vs_fixed_hull_hours": -2.4764864094410655,
+      "downscaled_fraction": 0.5277777777777778,
+      "ercot_gap_vs_fixed_hull_hours": -2.5608086301280935,
+      "mean_chunks": 2,
+      "mean_constant_carbon_kg_per_kappa": 860.7759139816296,
+      "mean_ercot_carbon_kg_per_kappa": 828.3332537799647,
+      "mean_nodehours": 2151.939784954074,
+      "mean_tat_hours": 76.48536803462963,
+      "method": "Dynamic-0.80",
+      "outcomes": 36,
+      "switched_fraction": 0.5277777777777778
+    },
+    {
+      "alpha": 0.9,
+      "completed": 36,
+      "constant_gap_vs_fixed_hull_hours": -2.4764864094410655,
+      "downscaled_fraction": 0.5277777777777778,
+      "ercot_gap_vs_fixed_hull_hours": -2.5608086301280935,
+      "mean_chunks": 2,
+      "mean_constant_carbon_kg_per_kappa": 860.7759139816296,
+      "mean_ercot_carbon_kg_per_kappa": 828.3332537799647,
+      "mean_nodehours": 2151.939784954074,
+      "mean_tat_hours": 76.48536803462963,
+      "method": "Dynamic-0.90",
+      "outcomes": 36,
+      "switched_fraction": 0.5277777777777778
+    },
+    {
+      "alpha": 1.0,
+      "completed": 36,
+      "constant_gap_vs_fixed_hull_hours": 0.0,
+      "downscaled_fraction": 0,
+      "ercot_gap_vs_fixed_hull_hours": 0.0,
+      "mean_chunks": 2,
+      "mean_constant_carbon_kg_per_kappa": 891.2510857955556,
+      "mean_ercot_carbon_kg_per_kappa": 857.3700328665185,
+      "mean_nodehours": 2228.127714488889,
+      "mean_tat_hours": 72.7013931474074,
+      "method": "Dynamic-1.00",
+      "outcomes": 36,
+      "switched_fraction": 0
+    }
+  ],
+  "scenario": "short-control",
+  "source_sha256": {
+    "short-control/seed-11/episodes/seed11-arrival000.json": "128886f69f90c86891f7d056518386d1f171dadeb6bd2f0c3cd685229dbe2f2a",
+    "short-control/seed-11/episodes/seed11-arrival001.json": "992b9ddca01c26600bea9f38955cf1e33ed4b7caeb7d5f0a2494af0a248a0a6d",
+    "short-control/seed-11/episodes/seed11-arrival002.json": "c70936d6051c596e9028d5b7ba25ab7f30f23a2ad08c5480f0ea5af548dc9a63",
+    "short-control/seed-11/episodes/seed11-arrival003.json": "7f871d9d79b294a1fdd601ce2f76af0a1542569a7d21377c27a68285fd27794a",
+    "short-control/seed-11/episodes/seed11-arrival004.json": "83aff8ef2b139da72287ee9bc538313b400df1efeedb5428326699738f3370e0",
+    "short-control/seed-11/episodes/seed11-arrival005.json": "163f2f80d61c40cfaee585b5a42e9a569da441a73b2b9e838a42b4ad163443ee",
+    "short-control/seed-11/episodes/seed11-arrival006.json": "4bbf9c60f8d1dd19828520643d8683d982d95ae1b46c6515b16bd98a455747a2",
+    "short-control/seed-11/episodes/seed11-arrival007.json": "5e3e15c6d3339a7a008b9e4624a022ccaa76be565918a8c1dc2ee53379ec1d91",
+    "short-control/seed-11/episodes/seed11-arrival008.json": "16783b8d3b3261bc41e0132fa0b15f3f4905dab4d0a645cbcab1dcfa1d230487",
+    "short-control/seed-11/episodes/seed11-arrival009.json": "8fd33085ef8e07f2a9ce3a33aef65db79d4c7069ed6beb80e45eb8ed56a62099",
+    "short-control/seed-11/episodes/seed11-arrival010.json": "8b646252c2b3110acd61c77628183e5d02c56bb0a017a8c88c3f7de9fb099169",
+    "short-control/seed-11/episodes/seed11-arrival011.json": "d492d41dc4ee7de2eee9a80ce1e16c82973be9e4a4aaa2a4e7a47e7d6d7a2266",
+    "short-control/seed-23/episodes/seed23-arrival000.json": "8d63ef4326ef30b1f2455c07bc0fe56159c53b6897251b9ea956f102972311f1",
+    "short-control/seed-23/episodes/seed23-arrival001.json": "fbf8a4aaedb4072195b3d46da4101b74f00aa5703d59d81469cbda40221b2520",
+    "short-control/seed-23/episodes/seed23-arrival002.json": "7818aac001af05a3affd3abebeca7018033510516b2149c7dd53506c9a2bc692",
+    "short-control/seed-23/episodes/seed23-arrival003.json": "5af674fee86d25a286dbe7672ef81331bde091fe13aa7fe6749483034e285403",
+    "short-control/seed-23/episodes/seed23-arrival004.json": "b552d9a7576c1d60465d9347722951f297706e091128e2fd9032602c5fa03113",
+    "short-control/seed-23/episodes/seed23-arrival005.json": "f8ff2117b2870b1b2a8365318a1549ac01d9febbd4b760da80f9aec6a0b3d706",
+    "short-control/seed-23/episodes/seed23-arrival006.json": "560a3a63739f9e5da069e3b7e8beee31ba6c918288a5ddb47e56ed72450de26c",
+    "short-control/seed-23/episodes/seed23-arrival007.json": "a29ca1ab2dc4cd5222e9c4bde20a8c86e8515feb80bed43973fd529bc0a2754e",
+    "short-control/seed-23/episodes/seed23-arrival008.json": "598d30f7a7781ca58738f662f97a8751018f7185c6fb8ace8f5165b2cdd52347",
+    "short-control/seed-23/episodes/seed23-arrival009.json": "9bcebacd17c031f7a361414979335a19c1ce5fb9d5696d450693536b2f66bf84",
+    "short-control/seed-23/episodes/seed23-arrival010.json": "f2a57190f70090df0ee10eb1f9b1f62975ea12bc58c98af9a831676e8c3367a7",
+    "short-control/seed-23/episodes/seed23-arrival011.json": "2d93d1cec69bbc9c00ecf6a674de3308543df34b50524ca5ef0e022236eb4ce0",
+    "short-control/seed-37/episodes/seed37-arrival000.json": "36cbfa2aacbf44fd1c7a74a17306aaa0614bc1172fad31ffe5fc3e5234ffd150",
+    "short-control/seed-37/episodes/seed37-arrival001.json": "a0110e5f06b059739a26693e55fa90b5a941952e386e5f0f3e912ce173f4931e",
+    "short-control/seed-37/episodes/seed37-arrival002.json": "98ae5b90af6cc6a1bd43563ff5fd3c47e75a66d62ab7c789b90db3fbfe7fa91a",
+    "short-control/seed-37/episodes/seed37-arrival003.json": "e3eab4e3a073eeb8170913ad287dd88c7ec46f684e43a6ab37291c58ab62f6c4",
+    "short-control/seed-37/episodes/seed37-arrival004.json": "5e1cd7d015fe4c4c33b3b4ae70cef038fa87f92d83e3c12b2b11d1e37132a2a0",
+    "short-control/seed-37/episodes/seed37-arrival005.json": "d8726f5700ca8a114ca4fb0763391ed5b0ea2f2a13aae4e33501ae4de19056b5",
+    "short-control/seed-37/episodes/seed37-arrival006.json": "5e31fe46b2c9a8d1f700eaa78f93d9c5a37d38b3c0e8fc69705d5c43c240ab89",
+    "short-control/seed-37/episodes/seed37-arrival007.json": "2e4fe6d47fd718b3c5ce99519375c39ab8701c1cb2d73c4ae8a40c8592a75a72",
+    "short-control/seed-37/episodes/seed37-arrival008.json": "c4f354d02f63351ccebe54b21789ec19f9541504d72fe4a8fc17f5c1052ed90d",
+    "short-control/seed-37/episodes/seed37-arrival009.json": "98bfdf666a0875bb7a098b76d3faf29eaf4893243650d1973ab7ace2acd5f652",
+    "short-control/seed-37/episodes/seed37-arrival010.json": "6f8adaf4de9a3bbd5b6cac20e5484ce051b9ff819b895e5c1afd6d59215c0f43",
+    "short-control/seed-37/episodes/seed37-arrival011.json": "acccf18754a803cb98837f03f7a103da24c02e77a216eba5d7e5f98d26f04054"
+  }
+}

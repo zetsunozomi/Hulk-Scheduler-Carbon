@@ -1,0 +1,225 @@
+{
+  "ci_sha256": "4c6030d3a1ab2920842bc8e8db8884e794523a1bbc7da52588b89347e4da84db",
+  "ci_usage": "Policy uses node-hours. Score identical allocations with constant400 and ERCOT archive; no future CI input.",
+  "cost_references": {
+    "nodehours": 1112.730523908889,
+    "time_hours": 69.62899107777777
+  },
+  "design": {
+    "alphas": [
+      0.0,
+      0.1,
+      0.2,
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9,
+      1.0
+    ],
+    "arrival_start_hours": 168,
+    "arrival_stop_hours": 672,
+    "constant_ci_g_per_kwh": 400,
+    "episode_timeout_hours": 720,
+    "episodes_per_seed": 12,
+    "origin_utc": "2020-10-01T00:00:00Z",
+    "pressure_cap_hours": 48,
+    "profile_config": "configs/scaling-v2-xl-e050-frontera-c84.development.json",
+    "purpose": "constructed_mechanism_development",
+    "scenarios": {
+      "burst-mix": {
+        "bundles": [
+          [
+            32,
+            16,
+            16
+          ],
+          [
+            16,
+            16,
+            16,
+            16
+          ],
+          [
+            32,
+            32,
+            8,
+            8
+          ]
+        ],
+        "description": "Busy/quiet cycles submit waves of ordinary 8/16/32-node requests with total demand of 64 or 80 nodes.",
+        "interarrival_hours": [
+          84,
+          120
+        ],
+        "kind": "waves",
+        "request_hours": 48,
+        "runtime_hours": [
+          24,
+          44
+        ],
+        "submit_spread_hours": 8
+      },
+      "layered-long": {
+        "description": "Two independent streams of 32-node jobs create intermittent overlapping occupation.",
+        "kind": "renewal",
+        "streams": [
+          {
+            "interarrival_hours": [
+              60,
+              84
+            ],
+            "nodes": [
+              32
+            ],
+            "request_hours": 48,
+            "runtime_hours": [
+              30,
+              44
+            ]
+          },
+          {
+            "interarrival_hours": [
+              60,
+              84
+            ],
+            "nodes": [
+              32
+            ],
+            "request_hours": 48,
+            "runtime_hours": [
+              30,
+              44
+            ]
+          }
+        ]
+      },
+      "loose-walltime": {
+        "description": "Wide jobs overrequest walltime; small unrelated jobs add interference. Tests the public-calendar proxy when requested time is inaccurate.",
+        "kind": "renewal",
+        "streams": [
+          {
+            "interarrival_hours": [
+              72,
+              108
+            ],
+            "nodes": [
+              64
+            ],
+            "request_hours": 48,
+            "runtime_hours": [
+              12,
+              36
+            ]
+          },
+          {
+            "interarrival_hours": [
+              12,
+              24
+            ],
+            "nodes": [
+              4,
+              8
+            ],
+            "request_hours": 12,
+            "runtime_hours": [
+              2,
+              6
+            ]
+          }
+        ]
+      },
+      "short-control": {
+        "description": "Same wide-job arrival process as wide-long, but short occupation; checks whether downscaling overreacts.",
+        "kind": "renewal",
+        "streams": [
+          {
+            "interarrival_hours": [
+              72,
+              108
+            ],
+            "nodes": [
+              64
+            ],
+            "request_hours": 12,
+            "runtime_hours": [
+              2,
+              8
+            ]
+          }
+        ]
+      },
+      "wide-long": {
+        "description": "Renewing 64-node long jobs leave room for 16 but not 32 nodes.",
+        "kind": "renewal",
+        "streams": [
+          {
+            "interarrival_hours": [
+              72,
+              108
+            ],
+            "nodes": [
+              64
+            ],
+            "request_hours": 48,
+            "runtime_hours": [
+              30,
+              44
+            ]
+          }
+        ]
+      }
+    },
+    "seeds": [
+      11,
+      23,
+      37
+    ],
+    "target_request_rule": "all_methods_request_48h_including_final",
+    "trace_hours": 1440,
+    "version": "opportunity-v1"
+  },
+  "kind": "opportunity-v1",
+  "method_count": 15,
+  "policy": "public-request-calendar + remaining-work weighted cost; pressure clipped at 48h; no training",
+  "power_rho": 1.0,
+  "profile_binding": {
+    "anchor_nodes": 16,
+    "anchor_training_hours": 110.0,
+    "design_sha256": "c434190a7f6fe07c43e5792e235e0d04f459fccfef8c198f9789670c2163040b",
+    "efficiency32_vs4": 0.49999999999999994,
+    "efficiency_vs4": {
+      "16": 0.6299605249474366,
+      "32": 0.49999999999999994,
+      "4": 1.0,
+      "8": 0.7937005259840997
+    },
+    "implementation_sha256": {
+      "frontera_scaling_sensitivity.py": "917ada149bfb37888ce232c76bda0a6b6fa35a9ffda0698e3d46946f9fe03dae",
+      "scaling_profiles.py": "e05985e521503894fca8f4a7f69c1a381c05dc534d246d65b2bc54aa583622f0",
+      "scaling_report.py": "f306d057b415c6bf97e1dc7ea97c61acec036fcb5e16fde20308c41e77cfc1e2"
+    },
+    "kind": "analytic_scaling_profile_v2",
+    "model": "xl",
+    "profile_status": "assumed",
+    "scenario": "e050"
+  },
+  "profile_config_sha256": "56d3d3843ab8038ae8fac50a9dd64b41d06e1ccf67a9c1c67ee61a7e98cdfc4d",
+  "request_rule": "all_methods_request_48h_including_final",
+  "source_sha256": {
+    "scripts/fixed_max_walltime.py": "0d3291ab01f2ca0c0d2fa7502dbaea7e9907905f3375fcbcd07c1f392e62e29b",
+    "scripts/opportunity_policy.py": "7c6f58b764909a063557fd09927622a8fbfb597c6d593cb4e86308b18a76de3e",
+    "scripts/opportunity_report.py": "7924bd63175e9abb71f5a433a53f7b782dcb2d15d688a836f3b050b1ea6fd644",
+    "scripts/opportunity_traces.py": "7835f956479b029cc791eb209c088f17a716e5ce781c14e0138abf9e8c9d7eda",
+    "scripts/opportunity_trial.py": "3f66c12325613d93e4902273fd8ab31607fff74cd8bc3315d531812a3409a8fd",
+    "src/carbon/carbon.py": "82f6114f02f54f04468df6ee3711c1231f1b59607a1f32012a71075afa132d21",
+    "src/carbon/common.py": "c8d0dbff6f586a5775a927c746f54dbeee649c44660635a69ca163281603d9f5",
+    "src/carbon/environment.py": "2132edf3378b2e11d7442d46a06bd167cbbdc5a5be8fcc5075204774ee119980",
+    "src/carbon/probe_resume.py": "51c532ba550ce54a75b9287720770e0388f8c506b08637d5180a7ea99d236dea",
+    "src/carbon/replay.py": "74ac5c9aa3b194faf6b2756721319c9c1c477acff92af71b4184e647d819b3bb",
+    "src/carbon/trace.py": "e4dbb02f0a39ad95e6c91edec79a9899f7e3cef8e0047a2e8a6901b87a6b4829",
+    "src/carbon/workload.py": "42e1bc091fb68495a7657c2ba5a5f1ff14243555549d1f9d97939d7bc637aa97"
+  }
+}

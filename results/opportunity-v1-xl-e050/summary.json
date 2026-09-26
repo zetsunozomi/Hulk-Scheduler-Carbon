@@ -1,0 +1,296 @@
+{
+  "completed_scenarios": {
+    "burst-mix": {
+      "all_methods_complete": true,
+      "arrival_count": 36,
+      "constant": {
+        "best_gap_hours": -4.17805774933646,
+        "distinct_dynamic_points": 9,
+        "dynamic_points_above_fixed_hull": 0,
+        "dynamic_points_below_fixed_hull": 9,
+        "dynamic_points_on_fixed_hull": 2,
+        "dynamic_points_outside_fixed_carbon_range": 0,
+        "fixed_lower_convex_frontier": [
+          [
+            445.09220956355557,
+            278.2049430813889
+          ],
+          [
+            560.8985036275556,
+            176.89161582120371
+          ],
+          [
+            707.2,
+            111.7671675925926
+          ],
+          [
+            891.2510857955556,
+            75.1013931474074
+          ]
+        ],
+        "note": "Negative gap means below the fixed lower convex frontier at equal carbon; outside-range points are retained without extrapolation."
+      },
+      "ercot": {
+        "best_gap_hours": -4.088819056708886,
+        "distinct_dynamic_points": 9,
+        "dynamic_points_above_fixed_hull": 0,
+        "dynamic_points_below_fixed_hull": 9,
+        "dynamic_points_on_fixed_hull": 2,
+        "dynamic_points_outside_fixed_carbon_range": 0,
+        "fixed_lower_convex_frontier": [
+          [
+            432.65781647987154,
+            278.2049430813889
+          ],
+          [
+            543.6865221011641,
+            176.89161582120371
+          ],
+          [
+            685.2245855304392,
+            111.7671675925926
+          ],
+          [
+            856.9046914055443,
+            75.1013931474074
+          ]
+        ],
+        "note": "Negative gap means below the fixed lower convex frontier at equal carbon; outside-range points are retained without extrapolation."
+      }
+    },
+    "layered-long": {
+      "all_methods_complete": true,
+      "arrival_count": 36,
+      "constant": {
+        "best_gap_hours": -8.541780448208812,
+        "distinct_dynamic_points": 9,
+        "dynamic_points_above_fixed_hull": 0,
+        "dynamic_points_below_fixed_hull": 6,
+        "dynamic_points_on_fixed_hull": 5,
+        "dynamic_points_outside_fixed_carbon_range": 0,
+        "fixed_lower_convex_frontier": [
+          [
+            445.09220956355557,
+            278.2049430813889
+          ],
+          [
+            560.8985036275556,
+            175.29346767305555
+          ],
+          [
+            707.2,
+            110.51068611111111
+          ],
+          [
+            891.2510857955556,
+            80.4027820362963
+          ]
+        ],
+        "note": "Negative gap means below the fixed lower convex frontier at equal carbon; outside-range points are retained without extrapolation."
+      },
+      "ercot": {
+        "best_gap_hours": -8.381954770203023,
+        "distinct_dynamic_points": 9,
+        "dynamic_points_above_fixed_hull": 0,
+        "dynamic_points_below_fixed_hull": 6,
+        "dynamic_points_on_fixed_hull": 5,
+        "dynamic_points_outside_fixed_carbon_range": 0,
+        "fixed_lower_convex_frontier": [
+          [
+            432.65781647987154,
+            278.2049430813889
+          ],
+          [
+            543.007119464732,
+            175.29346767305555
+          ],
+          [
+            684.3365346858994,
+            110.51068611111111
+          ],
+          [
+            857.7877025702342,
+            80.4027820362963
+          ]
+        ],
+        "note": "Negative gap means below the fixed lower convex frontier at equal carbon; outside-range points are retained without extrapolation."
+      }
+    },
+    "loose-walltime": {
+      "all_methods_complete": true,
+      "arrival_count": 36,
+      "constant": {
+        "best_gap_hours": -12.99613338291276,
+        "distinct_dynamic_points": 8,
+        "dynamic_points_above_fixed_hull": 0,
+        "dynamic_points_below_fixed_hull": 8,
+        "dynamic_points_on_fixed_hull": 3,
+        "dynamic_points_outside_fixed_carbon_range": 0,
+        "fixed_lower_convex_frontier": [
+          [
+            445.09220956355557,
+            278.2049430813889
+          ],
+          [
+            560.8985036275556,
+            175.29346767305555
+          ],
+          [
+            707.2,
+            110.93013055555555
+          ],
+          [
+            891.2510857955556,
+            87.76713388814815
+          ]
+        ],
+        "note": "Negative gap means below the fixed lower convex frontier at equal carbon; outside-range points are retained without extrapolation."
+      },
+      "ercot": {
+        "best_gap_hours": -12.786843362497478,
+        "distinct_dynamic_points": 8,
+        "dynamic_points_above_fixed_hull": 0,
+        "dynamic_points_below_fixed_hull": 8,
+        "dynamic_points_on_fixed_hull": 3,
+        "dynamic_points_outside_fixed_carbon_range": 0,
+        "fixed_lower_convex_frontier": [
+          [
+            432.65781647987154,
+            278.2049430813889
+          ],
+          [
+            543.007119464732,
+            175.29346767305555
+          ],
+          [
+            683.9086495867091,
+            110.93013055555555
+          ],
+          [
+            860.026292090164,
+            87.76713388814815
+          ]
+        ],
+        "note": "Negative gap means below the fixed lower convex frontier at equal carbon; outside-range points are retained without extrapolation."
+      }
+    },
+    "short-control": {
+      "all_methods_complete": true,
+      "arrival_count": 36,
+      "constant": {
+        "best_gap_hours": -2.4764864094410655,
+        "distinct_dynamic_points": 5,
+        "dynamic_points_above_fixed_hull": 0,
+        "dynamic_points_below_fixed_hull": 5,
+        "dynamic_points_on_fixed_hull": 6,
+        "dynamic_points_outside_fixed_carbon_range": 0,
+        "fixed_lower_convex_frontier": [
+          [
+            445.09220956355557,
+            278.2049430813889
+          ],
+          [
+            560.8985036275556,
+            175.29346767305555
+          ],
+          [
+            707.2,
+            110.51068611111111
+          ],
+          [
+            891.2510857955556,
+            72.7013931474074
+          ]
+        ],
+        "note": "Negative gap means below the fixed lower convex frontier at equal carbon; outside-range points are retained without extrapolation."
+      },
+      "ercot": {
+        "best_gap_hours": -2.5608086301280935,
+        "distinct_dynamic_points": 5,
+        "dynamic_points_above_fixed_hull": 0,
+        "dynamic_points_below_fixed_hull": 5,
+        "dynamic_points_on_fixed_hull": 6,
+        "dynamic_points_outside_fixed_carbon_range": 0,
+        "fixed_lower_convex_frontier": [
+          [
+            432.65781647987154,
+            278.2049430813889
+          ],
+          [
+            543.007119464732,
+            175.29346767305555
+          ],
+          [
+            684.3365346858994,
+            110.51068611111111
+          ],
+          [
+            857.3700328665185,
+            72.7013931474074
+          ]
+        ],
+        "note": "Negative gap means below the fixed lower convex frontier at equal carbon; outside-range points are retained without extrapolation."
+      }
+    },
+    "wide-long": {
+      "all_methods_complete": true,
+      "arrival_count": 36,
+      "constant": {
+        "best_gap_hours": -21.559420094171372,
+        "distinct_dynamic_points": 8,
+        "dynamic_points_above_fixed_hull": 0,
+        "dynamic_points_below_fixed_hull": 6,
+        "dynamic_points_on_fixed_hull": 5,
+        "dynamic_points_outside_fixed_carbon_range": 0,
+        "fixed_lower_convex_frontier": [
+          [
+            445.09220956355557,
+            278.2049430813889
+          ],
+          [
+            560.8985036275556,
+            175.29346767305555
+          ],
+          [
+            707.2,
+            110.51068611111111
+          ],
+          [
+            891.2510857955556,
+            100.83843018444445
+          ]
+        ],
+        "note": "Negative gap means below the fixed lower convex frontier at equal carbon; outside-range points are retained without extrapolation."
+      },
+      "ercot": {
+        "best_gap_hours": -21.90319930288456,
+        "distinct_dynamic_points": 8,
+        "dynamic_points_above_fixed_hull": 0,
+        "dynamic_points_below_fixed_hull": 6,
+        "dynamic_points_on_fixed_hull": 5,
+        "dynamic_points_outside_fixed_carbon_range": 0,
+        "fixed_lower_convex_frontier": [
+          [
+            432.65781647987154,
+            278.2049430813889
+          ],
+          [
+            543.007119464732,
+            175.29346767305555
+          ],
+          [
+            684.3365346858994,
+            110.51068611111111
+          ],
+          [
+            872.7439727183048,
+            100.83843018444445
+          ]
+        ],
+        "note": "Negative gap means below the fixed lower convex frontier at equal carbon; outside-range points are retained without extrapolation."
+      }
+    }
+  },
+  "kind": "opportunity-v1",
+  "pending_scenarios": []
+}
