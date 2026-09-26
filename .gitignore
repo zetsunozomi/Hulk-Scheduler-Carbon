@@ -59,6 +59,20 @@ __pycache__/
 !/results/**/iteration-000032/
 !/results/**/iteration-000064/
 
+# Opportunity experiments: small result packet only. Prune seed directories
+# themselves so git add/status never descends into full episode/trace records.
+/results/opportunity-*/**
+!/results/opportunity-*/run-plan.json
+!/results/opportunity-*/summary.json
+!/results/opportunity-*/summary.md
+!/results/opportunity-*/*/
+!/results/opportunity-*/*/summary.json
+!/results/opportunity-*/*/summary.md
+!/results/opportunity-*/*/curves.csv
+/results/opportunity-*/*/seed-*/
+# Slurm .out already contains the tee log; avoid returning duplicate logs.
+/out/frontera-opportunity.*.log
+
 # Exclude checkpoint names, including text metadata and whole checkpoint directories.
 /results/**/*[Cc][Hh][Ee][Cc][Kk][Pp][Oo][Ii][Nn][Tt]*
 /results/**/*[Cc][Kk][Pp][Tt]*

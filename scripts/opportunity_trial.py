@@ -195,8 +195,8 @@ def run_seed(root, design_path, output, scenario, seed, resume):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--trace', default='all', help='all or a scenario name from opportunity-v1.json')
-    parser.add_argument('--design', default='configs/opportunity-v1.json')
+    parser.add_argument('--trace', default='all', help='all or a scenario name from the selected design')
+    parser.add_argument('--design', default='configs/opportunity-v1-seed11.json')
     parser.add_argument('--repo-root', type=Path, default=ROOT)
     parser.add_argument('--output', type=Path)
     parser.add_argument('--workers', type=int, default=min(4, int(os.environ.get('SLURM_CPUS_PER_TASK', '1'))))
@@ -207,7 +207,7 @@ def main():
     require(args.workers > 0, 'workers must be positive')
     if args.report_only:
         from opportunity_report import report_all
-        report_all((args.output or args.repo_root / 'results/opportunity-v1-xl-e050').resolve())
+        report_all((args.output or args.repo_root / 'results/opportunity-v1-xl-e050-seed11').resolve())
         return
     from frontera_old_gpt import require_allocation
     require_allocation(args.check)
@@ -216,7 +216,7 @@ def main():
     design, raw, ci, work, contract = load_inputs(root, design_path)
     require(args.trace == 'all' or args.trace in design['scenarios'], 'Unknown trace scenario')
     names = list(design['scenarios']) if args.trace == 'all' else [args.trace]
-    output = (args.output or root / 'results/opportunity-v1-xl-e050').resolve()
+    output = (args.output or root / 'results/opportunity-v1-xl-e050-seed11').resolve()
     require(output != root and output not in root.parents, 'Output cannot be the repository root or its ancestor')
     # Matplotlib is the sole optional dependency; fail early on compute if absent.
     import importlib.util

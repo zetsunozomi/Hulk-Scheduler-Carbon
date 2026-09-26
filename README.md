@@ -18,15 +18,19 @@ mkdir -p out
 sbatch scripts/frontera_opportunity.sh
 ```
 
-One job runs all five constructed trace scenarios, three seeds and 36 arrivals
-per scenario. Each arrival evaluates Fixed-4/8/16/32 plus 11 dynamic slider
-settings. XL/e050 stays fixed; **every method requests 48h including its final
-segment**. No RL training, wait predictor, model weights or old result inputs
+New runs use seed **11 only**, with 12 arrivals per scenario, across all five
+constructed trace scenarios (900 outcomes total). Each arrival evaluates
+Fixed-4/8/16/32 plus 11 dynamic slider settings. The default design is `configs/opportunity-v1-seed11.json` and the
+output is `results/opportunity-v1-xl-e050-seed11/`. Existing three-seed results
+remain in their original directory and retain their original run-plan.
+XL/e050 stays fixed; **every method requests 48h including its final segment**. No RL training, wait predictor, model weights or old result inputs
 are needed. The controller uses public request information and target scaling.
 Append `--resume` after interruption; `--trace wide-long` runs one scenario.
 Black fixed / yellow dynamic plots are produced for constant CI and the ERCOT
-overlay, with all points and frontier gaps retained. Return JSON/CSV/MD/logs only;
-`--report-only` recreates figures locally. See [OPPORTUNITY_RUN.md](docs/OPPORTUNITY_RUN.md).
+overlay, with all points and frontier gaps retained. Git returns only the run
+plan, summaries, curve tables and Slurm .out logs; entire seed directories stay
+on the cluster. `scripts/opportunity_plot_summary.py OUTPUT` recreates figures
+locally from these compact summaries. See [OPPORTUNITY_RUN.md](docs/OPPORTUNITY_RUN.md).
 
 ### Additional profile: old GPT-2
 

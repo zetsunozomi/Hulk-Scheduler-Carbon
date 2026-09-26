@@ -2,17 +2,24 @@
 
 这轮在 Frontera **计算节点运行 CPU 调度模拟**。后台 trace 是构造的普通作业请求；不会向真实 Slurm 投递这些后台作业，也不做神经网络训练或能耗实测。
 
+## 2026-09-26：后续改为单种子
+
+新实验默认使用 `configs/opportunity-v1-seed11.json`，固定 seed=11，不根据结果选择种子。
+已运行的三种子配置仍保留在 `configs/opportunity-v1.json`；旧结果 `results/opportunity-v1-xl-e050/` 不修改、不删减。
+新默认输出增加 `-seed11` 后缀，避免覆盖或混用旧轮结果。无需为了减少种子数重跑已完成的这一轮。
+精简回传后，使用下文的 `opportunity_plot_summary.py` 重画旧轮曲线；保留旧 run-plan 和三个种子的原始汇总。
+
 ## 本轮固定设计
 
 - XL/e050、84 节点、动作 4/8/16/32、100,000 工作单位；沿用现有 scaling 输入与 300s setup/restart/checkpoint 开销。
 - 原配置先通过原有完整绑定验证，再建立单独的 synthetic 场景；旧 AMSP/GPT/RL 实验不变。
 - **fixed 和 dynamic 每次均请求 48h，包括最后一次；实际完成即释放**。
 - 一个 RL-free 控制器；alpha = 0, .1, .2, …, 1。0 更偏向省能耗，1 更偏向完成时间。
-- 每个 trace 3 个生成种子（11/23/37），每个种子 12 个随机分层到达；所有方法共享到达与后台请求。
-- 每个 trace 共 36 到达 ×（4 fixed + 11 dynamic）= **540 个结果**；五个 trace 共 **2700 个结果**。
+- 后续新实验每个 trace 只跑 **seed=11**，共 12 个随机分层到达；所有方法共享到达与后台请求。
+- 每个 trace 共 12 到达 ×（4 fixed + 11 dynamic）= **180 个结果**；五个 trace 共 **900 个结果**。
 - 所有目标任务独立回放，互相不竞争；其对后台作业的影响由各自回放重新计算。
 - 7 天背景 warmup；目标在第 7–28 天随机到达；每个目标最多观察 30 天；背景持续生成 60 天。
-- 输出目录 `results/opportunity-v1-xl-e050/`。没有训练阶段、训练 checkpoint、wait probes 或预测器依赖。
+- 输出目录 `results/opportunity-v1-xl-e050-seed11/`。没有训练阶段、训练 checkpoint、wait probes 或预测器依赖。
 
 ## 同一个动态框架
 
@@ -44,7 +51,7 @@ score(n) = alpha * [T(n,R) + D(n)] / T_ref
 
 ## 五个 trace
 
-完整生成参数在 `configs/opportunity-v1.json`，所有随机数与目标策略独立。
+完整生成参数在 `configs/opportunity-v1-seed11.json`，所有随机数与目标策略独立。
 
 | 名称 | 生成方式 | 主要检查的问题 |
 |---|---|---|
@@ -109,7 +116,7 @@ sbatch scripts/frontera_opportunity.sh --trace wide-long --resume
 ```bash
 squeue -u "$USER"
 tail -n 40 out/frontera-opportunity-<jobid>.out
-cat results/opportunity-v1-xl-e050/summary.md
+cat results/opportunity-v1-xl-e050-seed11/summary.md
 ```
 
 每个 trace 目录：
@@ -124,20 +131,42 @@ cat results/opportunity-v1-xl-e050/summary.md
 同时列出高于前沿、重合、超出 fixed 碳范围的点，不以一个有利 alpha 代表整条曲线获胜。
 若存在未完成任务，对应均值为空且整组比较标为不完整，不能删除这些到达后宣布胜利。
 
-## 只回传文本
+## 精简回传：不再添加完整 seed 目录
 
-本轮不产生任何模型 checkpoint。当前 `.gitignore` 已允许 JSON/CSV/MD/LOG 文本，PNG/PDF 继续忽略。
-远程保持只 pull 和启动；按已有文本回传方式同步 `out/` 和本轮 results 文本即可，无需压缩包。
-图可以在本地从文本直接重建：
+Git 仅接收以下现有小文件，无需在集群重跑模拟或导出：
+
+- 根目录 `run-plan.json`、`summary.json/md`。
+- 每种 trace 的 `summary.json/md` 和 `curves.csv`。summary.json 已包含全部 slider 点、各 seed 的曲线、负载和切换率。
+- 每个 Slurm 作业的一份 `out/frontera-opportunity-<jobid>.out`。
+
+整个 `seed-*/`（trace/cohort/episodes/complete/inputs）及重复的 `out/frontera-opportunity.*.log` 被忽略。
+PNG/PDF、模型和 checkpoint 继续忽略。规则直接排除大目录，`git add` 不再进入逐任务记录。
+原始文件仍留在集群，后续需要定位某条轨迹时再定点读取。
+
+如果此前已经 `git add` 过，先取消这批输出的 Git 跟踪，再按新规则添加：
+
+```bash
+# 在已有本轮输出、且已同步新 .gitignore 的仓库中运行。
+# --cached 只改 Git 索引，保留磁盘上的所有结果。
+git rm -r --cached --ignore-unmatch -- 'results/opportunity-*' 'out/frontera-opportunity.*.log'
+git add .gitignore results/opportunity-v1-xl-e050 out/frontera-opportunity-*.out
+git diff --cached --stat
+```
+
+未来单种子目录换成 `results/opportunity-v1-xl-e050-seed11`。无需把完整记录或任何压缩包传到本地。
+已跟踪的文件不受 .gitignore 自动影响，因此先执行上面的 --cached 清理很重要。
+
+本地仅凭汇总重画已完成的三种子实验：
 
 ```bash
 cd /Users/shuyuanfan/carbon-latest
-CARBON_PYTHON=/Users/shuyuanfan/miniconda3/envs/writing/bin/python \
-  bash scripts/frontera_opportunity.sh --report-only
+PYTHONPATH=src /Users/shuyuanfan/miniconda3/envs/writing/bin/python -B \
+  scripts/opportunity_plot_summary.py results/opportunity-v1-xl-e050
 ```
 
-本地也可以直接运行 `PYTHONPATH=src python scripts/opportunity_report.py results/opportunity-v1-xl-e050`。
-报告读取保存的输入契约，因此无需训练环境或任何二进制模型。
+新单种子结果替换最后一个目录名即可。这个入口核对 run-plan 与 summary 的配置绑定，
+只渲染已有汇总，不读取 seed 目录，不重算均值，也不声称重新验证了逐任务文件哈希。
+原来的完整报告入口仍用于集群原始记录审计。
 
 ## 准备状态
 

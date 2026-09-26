@@ -1,0 +1,53 @@
+{
+  "version": "opportunity-v1",
+  "purpose": "constructed_mechanism_development",
+  "profile_config": "configs/scaling-v2-xl-e050-frontera-c84.development.json",
+  "seeds": [11],
+  "episodes_per_seed": 12,
+  "alphas": [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
+  "origin_utc": "2020-10-01T00:00:00Z",
+  "trace_hours": 1440,
+  "arrival_start_hours": 168,
+  "arrival_stop_hours": 672,
+  "episode_timeout_hours": 720,
+  "constant_ci_g_per_kwh": 400,
+  "pressure_cap_hours": 48,
+  "target_request_rule": "all_methods_request_48h_including_final",
+  "scenarios": {
+    "wide-long": {
+      "description": "Renewing 64-node long jobs leave room for 16 but not 32 nodes.",
+      "kind": "renewal",
+      "streams": [{"nodes": [64], "interarrival_hours": [72, 108], "runtime_hours": [30, 44], "request_hours": 48}]
+    },
+    "layered-long": {
+      "description": "Two independent streams of 32-node jobs create intermittent overlapping occupation.",
+      "kind": "renewal",
+      "streams": [
+        {"nodes": [32], "interarrival_hours": [60, 84], "runtime_hours": [30, 44], "request_hours": 48},
+        {"nodes": [32], "interarrival_hours": [60, 84], "runtime_hours": [30, 44], "request_hours": 48}
+      ]
+    },
+    "burst-mix": {
+      "description": "Busy/quiet cycles submit waves of ordinary 8/16/32-node requests with total demand of 64 or 80 nodes.",
+      "kind": "waves",
+      "interarrival_hours": [84, 120],
+      "bundles": [[32, 16, 16], [16, 16, 16, 16], [32, 32, 8, 8]],
+      "submit_spread_hours": 8,
+      "runtime_hours": [24, 44],
+      "request_hours": 48
+    },
+    "loose-walltime": {
+      "description": "Wide jobs overrequest walltime; small unrelated jobs add interference. Tests the public-calendar proxy when requested time is inaccurate.",
+      "kind": "renewal",
+      "streams": [
+        {"nodes": [64], "interarrival_hours": [72, 108], "runtime_hours": [12, 36], "request_hours": 48},
+        {"nodes": [4, 8], "interarrival_hours": [12, 24], "runtime_hours": [2, 6], "request_hours": 12}
+      ]
+    },
+    "short-control": {
+      "description": "Same wide-job arrival process as wide-long, but short occupation; checks whether downscaling overreacts.",
+      "kind": "renewal",
+      "streams": [{"nodes": [64], "interarrival_hours": [72, 108], "runtime_hours": [2, 8], "request_hours": 12}]
+    }
+  }
+}
